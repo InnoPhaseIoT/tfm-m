@@ -53,7 +53,6 @@ void inph_ppc_init(struct inph_ppc_dev_t* dev,
         case AHB_PPC_XIP:
             dev->data->p_ns_ppc  = &p_spctrl->ahbnsppccxip;
             dev->data->p_sp_ppc  = &p_spctrl->apbsprvppccxip;
-            dev->data->p_nsp_ppc = 
             dev->data->p_nsp_ppc = &p_spctrl->apbsprvppccxip;
             dev->data->int_bit_mask = AHB_PPC_XIP_INT_POS_MASK;
             break;
@@ -98,7 +97,7 @@ void inph_ppc_init(struct inph_ppc_dev_t* dev,
             dev->data->p_ns_ppc  = &p_spctrl->apnnsppcbase0;
             dev->data->p_sp_ppc  = &p_spctrl->apbsprvppcbase0;
             dev->data->p_nsp_ppc = &p_spctrl->apbsprvppcbase0;
-            dev->data->int_bit_mask = AHB_PPC_BASE2_INT_POS_MASK;
+            dev->data->int_bit_mask = AHB_PPC_BASE0_INT_POS_MASK;
             break;
         
         /* default:  The default is not defined intentionally to force the
@@ -131,7 +130,7 @@ enum inph_ppc_error_t inph_ppc_config_peripheral(
             *(dev->data->p_sp_ppc) |= (1U << periph);
         }
     } else {
-        /* Sets secure attribute */
+        /* Sets non-secure attribute */
         *(dev->data->p_ns_ppc) |= (1U << periph);
 
         /* Uses non-secure unprivileged access address (NSPCTRL) to set
