@@ -26,7 +26,7 @@
 #define INPH_UART_REGISTERS_H
 
 /* Private headers ----------------------------------------------------------*/
-#include "inph_utils.h"
+#include "tfm_utils.h"
 
 /*  RBRTHR DESCRIPTION :Receiver Buffer Register (R when DLAB=0)
 Transmitter Holding Register (W when DLAB=0) */

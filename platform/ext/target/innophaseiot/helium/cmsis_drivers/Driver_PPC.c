@@ -24,19 +24,15 @@
 
 #include "Driver_PPC.h"
 
-#include "tfm_hal_device_header.h"
+#include "RTE_Device.h"
 #include "platform_retarget_dev.h"
-#include "inph_device.h"
-
-/* Driver version */
-#define INPH_PPC_DRV_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(1,0)
-#define INPH_PPC_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(1,0)
-#define INPH_DRIVER_VERSION ARM_DRIVER_VERSION
+#include "platform_retarget.h"
+#include "inph_ppc_drv.h"
 
 /* Driver Version */
 static const INPH_DRIVER_VERSION DriverVersion = {
-    INPH_PPC_API_VERSION,
-    INPH_PPC_DRV_VERSION
+    INPH_DRIVER_VERSION_MAJOR_MINOR(1,1),
+    INPH_DRIVER_VERSION_MAJOR_MINOR(1,1)
 };
 
 static INPH_DRIVER_VERSION INPH_PPC_GetVersion(void)
@@ -83,11 +79,11 @@ static uint32_t APB_PPCBASE0_IsPeriphPrivOnly(uint8_t periph)
 
 static int32_t APB_PPCBASE0_EnableInterrupt(void)
 {
-    enum ppc_sse200_error_t ret;
+    enum inph_ppc_error_t ret;
 
     ret = inph_ppc_irq_enable(&APB_PPCBASE0_DEV_S);
 
-    if( ret != PPC_SSE200_ERR_NONE) {
+    if( ret != INPH_PPC_ERR_NONE) {
         return ARM_DRIVER_ERROR;
     }
 
@@ -126,7 +122,7 @@ ARM_DRIVER_PPC Driver_APB_PPCBASE0 = {
 
 static int32_t APB_PPCBASE1_Initialize(void)
 {
-    inph_ppc_init(&APB_PPCBASE0_DEV_S, APB_PPC_BASE0);
+    inph_ppc_init(&APB_PPCBASE1_DEV_S, APB_PPC_BASE1);
 
     return ARM_DRIVER_OK;
 }
@@ -160,11 +156,11 @@ static uint32_t APB_PPCBASE1_IsPeriphPrivOnly(uint8_t periph)
 
 static int32_t APB_PPCBASE1_EnableInterrupt(void)
 {
-    enum ppc_sse200_error_t ret;
+    enum inph_ppc_error_t ret;
 
     ret = inph_ppc_irq_enable(&APB_PPCBASE1_DEV_S);
 
-    if( ret != PPC_SSE200_ERR_NONE) {
+    if( ret != INPH_PPC_ERR_NONE) {
         return ARM_DRIVER_ERROR;
     }
 
@@ -202,7 +198,7 @@ ARM_DRIVER_PPC Driver_APB_PPCBASE1 = {
 
 static int32_t APB_PPCBASE2_Initialize(void)
 {
-    inph_ppc_init(&APB_PPCBASE0_DEV_S, APB_PPC_BASE0);
+    inph_ppc_init(&APB_PPCBASE2_DEV_S, APB_PPC_BASE2);
 
     return ARM_DRIVER_OK;
 }
@@ -236,11 +232,11 @@ static uint32_t APB_PPCBASE2_IsPeriphPrivOnly(uint8_t periph)
 
 static int32_t APB_PPCBASE2_EnableInterrupt(void)
 {
-    enum ppc_sse200_error_t ret;
+    enum inph_ppc_error_t ret;
 
     ret = inph_ppc_irq_enable(&APB_PPCBASE2_DEV_S);
 
-    if( ret != PPC_SSE200_ERR_NONE) {
+    if( ret != INPH_PPC_ERR_NONE) {
         return ARM_DRIVER_ERROR;
     }
 

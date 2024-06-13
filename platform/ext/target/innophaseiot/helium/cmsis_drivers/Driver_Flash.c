@@ -19,8 +19,9 @@
 #include <string.h>
 #include <stdint.h>
 #include "Driver_Flash.h"
-#include "platform_retarget.h"
-#include "RTE_Device.h"
+#include "inph_device.h"
+//#include "platform_retarget.h"
+//#include "RTE_Device.h"
 
 #ifndef ARG_UNUSED
 #define ARG_UNUSED(arg)  ((void)arg)
@@ -127,7 +128,6 @@ static int32_t is_flash_ready_to_write(const uint8_t *start_addr, uint32_t cnt)
     return rc;
 }
 
-#if (RTE_FLASH0)
 static ARM_FLASH_INFO ARM_FLASH0_DEV_DATA = {
     .sector_info  = NULL,                  /* Uniform sector layout */
     .sector_count = FLASH0_SIZE / FLASH0_SECTOR_SIZE,
@@ -302,16 +302,15 @@ static ARM_FLASH_INFO * ARM_Flash_GetInfo(void)
 }
 
 ARM_DRIVER_FLASH Driver_FLASH0 = {
-    ARM_Flash_GetVersion,
-    ARM_Flash_GetCapabilities,
-    ARM_Flash_Initialize,
-    ARM_Flash_Uninitialize,
-    ARM_Flash_PowerControl,
-    ARM_Flash_ReadData,
-    ARM_Flash_ProgramData,
-    ARM_Flash_EraseSector,
-    ARM_Flash_EraseChip,
-    ARM_Flash_GetStatus,
-    ARM_Flash_GetInfo
+    .GetVersion = ARM_Flash_GetVersion,
+    .GetCapabilities = ARM_Flash_GetCapabilities,
+    .Initialize = ARM_Flash_Initialize,
+    .Uninitialize = ARM_Flash_Uninitialize,
+    .PowerControl = ARM_Flash_PowerControl,
+    .ReadData = ARM_Flash_ReadData,
+    .ProgramData= ARM_Flash_ProgramData,
+    .EraseSector = ARM_Flash_EraseSector,
+    .EraseChip = ARM_Flash_EraseChip,
+    .GetStatus = ARM_Flash_GetStatus,
+    .GetInfo = ARM_Flash_GetInfo
 };
-#endif /* RTE_FLASH0 */

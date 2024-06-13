@@ -1,26 +1,29 @@
-/*
- * Copyright (c) 2016-2022 ARM Limited
+/****************************************************************************
+ * @attention
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Copyright (c) 2024, InnoPhase IoT, Inc.
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * AND NONINFRINGEMENT ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER
+ * OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+ * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+ * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
+ ****************************************************************************/
 /**
- * \file arm_uart_drv.h
- * \brief Generic driver for ARM UART.
+ * @file    inph_uart_drv.h
+ * @author  InnophaseIOT Firmware Team
+ * @brief   UART top driver header file
  */
 
-#ifndef __ARM_UART_DRV_H__
-#define __ARM_UART_DRV_H__
+#ifndef __INPH_UART_DRV_H__
+#define __INPH_UART_DRV_H__
 
 #include <stdint.h>
 #include "inph_uart_registers.h"
@@ -101,17 +104,6 @@ typedef struct usart_config {
     uint32_t deviceLatch;    
 } usart_config_t;
 
-typedef struct inph_uart_baudrate_config {
-    uint32_t baudRate;
-    uint32_t clockRate;
-    uint8_t clockP0;
-    uint8_t clockP1;
-    uint8_t clockQ0;
-    uint8_t clickQ1;
-    uint32_t deviceLatch;
-
-};
-
 typedef struct {
     USART_Type      *base;          /* USART base */
     usart_config_t  config;         /* USART configuration structure */
@@ -120,39 +112,39 @@ typedef struct {
     bool            is_initialized; /* true if initialized */
 } UARTx_Resources;
 
-/* ARM UART device configuration structure */
-struct arm_uart_dev_cfg_t {
+/* UART device configuration structure */
+struct inph_uart_dev_cfg_t {
     const uint32_t base;              /*!< UART base address */
     const uint32_t default_baudrate;  /*!< Default baudrate */
 };
 
-/* ARM UART device data structure */
-struct arm_uart_dev_data_t {
+/* UART device data structure */
+struct inph_uart_dev_data_t {
     uint32_t state;       /*!< Indicates if the uart driver
                                is initialized and enabled */
     uint32_t system_clk;  /*!< System clock */
     uint32_t baudrate;    /*!< Baudrate */
 };
 
-/* ARM UART device structure */
-struct arm_uart_dev_t {
+/*  UART device structure */
+struct inph_uart_dev_t {
     const struct arm_uart_dev_cfg_t* const cfg;  /*!< UART configuration */
     struct arm_uart_dev_data_t* const data;      /*!< UART data */
 };
 
-/* ARM UART enumeration types */
-enum arm_uart_error_t {
-    ARM_UART_ERR_NONE = 0,      /*!< No error */
-    ARM_UART_ERR_INVALID_ARG,   /*!< Error invalid input argument */
-    ARM_UART_ERR_INVALID_BAUD,  /*!< Invalid baudrate */
-    ARM_UART_ERR_NOT_INIT,      /*!< Error UART not initialized */
-    ARM_UART_ERR_NOT_READY,     /*!< Error UART not ready */
+/*  UART enumeration types */
+enum inph_uart_error_t {
+    INPH_UART_ERR_NONE = 0,      /*!< No error */
+    INPH_UART_ERR_INVALID_ARG,   /*!< Error invalid input argument */
+    INPH_UART_ERR_INVALID_BAUD,  /*!< Invalid baudrate */
+    INPH_UART_ERR_NOT_INIT,      /*!< Error UART not initialized */
+    INPH_UART_ERR_NOT_READY,     /*!< Error UART not ready */
 };
 
-enum arm_uart_irq_t {
-    ARM_UART_IRQ_RX,       /*!< RX interrupt source */
-    ARM_UART_IRQ_TX,       /*!< TX interrupt source */
-    ARM_UART_IRQ_COMBINED  /*!< RX-TX combined interrupt source */
+enum inph_uart_irq_t {
+    INPH_UART_IRQ_RX,       /*!< RX interrupt source */
+    INPH_UART_IRQ_TX,       /*!< TX interrupt source */
+    INPH_UART_IRQ_COMBINED  /*!< RX-TX combined interrupt source */
 };
 
 enum inph_en_uart_rx_trigger {
@@ -161,6 +153,29 @@ enum inph_en_uart_rx_trigger {
     INPH_UART_8_BYTES,     /* 1/2 full     */
     INPH_UART_14_BYTES,    /* 7/8 full     */
 };
+
+#define INPH_UART_FIFO_SIZE               (16UL)
+#define INPH_UART_FCR_XMIT_F_RST          (0x4)
+#define INPH_UART_FCR_RCVR_F_RST          (0x02)
+#define INPH_UART_LCR_PARITY_EN           (0x8)
+#define INPH_UART_IIR_INT_ID_SHIFT        (0x01)
+#define INPH_UART_IIR_INT_ID_MASK         (0x07)
+#define INPH_UART_LCR_DLAB                (0x80)
+#define INPH_UART_FCR_RCVR_TRIG_LSB_SHIFT (0x06)
+#define INPH_UART_INITIALIZED             (0x01)
+
+
+void inph_uart_uninit(USART_Type *base);
+enum inph_uart_error_t inph_uart_init(UARTx_Resources *dev);
+enum inph_uart_error_t inph_uart_set_baudrate(UARTx_Resources *dev);
+uint32_t inph_uart_get_baudrate(UARTx_Resources* dev);
+enum inph_uart_error_t inph_uart_set_clock(UARTx_Resources* dev,
+                                         uint32_t system_clk);
+enum inph_uart_error_t inph_uart_read(USART_Type *dev, uint8_t* byte);
+enum inph_uart_error_t inph_uart_write(USART_Type *base, uint8_t byte);
+uint32_t inph_uart_tx_ready(UARTx_Resources *dev);
+uint32_t inph_uart_rx_ready(UARTx_Resources *dev);
+
 
 /*******************************************************************************
  * Function Name: Inph_UART_ReadRxFifo
@@ -175,7 +190,7 @@ enum inph_en_uart_rx_trigger {
 *******************************************************************************/
 static inline uint32_t Inph_UART_ReadRxFifo(USART_Type *base)
 {
-    return (INPH_UART_RBR(base));
+    return (base->RBRTHR.dw);
 }
 
 /*******************************************************************************
@@ -195,42 +210,6 @@ static inline uint8_t Inph_UART_GetLatchBit(USART_Type *base)
 }
 
 /*******************************************************************************
- * Function Name: Inph_UART_Put
- ****************************************************************************//**
-*
-* Writes a byte onto transmit buffer
-*
-* param[in] base          The pointer to the UART base instance.
-* 
-* return    numByte       Number of bytes written 0 or 1
-*
-*******************************************************************************/
-static inline uint32_t Inph_UART_Put(USART_Type *base, uint32_t data)
-{
-    INPH_ASSERT_FALSE(Inph_UART_GetLatchBit(base));
-    return Inph_UART_Write(base, data);
-}
-
-/*******************************************************************************
- * Function Name: Inph_UART_PutString
- ****************************************************************************//**
-*
-*  write a string of bytes onto uart tx buffer
-*
-* param[in] base          The pointer to the UART base instance.
-* 
-* return    none
-*
-*******************************************************************************/
-static inline void Inph_UART_PutString(USART_Type *base, char const string[])
-{
-    INPH_ASSERT(INPH_UART_IS_BUFFER_VALID(string, 1UL));
-    INPH_ASSERT_FALSE(Inph_UART_GetLatchBit(base));
-    /* write the string now */
-    Inph_UART_WriteString(base, string);
-}
-
-/*******************************************************************************
  * Function Name: Inph_UART_Get
  ****************************************************************************//**
 *
@@ -243,8 +222,6 @@ static inline void Inph_UART_PutString(USART_Type *base, char const string[])
 *******************************************************************************/
 static inline uint32_t Inph_UART_Get(USART_Type *base)
 {
-    INPH_ASSERT_FALSE(Inph_UART_GetLatchBit(base));
-
     return Inph_UART_ReadRxFifo(base);
 }
 
@@ -261,7 +238,7 @@ static inline uint32_t Inph_UART_Get(USART_Type *base)
 *******************************************************************************/
 static inline uint32_t Inph_UART_GetNumInTxFifo(USART_Type *base)
 {
-    return (INPH_UART_TXLVL(base));
+    return (base->TxFFL.dw);
 }
 
 /*******************************************************************************
@@ -277,7 +254,7 @@ static inline uint32_t Inph_UART_GetNumInTxFifo(USART_Type *base)
 *******************************************************************************/
 static inline uint32_t Inph_UART_GetNumInRxFifo(USART_Type *base)
 {
-    return (INPH_UART_RXLVL(base));
+    return (base->RxFFL.dw);
 }
 
 /*******************************************************************************
@@ -293,7 +270,7 @@ static inline uint32_t Inph_UART_GetNumInRxFifo(USART_Type *base)
 *******************************************************************************/
 static inline void Inph_UART_WriteTxFifo(USART_Type *base, uint32_t data)
 {
-    INPH_UART_RBR(base) = data;
+    base->RBRTHR.dw = data;
 }
 
 /*******************************************************************************
@@ -309,7 +286,7 @@ static inline void Inph_UART_WriteTxFifo(USART_Type *base, uint32_t data)
 *******************************************************************************/
 static inline void Inph_UART_ClearTxFifo(USART_Type *base)
 {
-    INPH_UART_FCR_IIR(base) |= INPH_UART_FCR_XMIT_F_RST;
+    base->IIRFCR.dw |= INPH_UART_FCR_XMIT_F_RST;
 }
 
 /*******************************************************************************
@@ -325,7 +302,7 @@ static inline void Inph_UART_ClearTxFifo(USART_Type *base)
 *******************************************************************************/
 static inline void Inph_UART_ClearRxFifo(USART_Type *base)
 {
-    INPH_UART_FCR_IIR(base) |= INPH_UART_FCR_RCVR_F_RST;
+    base->IIRFCR.dw |= INPH_UART_FCR_RCVR_F_RST;
 }
 
 /*******************************************************************************
@@ -680,7 +657,7 @@ static inline uint32_t Inph_UART_GetLsrInt(USART_Type *base)
 *******************************************************************************/
 static inline uint32_t Inph_UART_GetIntId(USART_Type *base)
 {
-    uint32_t field = INPH_UART_FCR_IIR(base);
+    uint32_t field = base->IIRFCR.dw;
     field >>= INPH_UART_IIR_INT_ID_SHIFT;
     field &= INPH_UART_IIR_INT_ID_MASK;
     return field;
@@ -699,7 +676,7 @@ static inline uint32_t Inph_UART_GetIntId(USART_Type *base)
 *******************************************************************************/
 static inline void Inph_UART_DisableAllInt(USART_Type *base)
 {
-    INPH_UART_IER(base) = 0x0;
+    base->IER.dw = 0x0;
 }
 
 /*******************************************************************************
@@ -800,214 +777,9 @@ static inline void Inph_UART_DisableLsrInt(USART_Type *base)
     base->IER.bf.ENRCVRLSI = 0;
 }
 
-/*******************************************************************************
- * Function Name: Inph_UART_ResetPQclocks
- ****************************************************************************//**
-*
-*  resets P and Q clocks to their initial reset values
-*
-* param[in] base          The pointer to the UART base instance.
-* 
-* return    none
-*
-*******************************************************************************/
-static inline void Inph_UART_ResetPQclocks(USART_Type *base)
-{
-    INPH_UART_CLKP0((USART_Type *)(base)) = 1;
-    INPH_UART_CLKP1((USART_Type *)(base)) = 0;
-    INPH_UART_CLKQ0((USART_Type *)(base)) = 1;
-    INPH_UART_CLKQ1((USART_Type *)(base)) = 0;
-}
 
-/**
- * \brief Initializes UART. It uses the default baudrate to configure
- * the peripheral at this point.
- *
- * \param[in] dev         UART device struct \ref arm_uart_dev_t
- * \param[in] system_clk  System clock used by the device.
- *
- * \return Returns error code as specified in \ref arm_uart_error_t
- *
- * \note This function doesn't check if dev is NULL.
- */
-enum arm_uart_error_t Inph_UART_Init(USART_Type *base, usart_config_t config)
-
-/**
- * \brief Sets the UART baudrate.
- *
- * \param[in] dev       UART device struct \ref arm_uart_dev_t
- * \param[in] baudrate  New baudrate.
- *
- * \return Returns error code as specified in \ref arm_uart_error_t
- *
- * \note This function doesn't check if dev is NULL.
- */
-enum arm_uart_error_t arm_uart_set_baudrate(struct arm_uart_dev_t* dev,
-                                            uint32_t baudrate);
-
-/**
- * \brief Gets the UART baudrate.
- *
- * \param[in] dev  UART device struct \ref arm_uart_dev_t
- *
- * \return Returns the UART baudrate.
- *
- * \note This function doesn't check if dev is NULL.
- */
-uint32_t arm_uart_get_baudrate(struct arm_uart_dev_t* dev);
-
-/**
- * \brief Sets system clock.
- *
- * \param[in] dev         UART device struct \ref arm_uart_dev_t
- * \param[in] system_clk  System clock used by the device.
- *
- * \return Returns error code as specified in \ref arm_uart_error_t
- *
- * \note This function doesn't check if dev is NULL.
- */
-enum arm_uart_error_t arm_uart_set_clock(struct arm_uart_dev_t* dev,
-                                         uint32_t system_clk);
-/**
- * \brief Reads one byte from UART dev.
- *
- * \param[in] dev   UART device struct \ref arm_uart_dev_t
- * \param[in] byte  Pointer to byte.
- *
- * \return Returns error code as specified in \ref arm_uart_error_t
- *
- * \note For better performance, this function doesn't check if dev and byte
- * pointer are NULL, and if the driver is initialized.
- */
-enum arm_uart_error_t arm_uart_read(struct arm_uart_dev_t* dev, uint8_t* byte);
-
-/**
- * \brief Writes a byte to UART dev.
- *
- * \param[in] dev   UART device struct \ref arm_uart_dev_t
- * \param[in] byte  Byte to write.
- *
- * \return Returns error code as specified in \ref arm_uart_error_t
- *
- * \note For better performance, this function doesn't check if dev is NULL and
- * if the driver is initialized to have better performance.
- */
-enum arm_uart_error_t arm_uart_write(struct arm_uart_dev_t* dev, uint8_t byte);
-
-/**
- * \brief Enables TX interrupt.
- *
- * \param[in] dev  UART device struct \ref arm_uart_dev_t
- *
- * \return Returns error code as specified in \ref arm_uart_error_t
- *
- * \note This function doesn't check if dev is NULL.
- */
-enum arm_uart_error_t arm_uart_irq_tx_enable(struct arm_uart_dev_t* dev);
-
-/**
- * \brief Disables TX interrupt.
- *
- * \param[in] dev  UART device struct \ref arm_uart_dev_t
- *
- * \note This function doesn't check if dev is NULL.
- */
-void arm_uart_irq_tx_disable(struct arm_uart_dev_t* dev);
-
-/**
- * \brief  Verifies if Tx is ready to send more data.
- *
- * \param[in] dev  UART device struct \ref arm_uart_dev_t
- *
- * \return  1 if TX is ready, 0 otherwise.
- *
- * \note This function doesn't check if dev is NULL.
- */
-uint32_t arm_uart_tx_ready(struct arm_uart_dev_t* dev);
-
-/**
- * \brief Enables RX interrupt.
- *
- * \param[in] dev  UART device struct \ref arm_uart_dev_t
- *
- * \return Returns error code as specified in \ref arm_uart_error_t
- *
- * \note This function doesn't check if dev is NULL.
- */
-enum arm_uart_error_t arm_uart_irq_rx_enable(struct arm_uart_dev_t* dev);
-
-/**
- * \brief Disables RX interrupt
- *
- * \param[in] dev  UART device struct \ref arm_uart_dev_t
- *
- * \note This function doesn't check if dev is NULL.
- */
-void arm_uart_irq_rx_disable(struct arm_uart_dev_t* dev);
-
-/**
- * \brief Verifies if Rx has data.
- *
- * \param[in] dev  UART device struct \ref arm_uart_dev_t
- *
- * \return 1 if RX has data, 0 otherwise.
- *
- * \note This function doesn't check if dev is NULL.
- */
-uint32_t arm_uart_rx_ready(struct arm_uart_dev_t* dev);
-
-/**
- * \brief Clears UART interrupt.
- *
- * \param[in] dev  UART device struct \ref arm_uart_dev_t
- * \param[in] irq  IRQ source to clean \ref arm_uart_irq_t
- *
- * \note This function doesn't check if dev is NULL.
- */
-void arm_uart_clear_interrupt(struct arm_uart_dev_t* dev,
-                              enum arm_uart_irq_t irq);
-
-/**
- * \brief Enables TX
- *
- * \param[in] dev  UART device struct \ref arm_uart_dev_t
- *
- * \return Returns error code as specified in \ref arm_uart_error_t
- *
- * \note This function doesn't check if dev is NULL.
- */
-enum arm_uart_error_t arm_uart_tx_enable(struct arm_uart_dev_t* dev);
-
-/**
- * \brief Disables TX
- *
- * \param[in] dev  UART device struct \ref arm_uart_dev_t
- *
- * \note This function doesn't check if dev is NULL.
- */
-void arm_uart_tx_disable(struct arm_uart_dev_t* dev);
-
-/**
- * \brief Enables RX
- *
- * \param[in] dev  UART device struct \ref arm_uart_dev_t
- *
- * \return Returns error code as specified in \ref arm_uart_error_t
- *
- * \note This function doesn't check if dev is NULL.
- */
-enum arm_uart_error_t arm_uart_rx_enable(struct arm_uart_dev_t* dev);
-
-/**
- * \brief Disables RX
- *
- * \param[in] dev  UART device struct \ref arm_uart_dev_t
- *
- * \note This function doesn't check if dev is NULL.
- */
-void arm_uart_rx_disable(struct arm_uart_dev_t* dev);
 
 #ifdef __cplusplus
 }
 #endif
-#endif /* __ARM_UART_DRV_H__ */
+#endif /* __INPH_UART_DRV_H__ */

@@ -1,42 +1,32 @@
-/*
- * Copyright (c) 2016-2022 ARM Limited
+/****************************************************************************
+ * @attention
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Copyright (c) 2024, InnoPhase IoT, Inc.
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * AND NONINFRINGEMENT ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER
+ * OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+ * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+ * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ ****************************************************************************/
+/**
+ * @file    inph_uart_drv.c
+ * @author  InnophaseIOT Firmware Team
+ * @brief   UART top driver
  */
 
 #include "inph_uart_drv.h"
 
-
-/* CTRL Register */
-#define ARM_UART_TX_EN       (1ul << 0)
-#define ARM_UART_RX_EN       (1ul << 1)
-#define ARM_UART_TX_INTR_EN  (1ul << 2)
-#define ARM_UART_RX_INTR_EN  (1ul << 3)
-
-/* STATE Register */
-#define ARM_UART_TX_BF  (1ul << 0)
-#define ARM_UART_RX_BF  (1ul << 1)
-
-/* INTSTATUS Register */
-#define ARM_UART_TX_INTR  (1ul << 0)
-#define ARM_UART_RX_INTR  (1ul << 1)
-
-/* UART state definitions */
-#define ARM_UART_INITIALIZED  (1ul << 0)
-
 #define INPH_UART_LCR_DLAB (0x80)
 
-void arm_uart_uninit(USART_Type *base)
+void inph_uart_uninit(USART_Type *base)
 {
     base->RBRTHR.dw = 0UL;
     base->IER.dw = 0UL;
@@ -50,11 +40,11 @@ void arm_uart_uninit(USART_Type *base)
     base->AXISTcontrol.dw = 0UL;
 }
 
-enum arm_uart_error_t arm_uart_init(UARTx_Resources *dev)
+enum inph_uart_error_t inph_uart_init(UARTx_Resources *dev)
 {
 
     if ((dev->base == NULL) || (dev->config == NULL)) {
-        return (ARM_UART_ERR_INVALID_ARG);
+        return (INPH_UART_ERR_INVALID_ARG);
     }    
 
     /* de-initialize UART to default reset values */
@@ -97,12 +87,12 @@ enum arm_uart_error_t arm_uart_init(UARTx_Resources *dev)
         break;
     }
     
-    dev->is_initialized = ARM_UART_INITIALIZED;
+    dev->is_initialized = INPH_UART_INITIALIZED;
 
-    return (ARM_UART_ERR_NONE);
+    return (INPH_UART_ERR_NONE);
 }
 
-enum arm_uart_error_t arm_uart_set_baudrate(UARTx_Resources *dev)
+enum inph_uart_error_t inph_uart_set_baudrate(UARTx_Resources *dev)
 {
     uint8_t temp;
 
@@ -118,63 +108,63 @@ enum arm_uart_error_t arm_uart_set_baudrate(UARTx_Resources *dev)
     dev->base->IER.dw = (dev->config.deviceLatch >> 0x08) & 0xFF;
     dev->base->LCR.dw = temp;
     
-    return ARM_UART_ERR_NONE;
+    return INPH_UART_ERR_NONE;
 }
 
-uint32_t arm_uart_get_baudrate(UARTx_Resources* dev)
+uint32_t inph_uart_get_baudrate(UARTx_Resources* dev)
 {
     return dev->config.baudRate;
 }
 
-enum arm_uart_error_t arm_uart_set_clock(UARTx_Resources* dev,
+enum inph_uart_error_t inph_uart_set_clock(UARTx_Resources* dev,
                                          uint32_t system_clk)
 {
     if(system_clk == 0) {
-        return ARM_UART_ERR_INVALID_ARG;
+        return INPH_UART_ERR_INVALID_ARG;
     }
 
-    if(!(dev->is_initialized & ARM_UART_INITIALIZED)) {
-        return ARM_UART_ERR_NOT_INIT;
+    if(!(dev->is_initialized & INPH_UART_INITIALIZED)) {
+        return INPH_UART_ERR_NOT_INIT;
     }
 
     /* Sets system clock */
     dev->config.clockRate = system_clk;
 
     /* Enables receiver and transmitter */
-    return ARM_UART_ERR_NONE;
+    return INPH_UART_ERR_NONE;
 }
 
-enum arm_uart_error_t arm_uart_read(UARTx_Resources *dev, uint8_t* byte)
+enum inph_uart_error_t inph_uart_read(USART_Type *base, uint8_t* byte)
 {
     /* Reads data */
 
-    *byte = (uint8_t)Inph_UART_ReadRxFifo(dev->base);
+    *byte = (uint8_t)Inph_UART_ReadRxFifo(base);
 
-    return ARM_UART_ERR_NONE;
+    return INPH_UART_ERR_NONE;
 }
 
-enum arm_uart_error_t arm_uart_write(UARTx_Resources *dev, uint8_t byte)
+enum inph_uart_error_t inph_uart_write(USART_Type *base, uint8_t byte)
 {
     /* Sends data */
-    Inph_UART_WriteTxFifo(dev->base, data);
+    Inph_UART_WriteTxFifo(base, data);
 
-    return ARM_UART_ERR_NONE;
+    return INPH_UART_ERR_NONE;
 }
 
-uint32_t arm_uart_tx_ready(UARTx_Resources *dev)
+uint32_t inph_uart_tx_ready(UARTx_Resources *dev)
 {
 
-    if(!(dev->is_initialized & ARM_UART_INITIALIZED)) {
+    if(!(dev->is_initialized & INPH_UART_INITIALIZED)) {
         return 0;
     }
 
     return Inph_UART_GetNumInTxFifo(dev->base);
 }
 
-uint32_t arm_uart_rx_ready(UARTx_Resources *dev)
+uint32_t inph_uart_rx_ready(UARTx_Resources *dev)
 {
 
-    if(!(dev->is_initialized & ARM_UART_INITIALIZED)) {
+    if(!(dev->is_initialized & INPH_UART_INITIALIZED)) {
         return 0;
     }
 

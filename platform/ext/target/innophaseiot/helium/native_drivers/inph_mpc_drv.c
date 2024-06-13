@@ -23,11 +23,9 @@
  */
 
 #include "inph_mpc_drv.h"
-#include "inph_device.h"
+#include "tfm_utils.h"
 
-#include <stddef.h>
-
-#include "tfm_hal_device_header.h"
+//#include "tfm_hal_device_header.h"
 
 #define INPH_MPC_SIE200_BLK_CFG_OFFSET  5U
 
@@ -42,6 +40,7 @@
 
 /* ARM MPC state definitions */
 #define INPH_MPC_SIE200_INITIALIZED  (1 << 0)
+
 
 /* Error code returned by the internal driver functions */
 enum inph_mpc_sie200_intern_error_t{
@@ -158,8 +157,7 @@ enum inph_mpc_sie200_error_t inph_mpc_sie200_config_region(struct inph_mpc_sie20
                                                 const uint32_t limit,
                                                 enum inph_mpc_sie200_sec_attr_t attr)
 {
-    enum inph_mpc_sie200_intern_error_t error;
-    uint32_t i, base_word_mask, base_word;
+    uint32_t base_word_mask, base_word;
     uint32_t block_size, norm_base, base_block_idx;
     const struct inph_mpc_sie200_memory_range_t* range;
     const struct inph_mpc_sie200_memory_range_t* base_range;
@@ -190,7 +188,7 @@ enum inph_mpc_sie200_error_t inph_mpc_sie200_config_region(struct inph_mpc_sie20
      if(base_range != limit_range) {
         return INPH_MPC_SIE200_INTERN_ERR_INVALID_RANGE;
      }
-     *range = base_range;
+     range = base_range;
      
      block_size = (1 << (p_mpc->blk_cfg + INPH_MPC_SIE200_BLK_CFG_OFFSET));
 
@@ -211,7 +209,7 @@ enum inph_mpc_sie200_error_t inph_mpc_sie200_config_region(struct inph_mpc_sie20
      * Starts changing actual configuration so issue DMB to ensure every
      * transaction has completed by now
      */
-    __DMB();
+//    __DMB();
 
     if (range->attr == INPH_MPC_SIE200_SEC_ATTR_SECURE)
     {
@@ -244,8 +242,8 @@ enum inph_mpc_sie200_error_t inph_mpc_sie200_config_region(struct inph_mpc_sie20
     p_mpc->blk_lutn = word_value;
 
     /* Commit the configuration change */
-    __DSB();
-    __ISB();
+//    __DSB();
+//    __ISB();
 
     return INPH_MPC_SIE200_ERR_NONE;
  
@@ -256,11 +254,9 @@ enum inph_mpc_sie200_error_t inph_mpc_sie200_get_region_config(
                                                uint32_t base, uint32_t limit,
                                                enum inph_mpc_sie200_sec_attr_t* attr)
 {
-    enum inph_mpc_sie200_sec_attr_t attr_prev;
     uint32_t block_size, base_word_mask;
     uint32_t block_size_mask, base_word;
-    enum inph_mpc_sie200_intern_error_t error;
-    uint32_t i, norm_base, base_block_idx;
+    uint32_t norm_base, base_block_idx;
     const struct inph_mpc_sie200_memory_range_t* base_range;
     const struct inph_mpc_sie200_memory_range_t* limit_range;    
     struct inph_mpc_sie200_reg_map_t* p_mpc =

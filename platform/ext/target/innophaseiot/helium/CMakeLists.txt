@@ -57,12 +57,14 @@ target_sources(tfm_s
 target_include_directories(platform_s
     PUBLIC
         .
-        ../common
+        ../drivers
         cmsis_drivers
         native_drivers
         partition
-#        retarget
+        retarget
         cmsis_core
+        bl1
+        bl2
 #        native_drivers/timer_cmsdk
         ${PLATFORM_DIR}/..
 )
@@ -71,11 +73,11 @@ target_sources(platform_s
 #    INTERFACE
 #        $<$<STREQUAL:"${TFM_FIH_PROFILE}","HIGH">:${PLATFORM_DIR}/ext/common/template/tfm_fih_rng.c>
     PRIVATE
-        cmsis_drivers/Driver_Flash.c
+#        cmsis_drivers/Driver_Flash.c
         cmsis_drivers/Driver_MPC.c
         cmsis_drivers/Driver_PPC.c
         cmsis_drivers/Driver_USART.c
-#       retarget/platform_retarget_dev.c
+        retarget/platform_retarget_dev.c
 #       cmsis_core/system_core_init.c
         native_drivers/inph_mpc_drv.c
 #        native_drivers/mpu_armv8m_drv.c
@@ -146,7 +148,7 @@ install(FILES       ${PLATFORM_DIR}/ext/common/test_interrupt.c
                     ${TARGET_PLATFORM_PATH}/native_drivers/inph_uart_drv.c
 #                    ${TARGET_PLATFORM_PATH}/native_drivers/timer_cmsdk/timer_cmsdk.c
                     ${TARGET_PLATFORM_PATH}/cmsis_drivers/Driver_USART.c
-#                    ${TARGET_PLATFORM_PATH}/retarget/platform_retarget_dev.c
+                    ${TARGET_PLATFORM_PATH}/retarget/platform_retarget_dev.c
         DESTINATION ${INSTALL_PLATFORM_NS_DIR})
 
 install(DIRECTORY   ${TARGET_PLATFORM_PATH}/cmsis_core
@@ -157,18 +159,19 @@ install(DIRECTORY   ${PLATFORM_DIR}/ext/driver
         DESTINATION ${INSTALL_PLATFORM_NS_DIR}/include)
 
 install(FILES       ${TARGET_PLATFORM_PATH}/partition/region_defs.h
-                    ${TARGET_PLATFORM_PATH}/partition/flash_layout.h
+#                    ${TARGET_PLATFORM_PATH}/partition/flash_layout.h
                     ${TARGET_PLATFORM_PATH}/native_drivers/inph_uart_drv.h
 #                    ${TARGET_PLATFORM_PATH}/native_drivers/timer_cmsdk/timer_cmsdk.h
                     ${TARGET_PLATFORM_PATH}/native_drivers/inph_mpc_drv.h
                     ${TARGET_PLATFORM_PATH}/native_drivers/inph_ppc_drv.h
-#                    ${TARGET_PLATFORM_PATH}/retarget/platform_retarget.h
+                    ${TARGET_PLATFORM_PATH}/retarget/platform_retarget.h
+                    ${TARGET_PLATFORM_PATH}/retarget/platform_retarget_dev.h                    
 #                    ${TARGET_PLATFORM_PATH}/retarget/platform_retarget_pins.h
 #                    ${TARGET_PLATFORM_PATH}/target_cfg.h
-                    ${TARGET_PLATFORM_PATH}/inph_device.h
+#                     ${TARGET_PLATFORM_PATH}/inph_device.h
 #                    ${TARGET_PLATFORM_PATH}/tfm_peripherals_def.h
 #                    ${TARGET_PLATFORM_PATH}/cmsis_driver_config.h
-#                    ${TARGET_PLATFORM_PATH}/RTE_Device.h
+#                     ${TARGET_PLATFORM_PATH}/RTE_Device.h
 #                    ${PLATFORM_DIR}/ext/common/test_interrupt.h
                     ${PLATFORM_DIR}/ext/driver/Driver_USART.h
                     ${PLATFORM_DIR}/ext/driver/Driver_Common.h

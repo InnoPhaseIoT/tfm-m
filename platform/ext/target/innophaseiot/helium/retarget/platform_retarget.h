@@ -1,0 +1,125 @@
+/****************************************************************************
+ * @attention
+ *
+ * Copyright (c) 2024, InnoPhase IoT, Inc.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * AND NONINFRINGEMENT ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER
+ * OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+ * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+ * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ ****************************************************************************/
+/**
+ * @file    platform_retarget_dev.h
+ * @author  InnophaseIOT Firmware Team
+ * @brief   Device wizard
+ */
+
+
+#ifndef __PLATFORM_RETARGET_H
+#define __PLATFORM_RETARGET_H
+
+
+/* ======= Defines peripherals memory map addresses ======= */
+/* Non-secure memory map addresses */
+#define CMSDK_TIMER0_BASE_NS   0x40000000
+#define CMSDK_TIMER1_BASE_NS   0x40001000
+#define APB_DUALTIMER_BASE_NS  0x40002000
+#define MHU0_BASE_NS           0x40003000
+#define MHU1_BASE_NS           0x40004000
+#define S32K_TIMER_BASE_NS     0x4002F000
+#define S32K_WATCHDOG_BASE_NS  0x4002E000
+#define APB_WATCHDOG_BASE_NS   0x40081000
+#define GPIO0_BASE_NS          0x40100000
+#define GPIO1_BASE_NS          0x40101000
+#define GPIO2_BASE_NS          0x40102000
+#define GPIO3_BASE_NS          0x40103000
+#define UART0_BASE_NS          0x40200000
+#define UART1_BASE_NS          0x40201000
+#define UART2_BASE_NS          0x40202000
+#define UART3_BASE_NS          0x40203000
+#define UART4_BASE_NS          0x40204000
+#define I2C0_SBCON_BASE_NS     0x40207000  /* Touchscreen I2C Base Address */
+#define I2C1_SBCON_BASE_NS     0x40208000  /* Audio I2C Base Address */
+#define I2C2_SBCON_BASE_NS     0x4020C000  /* Shield 0 SBCon Base Address */
+#define I2C3_SBCON_BASE_NS     0x4020D000  /* Shield 1 SBCon Base Address */
+#define SSP0_BASE_NS           0x40206000  /* CLCD SSP PL022 Base Address */
+#define SSP1_BASE_NS           0x40205000  /* User SSP PL022 Base Address */
+#define SSP2_BASE_NS           0x40209000  /* ADC SPI PL022 Base Address */
+#define SSP3_BASE_NS           0x4020A000  /* Shield 0 SPI PL022 Base Address */
+#define SSP4_BASE_NS           0x4020B000  /* Shield 1 SPI PL022 Base Address */
+#define MPS2_IO_SCC_BASE_NS    0x40300000
+#define MPS2_IO_FPGAIO_BASE_NS 0x40302000
+
+#define INPH_NSPCTRL_BASE_NS           0x40001000
+
+/* Secure memory map addresses */
+
+#define UART0_BASE_S           0x50200000
+#define UART1_BASE_S           0x50201000
+#define UART2_BASE_S           0x50202000
+#define UART3_BASE_S           0x50203000
+#define UART4_BASE_S           0x50204000
+#define I2C0_SBCON_BASE_S      0x50207000
+#define I2C1_SBCON_BASE_S      0x50208000
+#define I2C2_SBCON_BASE_S      0x5020C000
+#define I2C3_SBCON_BASE_S      0x5020D000
+
+#define MPC_CODE_SRAM0_BASE_S   0x40040FFF
+#define MPC_CODE_SRAM1_BASE_S   0x40041FFF
+#define MPC_CODE_SRAM2_BASE_S   0x40042FFF
+#define MPC_CODE_SRAM3_BASE_S   0x40043FFF
+#define MPC_CODE_SRAM4_BASE_S   0x40044FFF
+#define MPC_CODE_SRAM5_BASE_S   0x40045FFF
+#define MPC_CODE_SRAM6_BASE_S   0x40046FFF
+#define MPC_CODE_SRAM7_BASE_S   0x40047FFF
+#define MPC_CODE_SRAM8_BASE_S   0x40048FFF
+#define MPC_CODE_SRAM9_BASE_S   0x40049FFF
+#define MPC_CODE_SRAM10_BASE_S   0x4004AFFF
+#define MPC_CODE_SRAM11_BASE_S   0x4004BFFF
+#define MPC_CODE_SRAM12_BASE_S   0x4004CFFF
+#define MPC_CODE_SRAM13_BASE_S   0x4004DFFF
+#define MPC_CODE_SRAM14_BASE_S   0x4004EFFF
+#define MPC_CODE_SRAM15_BASE_S   0x4004FFFF
+
+#define MPC_CODE_ROM_BASE_S     0x40050FFF
+#define MPC_CODE_XIP_BASE_S     0x40051FFF
+
+#define INPH_SPCTRL_BASE_S      0x40030000
+
+
+/* SRAM MPC ranges and limits */
+
+#define MPC_CODE_SRAM0_RANGE_BASE_NS   0x30000000
+#define MPC_CODE_SRAM0_RANGE_LIMIT_NS  0x0000FFFF
+#define MPC_CODE_SRAM0_RANGE_BASE_S    0x30000000
+#define MPC_CODE_SRAM0_RANGE_LIMIT_S   0x0000FFFF
+
+#define MPC_CODE_SRAM1_RANGE_BASE_NS   0x30010000
+#define MPC_CODE_SRAM1_RANGE_LIMIT_NS  0x0000FFFF
+#define MPC_CODE_SRAM1_RANGE_BASE_S    0x30010000
+#define MPC_CODE_SRAM1_RANGE_LIMIT_S   0x0000FFFF
+
+#define MPC_CODE_SRAM2_RANGE_BASE_NS   0x30020000
+#define MPC_CODE_SRAM2_RANGE_LIMIT_NS  0x0000FFFF
+#define MPC_CODE_SRAM2_RANGE_BASE_S    0x30020000
+#define MPC_CODE_SRAM2_RANGE_LIMIT_S   0x0000FFFF
+
+
+/* Flash memory emulated over external SSRAM memory */
+#define FLASH0_BASE_S                  0x10000000
+#define FLASH0_BASE_NS                 0x00000000
+#define FLASH0_SIZE                    0x00400000  /* 4 MB */
+#define FLASH0_SECTOR_SIZE             0x00001000  /* 4 kB */
+#define FLASH0_PAGE_SIZE               0x00001000  /* 4 kB */
+#define FLASH0_PROGRAM_UNIT            0x1         /* Minimum write size */
+
+#endif  /* __PLATFORM_RETARGET_DEV_H */
+

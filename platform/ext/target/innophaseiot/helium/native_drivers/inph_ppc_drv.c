@@ -145,7 +145,7 @@ enum inph_ppc_error_t inph_ppc_config_peripheral(
     return INPH_PPC_ERR_NONE;
 }
 
-uint32_t inph_ppc_is_periph_secure(struct ppc_sse200_dev_t* dev,
+uint32_t inph_ppc_is_periph_secure(struct inph_ppc_dev_t* dev,
                                      uint8_t periph)
 {
     if(dev->data->state != INPH_PPC_INITIALIZED) {
