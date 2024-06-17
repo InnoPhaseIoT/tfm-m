@@ -27,6 +27,7 @@
 
 #include <stdint.h>
 #include "inph_uart_registers.h"
+#include "Driver_USART.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -110,6 +111,7 @@ typedef struct {
     uint32_t        tx_nbr_bytes;   /* Number of bytes transfered */
     uint32_t        rx_nbr_bytes;   /* Number of bytes recevied */
     bool            is_initialized; /* true if initialized */
+    ARM_USART_SignalEvent_t cb_event;
 } UARTx_Resources;
 
 /* UART device configuration structure */

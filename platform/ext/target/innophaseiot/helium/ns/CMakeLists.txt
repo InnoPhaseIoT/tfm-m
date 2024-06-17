@@ -16,12 +16,11 @@ target_sources(platform_ns
         inph_uart_drv.c
 #        timer_cmsdk.c
         Driver_USART.c
-        cmsis_core/src/startup_ARMCM33.c
-#        cmsis_core/system_core_init.c #need help on this ken
-#        retarget/platform_retarget_dev.c
+        cmsis_core/system_core_init.c
+        retarget/platform_retarget_dev.c
     INTERFACE
-#        $<$<BOOL:${TEST_NS_FPU}>:${CMAKE_CURRENT_LIST_DIR}/cmsis_core/an521_ns_init.c>
-#        $<$<BOOL:${TEST_NS_FPU}>:${CMAKE_CURRENT_LIST_DIR}/test_interrupt.c>
+        $<$<BOOL:${TEST_NS_FPU}>:${CMAKE_CURRENT_LIST_DIR}/cmsis_core/an521_ns_init.c>
+        $<$<BOOL:${TEST_NS_FPU}>:${CMAKE_CURRENT_LIST_DIR}/test_interrupt.c>
 )
 
 target_include_directories(platform_ns

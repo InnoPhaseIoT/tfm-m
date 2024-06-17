@@ -99,6 +99,8 @@ typedef enum _ARM_PPC_PrivAttr {
 /**
  * \brief Access structure of the MPC Driver.
  */
+
+
 typedef struct _ARM_DRIVER_PPC {
   ARM_DRIVER_VERSION  (*GetVersion)       (void);            ///< Pointer to \ref ARM_PPC_GetVersion   : Get driver version.
   int32_t             (*Initialize)       (void);            ///< Pointer to \ref ARM_PPC_Initialize   : Initialize the PPC Interface.
@@ -111,6 +113,7 @@ typedef struct _ARM_DRIVER_PPC {
   void                (*ClearInterrupt)   (void);            ///< Pointer to \ref ARM_PPC_ClearInterrupt   : Clear PPC interrupt.
   uint32_t            (*InterruptState)   (void);            ///< Pointer to \ref ARM_PPC_InterruptState   : PPC interrupt State.
 } const ARM_DRIVER_PPC;
+
 
 #endif /* __CMSIS_PPC_DRV_H__ */
 

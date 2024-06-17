@@ -90,6 +90,8 @@ int32_t tfm_nspm_get_current_client_id(void)
 
 void tfm_nspm_ctx_init(void)
 {
+//MHK
+#if 0
 #ifdef TFM_PARTITION_NS_AGENT_TZ
     /* SCB_NS.VTOR points to the Non-secure vector table base address */
     SCB_NS->VTOR = tfm_hal_get_ns_VTOR();
@@ -103,4 +105,5 @@ void tfm_nspm_ctx_init(void)
         tfm_core_panic();
     }
 #endif
+#endif //MHK    
 }

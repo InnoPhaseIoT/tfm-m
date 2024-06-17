@@ -25,6 +25,8 @@
 #ifndef __INPH_PPC_DRV_H
 #define __INPH_PPC_DRV_H
 
+#include <stdint.h>
+
 /* SPCTRL PPCs control memory mapped registers access structure */
 struct inph_spctrl_ppc_sse200_t {
     volatile uint32_t spcsecctrl;       /* configuration control register */

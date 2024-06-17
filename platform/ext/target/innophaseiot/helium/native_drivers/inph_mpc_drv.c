@@ -211,14 +211,8 @@ enum inph_mpc_sie200_error_t inph_mpc_sie200_config_region(struct inph_mpc_sie20
      */
 //    __DMB();
 
-    if (range->attr == INPH_MPC_SIE200_SEC_ATTR_SECURE)
-    {
-        norm_base = base - INPH_MPC_MEM_BASE_ADDR_S;
-    }
-    else
-    {
-        norm_base = base - INPH_MPC_MEM_BASE_ADDR_NS;
-    }
+    norm_base = base - base_range->base;
+
     base_block_idx = norm_base/block_size;
     base_word_mask = (1 << (base_block_idx % 32));
     base_word = base_block_idx / 32;
@@ -258,10 +252,10 @@ enum inph_mpc_sie200_error_t inph_mpc_sie200_get_region_config(
     uint32_t block_size_mask, base_word;
     uint32_t norm_base, base_block_idx;
     const struct inph_mpc_sie200_memory_range_t* base_range;
-    const struct inph_mpc_sie200_memory_range_t* limit_range;    
+    const struct inph_mpc_sie200_memory_range_t* limit_range;
+    
     struct inph_mpc_sie200_reg_map_t* p_mpc =
-                                   (struct inph_mpc_sie200_reg_map_t*)dev->cfg->base;
-    const struct inph_mpc_sie200_memory_range_t* range;
+                            (struct inph_mpc_sie200_reg_map_t*)dev->cfg->base;
     uint32_t word_value;
 
     if(!(dev->data->state & INPH_MPC_SIE200_INITIALIZED)) {
@@ -299,14 +293,7 @@ enum inph_mpc_sie200_error_t inph_mpc_sie200_get_region_config(
     }    
 
     /* Set the block index to the first word that will be updated */
-    if (range->attr == INPH_MPC_SIE200_SEC_ATTR_SECURE)
-    {
-        norm_base = base - INPH_MPC_MEM_BASE_ADDR_S;
-    }
-    else
-    {
-        norm_base = base - INPH_MPC_MEM_BASE_ADDR_NS;
-    }
+    norm_base = base - base_range->base;
     
    base_block_idx = norm_base/block_size;
    base_word_mask = (1 << (base_block_idx % 32));

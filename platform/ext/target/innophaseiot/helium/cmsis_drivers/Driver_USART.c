@@ -32,7 +32,7 @@
 #endif
 
 /* Driver Version */
-static const INPH_DRIVER_VERSION DriverVersion = {
+static const ARM_DRIVER_VERSION DriverVersion = {
     INPH_DRIVER_VERSION_MAJOR_MINOR(1,1),
     INPH_DRIVER_VERSION_MAJOR_MINOR(1,1)
 };
@@ -75,36 +75,37 @@ static UARTx_Resources USART0_DEV = { //((UART_Type *)(uart))
     .is_initialized = 0
 };
 
-static INPH_DRIVER_VERSION INPH_USART_GetVersion(void)
+static ARM_DRIVER_VERSION GetVersion(void)
 {
     return DriverVersion;
 }
 
-static ARM_USART_CAPABILITIES INPH_USART_GetCapabilities(void)
+static ARM_USART_CAPABILITIES GetCapabilities(void)
 {
     return DriverCapabilities;
 }
 
-static int32_t INPH_USART_Initialize(UARTx_Resources* USART0_DEV)
+static int32_t Initialize(ARM_USART_SignalEvent_t cb_event)
 {
     enum inph_uart_error_t ret;
     
     /* Initializes generic UART driver */
-    USART0_DEV->config.stopBits = INPH_UART_STOP_BITS_1;
-    USART0_DEV->config.parity = INPH_UART_PARITY_NONE;
-    USART0_DEV->config.dataWidth = INPH_UART_8_BITS;
-    USART0_DEV->config.rxFifoTriggerLevel = INPH_UART_1_BYTE;
+    USART0_DEV.config.stopBits = INPH_UART_STOP_BITS_1;
+    USART0_DEV.config.parity = INPH_UART_PARITY_NONE;
+    USART0_DEV.config.dataWidth = INPH_UART_8_BITS;
+    USART0_DEV.config.rxFifoTriggerLevel = INPH_UART_1_BYTE;
+    USART0_DEV.cb_event = cb_event;
     
-    ret = inph_uart_init(USART0_DEV);
+    ret = inph_uart_init(&USART0_DEV);
     if (ret == INPH_UART_ERR_NONE)
         return INPH_DRIVER_OK;
     else
         return INPH_DRIVER_ERROR;
 }
 
-static int32_t INPH_USART_Uninitialize(UARTx_Resources* USART0_DEV)
+static int32_t Uninitialize(void)
 {
-    inph_uart_uninit(USART0_DEV->base);
+    inph_uart_uninit(USART0_DEV.base);
     return INPH_DRIVER_OK;
 }
 
@@ -186,32 +187,32 @@ static int32_t INPH_USARTx_Receive(UARTx_Resources* USART0_DEV,
     return INPH_DRIVER_OK;
 }
 
-static uint32_t INPH_USART_GetTxCount(UARTx_Resources* USART0_DEV)
+static uint32_t GetTxCount(void)
 {
-    return USART0_DEV->tx_nbr_bytes;
+    return USART0_DEV.tx_nbr_bytes;
 }
 
-static uint32_t INPH_USART_GetRxCount(UARTx_Resources* USART0_DEV)
+static uint32_t GetRxCount(void)
 {
-    return USART0_DEV->rx_nbr_bytes;
+    return USART0_DEV.rx_nbr_bytes;
 }
 
-static int32_t INPH_USART_PowerControl(ARM_POWER_STATE state)
+static int32_t PowerControl(ARM_POWER_STATE state)
 {
     return INPH_USARTx_PowerControl(&USART0_DEV, state);
 }
 
-static int32_t INPH_USART_Send(const void *data, uint32_t num)
+static int32_t Send(const void *data, uint32_t num)
 {
     return INPH_USARTx_Send(&USART0_DEV, data, num);
 }
 
-static int32_t INPH_USART_Receive(void *data, uint32_t num)
+static int32_t Receive(void *data, uint32_t num)
 {
     return INPH_USARTx_Receive(&USART0_DEV, data, num);
 }
 
-static int32_t INPH_USART_Transfer(const void *data_out, void *data_in,
+static int32_t Transfer(const void *data_out, void *data_in,
                                    uint32_t num)
 {
     ARG_UNUSED(data_out);
@@ -221,44 +222,44 @@ static int32_t INPH_USART_Transfer(const void *data_out, void *data_in,
     return INPH_DRIVER_ERROR_UNSUPPORTED;
 }
 
-static int32_t INPH_USART_Control(uint32_t control, uint32_t arg)
+static int32_t Control(uint32_t control, uint32_t arg)
 {
     return INPH_DRIVER_ERROR_UNSUPPORTED;
 }
 
-static ARM_USART_STATUS INPH_USART_GetStatus(void)
+static ARM_USART_STATUS GetStatus(void)
 {
     ARM_USART_STATUS status = {0, 0, 0, 0, 0, 0, 0, 0};
     return status;
 }
 
-static int32_t INPH_USART_SetModemControl(ARM_USART_MODEM_CONTROL control)
+static int32_t SetModemControl(ARM_USART_MODEM_CONTROL control)
 {
     ARG_UNUSED(control);
     return ARM_DRIVER_ERROR_UNSUPPORTED;
 }
 
-static ARM_USART_MODEM_STATUS INPH_USART_GetModemStatus(void)
+static ARM_USART_MODEM_STATUS GetModemStatus(void)
 {
     ARM_USART_MODEM_STATUS modem_status = {0, 0, 0, 0, 0};
     return modem_status;
 }
 
-extern ARM_DRIVER_USART Driver_USART;
-ARM_DRIVER_USART Driver_USART = {
-    .GetVersion = INPH_USART_GetVersion,
-    .GetCapabilities = INPH_USART_GetCapabilities,
-    .Initialize = INPH_USART_Initialize,
-    .Uninitialize = INPH_USART_Uninitialize,
-    .PowerControl = INPH_USART_PowerControl,
-    .Send = INPH_USART_Send,
-    .Receive = INPH_USART_Receive,
-    .Transfer = INPH_USART_Transfer,
-    .GetTxCount = INPH_USART_GetTxCount,
-    .GetRxCount = INPH_USART_GetRxCount,
-    .Control = INPH_USART_Control,
-    .GetStatus = INPH_USART_GetStatus,
-    .SetModemControl = INPH_USART_SetModemControl,
-    .GetModemStatus = INPH_USART_GetModemStatus
+extern ARM_DRIVER_USART Driver_USART0;
+ARM_DRIVER_USART Driver_USART0 = {
+    .GetVersion = GetVersion,
+    .GetCapabilities = GetCapabilities,
+    .Initialize = Initialize,
+    .Uninitialize = Uninitialize,
+    .PowerControl = PowerControl,
+    .Send = Send,
+    .Receive = Receive,
+    .Transfer = Transfer,
+    .GetTxCount = GetTxCount,
+    .GetRxCount = GetRxCount,
+    .Control = Control,
+    .GetStatus = GetStatus,
+    .SetModemControl = SetModemControl,
+    .GetModemStatus = GetModemStatus
 };
 

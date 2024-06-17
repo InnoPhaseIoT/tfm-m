@@ -19,9 +19,9 @@
 #include <string.h>
 #include <stdint.h>
 #include "Driver_Flash.h"
-#include "inph_device.h"
-//#include "platform_retarget.h"
-//#include "RTE_Device.h"
+//#include "inph_device.h"
+#include "platform_retarget.h"
+#include "RTE_Device.h"
 
 #ifndef ARG_UNUSED
 #define ARG_UNUSED(arg)  ((void)arg)

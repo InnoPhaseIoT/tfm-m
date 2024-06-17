@@ -30,12 +30,12 @@
 #include "inph_ppc_drv.h"
 
 /* Driver Version */
-static const INPH_DRIVER_VERSION DriverVersion = {
+static const ARM_DRIVER_VERSION DriverVersion = {
     INPH_DRIVER_VERSION_MAJOR_MINOR(1,1),
     INPH_DRIVER_VERSION_MAJOR_MINOR(1,1)
 };
 
-static INPH_DRIVER_VERSION INPH_PPC_GetVersion(void)
+static ARM_DRIVER_VERSION INPH_PPC_GetVersion(void)
 {
     return DriverVersion;
 }
@@ -57,12 +57,12 @@ static int32_t APB_PPCBASE0_Uninitialize(void)
 }
 
 static int32_t APB_PPCBASE0_ConfigPeriph(uint8_t periph,
-                                         enum inph_ppc_sec_attr_t sec_attr,
-                                         enum inph_ppc_sec_attr_t priv_attr)
+                                         ARM_PPC_SecAttr sec_attr,
+                                         ARM_PPC_PrivAttr priv_attr)
 {
     inph_ppc_config_peripheral(&APB_PPCBASE0_DEV_S, periph,
                                  (enum inph_ppc_sec_attr_t)sec_attr,
-                                 (enum inph_ppc_sec_attr_t)priv_attr);
+                                 (enum inph_ppc_priv_attr_t)priv_attr);
 
     return ARM_DRIVER_OK;
 }
@@ -134,8 +134,8 @@ static int32_t APB_PPCBASE1_Uninitialize(void)
 }
 
 static int32_t APB_PPCBASE1_ConfigPeriph(uint8_t periph,
-                                         enum inph_ppc_sec_attr_t sec_attr,
-                                         enum inph_ppc_sec_attr_t priv_attr)
+                                         ARM_PPC_SecAttr sec_attr,
+                                         ARM_PPC_PrivAttr priv_attr)
 {
     inph_ppc_config_peripheral(&APB_PPCBASE1_DEV_S, periph,
                                  (enum inph_ppc_sec_attr_t)sec_attr,
@@ -210,12 +210,12 @@ static int32_t APB_PPCBASE2_Uninitialize(void)
 }
 
 static int32_t APB_PPCBASE2_ConfigPeriph(uint8_t periph,
-                                         enum inph_ppc_sec_attr_t sec_attr,
-                                         enum inph_ppc_sec_attr_t priv_attr)
+                                         ARM_PPC_SecAttr sec_attr,
+                                         ARM_PPC_PrivAttr priv_attr)
 {
     inph_ppc_config_peripheral(&APB_PPCBASE2_DEV_S, periph,
                                  (enum inph_ppc_sec_attr_t)sec_attr,
-                                 (enum inph_ppc_sec_attr_t)priv_attr);
+                                 (enum inph_ppc_priv_attr_t)priv_attr);
 
     return ARM_DRIVER_OK;
 }

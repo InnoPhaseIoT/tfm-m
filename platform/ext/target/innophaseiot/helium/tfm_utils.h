@@ -148,6 +148,9 @@ typedef unsigned int irq_t;
 #define MILLISEC                 (1000)
 #define MICROSEC                 (1000000)
 
+//#define __DSB()                  (__dsb(0xF))
+//#define __DMB()                  (__dmb(0xF))
+
 /* Private declarations ------------------------------------------------------*/
 
 /* Private function ----------------------------------------------------------*/

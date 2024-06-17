@@ -33,41 +33,41 @@ void inph_uart_uninit(USART_Type *base)
     base->IIRFCR.dw = 0UL;
     base->LCR.dw = 0UL;
     base->MCR.dw = 0UL;
-    base->CLKDIVP0 = 1UL;
-    base->CLKDIVP1 = 0UL;
-    base->CLKDIVQ0 = 1UL;
-    base->CLKDIVQ1 = 0UL;
+    base->CLKDIVP0.dw = 1UL;
+    base->CLKDIVP1.dw = 0UL;
+    base->CLKDIVQ0.dw = 1UL;
+    base->CLKDIVQ1.dw = 0UL;
     base->AXISTcontrol.dw = 0UL;
 }
 
 enum inph_uart_error_t inph_uart_init(UARTx_Resources *dev)
 {
-
-    if ((dev->base == NULL) || (dev->config == NULL)) {
+//    if ((dev->base == 0) || (dev->config == 0)) {
+    if (dev->base == 0) {
         return (INPH_UART_ERR_INVALID_ARG);
     }    
 
     /* de-initialize UART to default reset values */
-    Inph_UART_Deinit(dev->base);
+    inph_uart_uninit(dev->base);
 
     /* Enable FIFO */
     Inph_UART_EnableFifo(dev->base);
 
     /* set the stop bits and data length */
-    Inph_UART_EnableStopBits(dev->base, dev->config->stopBits);
-    Inph_UART_EnableDataWidth(dev->base, dev->config->dataWidth);
+    Inph_UART_EnableStopBits(dev->base, dev->config.stopBits);
+    Inph_UART_EnableDataWidth(dev->base, dev->config.dataWidth);
 
     /* set the parity */
-    if (dev->config->parity != 0) {
+    if (dev->config.parity != 0) {
         Inph_UART_EnableParity(dev->base);
-        Inph_UART_SetParity(dev->base, dev->config->parity);
+        Inph_UART_SetParity(dev->base, dev->config.parity);
     }
     else {
         Inph_UART_DisnableParity(dev->base);
     }
 
     /* set the trigger level */
-    switch (dev->config->rxFifoTriggerLevel) {
+    switch (dev->config.rxFifoTriggerLevel) {
     default:
     case INPH_UART_1_BYTE:
         dev->base->IIRFCR.bf.FIFOENRCVRTRIGLSB = 0;
@@ -146,7 +146,7 @@ enum inph_uart_error_t inph_uart_read(USART_Type *base, uint8_t* byte)
 enum inph_uart_error_t inph_uart_write(USART_Type *base, uint8_t byte)
 {
     /* Sends data */
-    Inph_UART_WriteTxFifo(base, data);
+    Inph_UART_WriteTxFifo(base, byte);
 
     return INPH_UART_ERR_NONE;
 }

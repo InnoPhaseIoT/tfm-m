@@ -38,7 +38,7 @@ static const ARM_DRIVER_VERSION DriverVersion = {
     INPH_MPC_DRV_VERSION
 };
 
-static ARM_DRIVER_VERSION INPH_MPC_GetVersion(void)
+static ARM_DRIVER_VERSION ARM_MPC_GetVersion(void)
 {
     return DriverVersion;
 }
@@ -101,7 +101,7 @@ static const struct  inph_mpc_sie200_memory_range_t* INPH_MPC_SRAM0_RANGE_LIST[I
     {&INPH_MPC_SRAM0_RANGE_S, &INPH_MPC_SRAM0_RANGE_NS};
 
 /* SRAM0_MPC Driver wrapper functions */
-static int32_t INPH_MPC_SRAM0_Initialize(void)
+static int32_t SRAM0_MPC_Initialize(void)
 {
     enum inph_mpc_sie200_error_t ret;
 
@@ -112,13 +112,13 @@ static int32_t INPH_MPC_SRAM0_Initialize(void)
     return inph_error_codes(ret);
 }
 
-static int32_t INPH_MPC_SRAM0_Uninitialize(void)
+static int32_t SRAM0_MPC_Uninitialize(void)
 {
     /* Nothing to be done */
     return ARM_DRIVER_OK;
 }
 
-static int32_t INPH_MPC_SRAM0_GetBlockSize(uint32_t* blk_size)
+static int32_t SRAM0_MPC_GetBlockSize(uint32_t* blk_size)
 {
     enum inph_mpc_sie200_error_t ret;
 
@@ -127,7 +127,7 @@ static int32_t INPH_MPC_SRAM0_GetBlockSize(uint32_t* blk_size)
     return inph_error_codes(ret);
 }
 
-static int32_t INPH_MPC_SRAM0_GetCtrlConfig(uint32_t* ctrl_val)
+static int32_t SRAM0_MPC_GetCtrlConfig(uint32_t* ctrl_val)
 {
     enum inph_mpc_sie200_error_t ret;
 
@@ -136,7 +136,7 @@ static int32_t INPH_MPC_SRAM0_GetCtrlConfig(uint32_t* ctrl_val)
     return inph_error_codes(ret);
 }
 
-static int32_t INPH_MPC_SRAM0_SetCtrlConfig(uint32_t ctrl)
+static int32_t SRAM0_MPC_SetCtrlConfig(uint32_t ctrl)
 {
     enum inph_mpc_sie200_error_t ret;
 
@@ -145,7 +145,7 @@ static int32_t INPH_MPC_SRAM0_SetCtrlConfig(uint32_t ctrl)
     return inph_error_codes(ret);
 }
 
-static int32_t INPH_MPC_SRAM0_GetRegionConfig(uintptr_t base,
+static int32_t SRAM0_MPC_GetRegionConfig(uintptr_t base,
                                          uintptr_t limit,
                                          ARM_MPC_SEC_ATTR* attr)
 {
@@ -157,7 +157,7 @@ static int32_t INPH_MPC_SRAM0_GetRegionConfig(uintptr_t base,
     return inph_error_codes(ret);
 }
 
-static int32_t INPH_MPC_SRAM0_ConfigRegion(uintptr_t base,
+static int32_t SRAM0_MPC_ConfigRegion(uintptr_t base,
                                       uintptr_t limit,
                                       ARM_MPC_SEC_ATTR attr)
 {
@@ -169,7 +169,7 @@ static int32_t INPH_MPC_SRAM0_ConfigRegion(uintptr_t base,
     return inph_error_codes(ret);
 }
 
-static int32_t INPH_MPC_SRAM0_EnableInterrupt(void)
+static int32_t SRAM0_MPC_EnableInterrupt(void)
 {
     enum inph_mpc_sie200_error_t ret;
 
@@ -178,43 +178,43 @@ static int32_t INPH_MPC_SRAM0_EnableInterrupt(void)
     return inph_error_codes(ret);
 }
 
-static void INPH_MPC_SRAM0_DisableInterrupt(void)
+static void SRAM0_MPC_DisableInterrupt(void)
 {
     inph_mpc_sie200_irq_disable(&INPH_MPC_SRAM0_DEV_S);
 }
 
 
-static void INPH_MPC_SRAM0_ClearInterrupt(void)
+static void SRAM0_MPC_ClearInterrupt(void)
 {
     inph_mpc_sie200_clear_irq(&INPH_MPC_SRAM0_DEV_S);
 }
 
-static uint32_t INPH_MPC_SRAM0_InterruptState(void)
+static uint32_t SRAM0_MPC_InterruptState(void)
 {
     return inph_mpc_sie200_irq_state(&INPH_MPC_SRAM0_DEV_S);
 }
 
-static int32_t INPH_MPC_SRAM0_LockDown(void)
+static int32_t SRAM0_MPC_LockDown(void)
 {
     return inph_mpc_sie200_lock_down(&INPH_MPC_SRAM0_DEV_S);
 }
 
 /* SRAM0_MPC Driver CMSIS access structure */
-extern ARM_DRIVER_MPC INPH_DRIVER_MPC_SRAM0;
-ARM_DRIVER_MPC INPH_DRIVER_MPC_SRAM0 = {
-    .GetVersion       = INPH_MPC_GetVersion,
-    .Initialize       = INPH_MPC_SRAM0_Initialize,
-    .Uninitialize     = INPH_MPC_SRAM0_Uninitialize,
-    .GetBlockSize     = INPH_MPC_SRAM0_GetBlockSize,
-    .GetCtrlConfig    = INPH_MPC_SRAM0_GetCtrlConfig,
-    .SetCtrlConfig    = INPH_MPC_SRAM0_SetCtrlConfig,
-    .ConfigRegion     = INPH_MPC_SRAM0_ConfigRegion,
-    .GetRegionConfig  = INPH_MPC_SRAM0_GetRegionConfig,
-    .EnableInterrupt  = INPH_MPC_SRAM0_EnableInterrupt,
-    .DisableInterrupt = INPH_MPC_SRAM0_DisableInterrupt,
-    .ClearInterrupt   = INPH_MPC_SRAM0_ClearInterrupt,
-    .InterruptState   = INPH_MPC_SRAM0_InterruptState,
-    .LockDown         = INPH_MPC_SRAM0_LockDown,
+extern ARM_DRIVER_MPC Driver_SRAM0_MPC;
+ARM_DRIVER_MPC Driver_SRAM0_MPC = {
+    .GetVersion       = ARM_MPC_GetVersion,
+    .Initialize       = SRAM0_MPC_Initialize,
+    .Uninitialize     = SRAM0_MPC_Uninitialize,
+    .GetBlockSize     = SRAM0_MPC_GetBlockSize,
+    .GetCtrlConfig    = SRAM0_MPC_GetCtrlConfig,
+    .SetCtrlConfig    = SRAM0_MPC_SetCtrlConfig,
+    .ConfigRegion     = SRAM0_MPC_ConfigRegion,
+    .GetRegionConfig  = SRAM0_MPC_GetRegionConfig,
+    .EnableInterrupt  = SRAM0_MPC_EnableInterrupt,
+    .DisableInterrupt = SRAM0_MPC_DisableInterrupt,
+    .ClearInterrupt   = SRAM0_MPC_ClearInterrupt,
+    .InterruptState   = SRAM0_MPC_InterruptState,
+    .LockDown         = SRAM0_MPC_LockDown
 };
 //#endif /* INPH_MPC_SRAM0_S */
 

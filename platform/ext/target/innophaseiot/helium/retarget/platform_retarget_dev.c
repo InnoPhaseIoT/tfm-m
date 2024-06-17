@@ -19,7 +19,7 @@
 /**
  * @file    platform_retarget_dev.c
  * @author  InnophaseIOT Firmware Team
- * @brief   Device wizard
+ * @brief   security structures
  */
 
 #include "platform_retarget_dev.h"
