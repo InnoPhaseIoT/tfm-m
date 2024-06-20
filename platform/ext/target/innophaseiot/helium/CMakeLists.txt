@@ -157,12 +157,13 @@ install(DIRECTORY   ${PLATFORM_DIR}/ext/driver
 
 install(FILES       ${TARGET_PLATFORM_PATH}/partition/region_defs.h
                     ${TARGET_PLATFORM_PATH}/partition/flash_layout.h
-                    ${TARGET_PLATFORM_PATH}/native_drivers/arm_uart_drv.h
+                    ${TARGET_PLATFORM_PATH}/native_drivers/inph_uart_drv.h
+                    ${TARGET_PLATFORM_PATH}/native_drivers/inph_uart_registers.h                    
 #                    ${TARGET_PLATFORM_PATH}/native_drivers/timer_cmsdk/timer_cmsdk.h
                     ${TARGET_PLATFORM_PATH}/native_drivers/inph_mpc_drv.h
                     ${TARGET_PLATFORM_PATH}/native_drivers/inph_ppc_drv.h
                     ${TARGET_PLATFORM_PATH}/retarget/platform_retarget.h
-                    ${TARGET_PLATFORM_PATH}/retarget/platform_retarget_pins.h
+#                    ${TARGET_PLATFORM_PATH}/retarget/platform_retarget_pins.h
                     ${TARGET_PLATFORM_PATH}/target_cfg.h
                     ${TARGET_PLATFORM_PATH}/device_cfg.h
                     ${TARGET_PLATFORM_PATH}/tfm_peripherals_def.h

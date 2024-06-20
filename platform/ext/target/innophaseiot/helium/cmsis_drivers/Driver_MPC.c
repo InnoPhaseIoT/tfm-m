@@ -217,4 +217,3 @@ ARM_DRIVER_MPC Driver_SRAM0_MPC = {
     .LockDown         = SRAM0_MPC_LockDown
 };
 //#endif /* INPH_MPC_SRAM0_S */
-

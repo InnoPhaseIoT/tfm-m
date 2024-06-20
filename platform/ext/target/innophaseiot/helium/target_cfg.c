@@ -67,7 +67,8 @@ const struct memory_region_limits memory_regions = {
 #define NSCCFG_CODENSC  1
 
 /* Import MPC driver */
-extern ARM_DRIVER_MPC Driver_SRAM1_MPC, Driver_SRAM0_MPC;
+//extern ARM_DRIVER_MPC Driver_SRAM1_MPC, Driver_SRAM0_MPC;
+extern ARM_DRIVER_MPC Driver_SRAM0_MPC;
 
 /* Define Peripherals NS address range for the platform */
 #define PERIPHERALS_BASE_NS_START (0x40000000)
@@ -275,10 +276,10 @@ enum tfm_plat_err_t nvic_interrupt_enable(void)
     int32_t ret = ARM_DRIVER_OK;
 
     /* MPC interrupt enabling */
-    ret = Driver_SRAM1_MPC.EnableInterrupt();
-    if (ret != ARM_DRIVER_OK) {
-        return TFM_PLAT_ERR_SYSTEM_ERR;
-    }
+//    ret = Driver_SRAM1_MPC.EnableInterrupt();
+//    if (ret != ARM_DRIVER_OK) {
+//        return TFM_PLAT_ERR_SYSTEM_ERR;
+//    }
     ret = Driver_SRAM0_MPC.EnableInterrupt();
     if (ret != ARM_DRIVER_OK) {
         return TFM_PLAT_ERR_SYSTEM_ERR;
@@ -455,11 +456,11 @@ FIH_RET_TYPE(int32_t) mpc_init_cfg(void)
 {
     int32_t ret = ARM_DRIVER_OK;
 
-    ret = Driver_SRAM1_MPC.Initialize();
-    if (ret != ARM_DRIVER_OK) {
-        FIH_RET(fih_int_encode(ret));
-    }
-
+//    ret = Driver_SRAM1_MPC.Initialize();
+//    if (ret != ARM_DRIVER_OK) {
+//        FIH_RET(fih_int_encode(ret));
+//    }
+#if 0
     ret = Driver_SRAM1_MPC.ConfigRegion(
                                       memory_regions.non_secure_partition_base,
                                       memory_regions.non_secure_partition_limit,
@@ -467,7 +468,9 @@ FIH_RET_TYPE(int32_t) mpc_init_cfg(void)
     if (ret != ARM_DRIVER_OK) {
         FIH_RET(fih_int_encode(ret));
     }
+#endif
 
+#if 0    
 #ifdef BL2
     /* Secondary image region */
     ret = Driver_SRAM1_MPC.ConfigRegion(memory_regions.secondary_partition_base,
@@ -477,6 +480,7 @@ FIH_RET_TYPE(int32_t) mpc_init_cfg(void)
         FIH_RET(fih_int_encode(ret));
     }
 #endif /* BL2 */
+#endif    
 
     ret = Driver_SRAM0_MPC.Initialize();
     if (ret != ARM_DRIVER_OK) {
@@ -494,12 +498,14 @@ FIH_RET_TYPE(int32_t) mpc_init_cfg(void)
         FIH_RET(fih_int_encode(ret));
     }
 
+#if 0
     /* Lock down the MPC configuration */
     ret = Driver_SRAM1_MPC.LockDown();
     if (ret != ARM_DRIVER_OK) {
         FIH_RET(fih_int_encode(ret));
     }
-
+#endif
+    
     ret = Driver_SRAM0_MPC.LockDown();
     if (ret != ARM_DRIVER_OK) {
         FIH_RET(fih_int_encode(ret));

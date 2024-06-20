@@ -13,12 +13,12 @@
 #include "exception_info.h"
 
 /* Import MPC driver */
-extern ARM_DRIVER_MPC Driver_SRAM1_MPC;
+extern ARM_DRIVER_MPC Driver_SRAM0_MPC;
 
 void C_MPC_Handler(void)
 {
     /* Clear MPC interrupt flag and pending MPC IRQ */
-    Driver_SRAM1_MPC.ClearInterrupt();
+    Driver_SRAM0_MPC.ClearInterrupt();
     NVIC_ClearPendingIRQ(MPC_IRQn);
 
     /* Print fault message and block execution */
