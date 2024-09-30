@@ -23,8 +23,8 @@
  */
 
 
-#ifndef __PLATFORM_RETARGET_H
-#define __PLATFORM_RETARGET_H
+#ifndef __PLATFORM_RETARGET_DEV_H
+#define __PLATFORM_RETARGET_DEV_H
 
 
 /* ======= Defines peripherals memory map addresses ======= */
@@ -62,11 +62,9 @@
 
 /* Secure memory map addresses */
 
-#define UART0_BASE_S           0x50200000
-#define UART1_BASE_S           0x50201000
-#define UART2_BASE_S           0x50202000
-#define UART3_BASE_S           0x50203000
-#define UART4_BASE_S           0x50204000
+#define UART0_BASE_S           0x50080000
+#define UART1_BASE_S           0x50082000
+#define UART2_BASE_S           0x50084000
 #define I2C0_SBCON_BASE_S      0x50207000
 #define I2C1_SBCON_BASE_S      0x50208000
 #define I2C2_SBCON_BASE_S      0x5020C000

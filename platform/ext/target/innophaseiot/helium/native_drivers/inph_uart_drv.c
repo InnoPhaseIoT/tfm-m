@@ -28,16 +28,14 @@
 
 void inph_uart_uninit(USART_Type *base)
 {
-    base->RBRTHR.dw = 0UL;
-    base->IER.dw = 0UL;
-    base->IIRFCR.dw = 0UL;
-    base->LCR.dw = 0UL;
-    base->MCR.dw = 0UL;
-    base->CLKDIVP0.dw = 1UL;
-    base->CLKDIVP1.dw = 0UL;
-    base->CLKDIVQ0.dw = 1UL;
-    base->CLKDIVQ1.dw = 0UL;
-    base->AXISTcontrol.dw = 0UL;
+    /* reset the FIFOs */
+    INPH_UART_FCR_XFIFOR(base) = 1UL;
+    INPH_UART_FCR_RFIFOR(base) = 1UL;
+
+    INPH_UART_FCR(base) = 0UL;
+    INPH_UART_IER(base) = 0UL;
+    INPH_UART_LCR(base) = 0UL;
+    INPH_UART_MCR(base) = 0UL;
 }
 
 enum inph_uart_error_t inph_uart_init(UARTx_Resources *dev)
@@ -70,20 +68,16 @@ enum inph_uart_error_t inph_uart_init(UARTx_Resources *dev)
     switch (dev->config.rxFifoTriggerLevel) {
     default:
     case INPH_UART_1_BYTE:
-        dev->base->IIRFCR.bf.FIFOENRCVRTRIGLSB = 0;
-        dev->base->IIRFCR.bf.FIFOENRCVRTRIGMSB = 0;
+        INPH_UART_FCR_RT(dev->base) = INPH_UART_1_BYTE;
         break;
     case INPH_UART_4_BYTES:
-        dev->base->IIRFCR.bf.FIFOENRCVRTRIGLSB = 1;
-        dev->base->IIRFCR.bf.FIFOENRCVRTRIGMSB = 0;
+        INPH_UART_FCR_RT(dev->base) = INPH_UART_4_BYTES;
         break;
     case INPH_UART_8_BYTES:
-        dev->base->IIRFCR.bf.FIFOENRCVRTRIGLSB = 0;
-        dev->base->IIRFCR.bf.FIFOENRCVRTRIGMSB = 1;
+        INPH_UART_FCR_RT(dev->base) = INPH_UART_8_BYTES;
         break;
     case INPH_UART_14_BYTES:
-        dev->base->IIRFCR.bf.FIFOENRCVRTRIGLSB = 1;
-        dev->base->IIRFCR.bf.FIFOENRCVRTRIGMSB = 1;
+        INPH_UART_FCR_RT(dev->base) = INPH_UART_14_BYTES;
         break;
     }
     
@@ -97,17 +91,16 @@ enum inph_uart_error_t inph_uart_set_baudrate(UARTx_Resources *dev)
     uint8_t temp;
 
     /* set the DLAB bit */
-    temp = dev->base->LCR.dw;
-    dev->base->LCR.dw = INPH_UART_LCR_DLAB | temp;
-
-    dev->base->CLKDIVP0.dw = dev->config.clockP0;
-    dev->base->CLKDIVQ0.dw = dev->config.clockQ0;
+    temp = INPH_UART_LCR(dev->base);
+    INPH_UART_LCR(dev->base) = 0x80 | temp;
 
     /* set the latch values now */
-    dev->base->RBRTHR.dw = dev->config.deviceLatch & 0xFF;
-    dev->base->IER.dw = (dev->config.deviceLatch >> 0x08) & 0xFF;
-    dev->base->LCR.dw = temp;
-    
+    INPH_UART_DLL(dev->base) = 3;
+    INPH_UART_DLH(dev->base) = 1;
+    /* device latch fractional size is 6 */
+    INPH_UART_DLF(dev->base) = 43;
+    INPH_UART_LCR(dev->base) = temp;
+
     return INPH_UART_ERR_NONE;
 }
 
