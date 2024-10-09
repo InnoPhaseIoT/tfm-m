@@ -158,7 +158,8 @@ install(DIRECTORY   ${PLATFORM_DIR}/ext/driver
 install(FILES       ${TARGET_PLATFORM_PATH}/partition/region_defs.h
                     ${TARGET_PLATFORM_PATH}/partition/flash_layout.h
                     ${TARGET_PLATFORM_PATH}/native_drivers/inph_uart_drv.h
-                    ${TARGET_PLATFORM_PATH}/native_drivers/inph_uart_registers.h                    
+                    ${TARGET_PLATFORM_PATH}/native_drivers/inph_uart_registers.h     
+                    ${TARGET_PLATFORM_PATH}/native_drivers/inph_security_registers.h               
 #                    ${TARGET_PLATFORM_PATH}/native_drivers/timer_cmsdk/timer_cmsdk.h
                     ${TARGET_PLATFORM_PATH}/native_drivers/inph_mpc_drv.h
                     ${TARGET_PLATFORM_PATH}/native_drivers/inph_ppc_drv.h

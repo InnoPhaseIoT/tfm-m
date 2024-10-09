@@ -31,7 +31,9 @@
 
 static struct inph_ppc_dev_cfg_t APB_PPCBASE0_DEV_CFG = {
     .spctrl_base  = INPH_SPCTRL_BASE_S,
-    .nspctrl_base = INPH_NSPCTRL_BASE_NS };
+    .nspctrl_base = INPH_SPCTRL_BASE_NS,
+    .snspriv_base = INPH_NSPRIV_BASE_S,
+    .nnspriv_base = INPH_NSPRIV_BASE_NS };
 
 static struct inph_ppc_dev_data_t APB_PPCBASE0_DEV_DATA_S = {
     .p_ns_ppc  = 0,
@@ -45,7 +47,9 @@ struct inph_ppc_dev_t APB_PPCBASE0_DEV_S = {
 
 static struct inph_ppc_dev_cfg_t APB_PPCBASE1_DEV_CFG = {
     .spctrl_base  = INPH_SPCTRL_BASE_S,
-    .nspctrl_base = INPH_NSPCTRL_BASE_NS };
+    .nspctrl_base = INPH_SPCTRL_BASE_NS,
+    .snspriv_base = INPH_NSPRIV_BASE_S,
+    .nnspriv_base = INPH_NSPRIV_BASE_NS };
 
 static struct inph_ppc_dev_data_t APB_PPCBASE1_DEV_DATA_S = {
     .p_ns_ppc  = 0,
@@ -59,7 +63,9 @@ struct inph_ppc_dev_t APB_PPCBASE1_DEV_S = {
 
 static struct inph_ppc_dev_cfg_t APB_PPCBASE2_DEV_CFG = {
     .spctrl_base  = INPH_SPCTRL_BASE_S,
-    .nspctrl_base = INPH_NSPCTRL_BASE_NS };
+    .nspctrl_base = INPH_SPCTRL_BASE_NS,
+    .snspriv_base = INPH_NSPRIV_BASE_S,
+    .nnspriv_base = INPH_NSPRIV_BASE_NS };
 
 static struct inph_ppc_dev_data_t APB_PPCBASE2_DEV_DATA_S = {
     .p_ns_ppc  = 0,
@@ -71,51 +77,80 @@ static struct inph_ppc_dev_data_t APB_PPCBASE2_DEV_DATA_S = {
 struct inph_ppc_dev_t APB_PPCBASE2_DEV_S = {
     &APB_PPCBASE2_DEV_CFG, &APB_PPCBASE2_DEV_DATA_S };
 
-static struct inph_ppc_dev_cfg_t APB_PPCPERIPH0_DEV_CFG = {
+/* Peripheral0 */
+static struct inph_ppc_dev_cfg_t AHB_PPCPERIPH0_DEV_CFG = {
     .spctrl_base  = INPH_SPCTRL_BASE_S,
-    .nspctrl_base = INPH_NSPCTRL_BASE_NS };
+    .nspctrl_base = INPH_SPCTRL_BASE_NS,
+    .snspriv_base = INPH_NSPRIV_BASE_S,
+    .nnspriv_base = INPH_NSPRIV_BASE_NS };
 
-static struct inph_ppc_dev_data_t APB_PPCPERIPH0_DEV_DATA_S = {
+static struct inph_ppc_dev_data_t AHB_PPCPERIPH0_DEV_DATA_S = {
     .p_ns_ppc  = 0,
     .p_sp_ppc  = 0,
     .p_nsp_ppc = 0,
     .int_bit_mask = 0,
     .state = 0 };
 
-struct inph_ppc_dev_t APB_PPCPERIPH0_DEV_S = {
-    &APB_PPCPERIPH0_DEV_CFG, &APB_PPCPERIPH0_DEV_DATA_S };
+struct inph_ppc_dev_t AHB_PPCPERIPH0_DEV_S = {
+    &AHB_PPCPERIPH0_DEV_CFG, &AHB_PPCPERIPH0_DEV_DATA_S };
 
-static struct inph_ppc_dev_cfg_t APB_PPCPERIPH1_DEV_CFG = {
+/* Peripheral1 */
+static struct inph_ppc_dev_cfg_t AHB_PPCPERIPH1_DEV_CFG = {
     .spctrl_base  = INPH_SPCTRL_BASE_S,
-    .nspctrl_base = INPH_NSPCTRL_BASE_NS };
+    .nspctrl_base = INPH_SPCTRL_BASE_NS,
+    .snspriv_base = INPH_NSPRIV_BASE_S,
+    .nnspriv_base = INPH_NSPRIV_BASE_NS };
 
-static struct inph_ppc_dev_data_t APB_PPCPERIPH1_DEV_DATA_S = {
+static struct inph_ppc_dev_data_t AHB_PPCPERIPH1_DEV_DATA_S = {
     .p_ns_ppc  = 0,
     .p_sp_ppc  = 0,
     .p_nsp_ppc = 0,
     .int_bit_mask = 0,
     .state = 0 };
 
-struct inph_ppc_dev_t APB_PPCPERIPH1_DEV_S = {
-    &APB_PPCPERIPH1_DEV_CFG, &APB_PPCPERIPH1_DEV_DATA_S };
+struct inph_ppc_dev_t AHB_PPCPERIPH1_DEV_S = {
+    &AHB_PPCPERIPH1_DEV_CFG, &AHB_PPCPERIPH1_DEV_DATA_S };
 
-static struct inph_ppc_dev_cfg_t AHB_PPCCXIP_DEV_CFG = {
+/* XIP1 */
+static struct inph_ppc_dev_cfg_t AHB_PPCCXIP1_DEV_CFG = {
     .spctrl_base  = INPH_SPCTRL_BASE_S,
-    .nspctrl_base = INPH_NSPCTRL_BASE_NS };
+    .nspctrl_base = INPH_SPCTRL_BASE_NS,
+    .snspriv_base = INPH_NSPRIV_BASE_S,
+    .nnspriv_base = INPH_NSPRIV_BASE_NS };
 
-static struct inph_ppc_dev_data_t AHB_PPCCXIP_DEV_DATA_S = {
+static struct inph_ppc_dev_data_t AHB_PPCCXIP1_DEV_DATA_S = {
     .p_ns_ppc  = 0,
     .p_sp_ppc  = 0,
     .p_nsp_ppc = 0,
     .int_bit_mask = 0,
     .state = 0 };
 
-struct inph_ppc_dev_t AHB_PPCCXIP_DEV_S = {
-    &AHB_PPCCXIP_DEV_CFG, &AHB_PPCCXIP_DEV_DATA_S };
+struct inph_ppc_dev_t AHB_PPCCXIP1_DEV_S = {
+    &AHB_PPCCXIP1_DEV_CFG, &AHB_PPCCXIP1_DEV_DATA_S };
 
+/* XIP2 */
+static struct inph_ppc_dev_cfg_t AHB_PPCCXIP2_DEV_CFG = {
+    .spctrl_base  = INPH_SPCTRL_BASE_S,
+    .nspctrl_base = INPH_SPCTRL_BASE_NS,
+    .snspriv_base = INPH_NSPRIV_BASE_S,
+    .nnspriv_base = INPH_NSPRIV_BASE_NS };
+
+static struct inph_ppc_dev_data_t AHB_PPCCXIP2_DEV_DATA_S = {
+    .p_ns_ppc  = 0,
+    .p_sp_ppc  = 0,
+    .p_nsp_ppc = 0,
+    .int_bit_mask = 0,
+    .state = 0 };
+
+struct inph_ppc_dev_t AHB_PPCCXIP2_DEV_S = {
+    &AHB_PPCCXIP2_DEV_CFG, &AHB_PPCCXIP2_DEV_DATA_S };
+
+/* SDIO */
 static struct inph_ppc_dev_cfg_t AHB_PPCSDIO_DEV_CFG = {
     .spctrl_base  = INPH_SPCTRL_BASE_S,
-    .nspctrl_base = INPH_NSPCTRL_BASE_NS };
+    .nspctrl_base = INPH_SPCTRL_BASE_NS,
+    .snspriv_base = INPH_NSPRIV_BASE_S,
+    .nnspriv_base = INPH_NSPRIV_BASE_NS };
 
 static struct inph_ppc_dev_data_t AHB_PPCSDIO_DEV_DATA_S = {
     .p_ns_ppc  = 0,
@@ -127,9 +162,12 @@ static struct inph_ppc_dev_data_t AHB_PPCSDIO_DEV_DATA_S = {
 struct inph_ppc_dev_t AHB_PPCSDIO_DEV_S = {
     &AHB_PPCSDIO_DEV_CFG, &AHB_PPCSDIO_DEV_DATA_S };
 
+/* system control APB */
 static struct inph_ppc_dev_cfg_t APB_PPCSYSTEM_DEV_CFG = {
     .spctrl_base  = INPH_SPCTRL_BASE_S,
-    .nspctrl_base = INPH_NSPCTRL_BASE_NS };
+    .nspctrl_base = INPH_SPCTRL_BASE_NS,
+    .snspriv_base = INPH_NSPRIV_BASE_S,
+    .nnspriv_base = INPH_NSPRIV_BASE_NS };
 
 static struct inph_ppc_dev_data_t APB_PPCSYSTEM_DEV_DATA_S = {
     .p_ns_ppc  = 0,
@@ -140,6 +178,24 @@ static struct inph_ppc_dev_data_t APB_PPCSYSTEM_DEV_DATA_S = {
 
 struct inph_ppc_dev_t APB_PPCSYSTEM_DEV_S = {
     &APB_PPCSYSTEM_DEV_CFG, &APB_PPCSYSTEM_DEV_DATA_S };
+
+/* system control AHB */
+static struct inph_ppc_dev_cfg_t AHB_PPCSYSTEM_DEV_CFG = {
+    .spctrl_base  = INPH_SPCTRL_BASE_S,
+    .nspctrl_base = INPH_SPCTRL_BASE_NS,
+    .snspriv_base = INPH_NSPRIV_BASE_S,
+    .nnspriv_base = INPH_NSPRIV_BASE_NS };
+
+static struct inph_ppc_dev_data_t AHB_PPCSYSTEM_DEV_DATA_S = {
+    .p_ns_ppc  = 0,
+    .p_sp_ppc  = 0,
+    .p_nsp_ppc = 0,
+    .int_bit_mask = 0,
+    .state = 0 };
+
+struct inph_ppc_dev_t AHB_PPCSYSTEM_DEV_S = {
+    &AHB_PPCSYSTEM_DEV_CFG, &AHB_PPCSYSTEM_DEV_DATA_S };
+
 
 
 /* MPC definitions */

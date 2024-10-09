@@ -26,64 +26,8 @@
 #define __INPH_PPC_DRV_H
 
 #include <stdint.h>
-
-/* SPCTRL PPCs control memory mapped registers access structure */
-struct inph_spctrl_ppc_sse200_t {
-    volatile uint32_t spcsecctrl;       /* configuration control register */
-    volatile uint32_t buswait;          /* bus access wait control */
-    volatile uint32_t secrespcfg;       /* security  violation response config register */
-    volatile uint32_t nsccfg;           /* non secure callable config for IDAU */
-    //MPC
-    volatile uint32_t secmpcintstatus;  /* memory protection controller interrupt status */                                         
-    volatile uint32_t secmpcinten;      /* MPC interrupt enable */
-    
-    //PPC
-    volatile uint32_t secppcintstatus;  /* PPC controller interrupt status */
-    volatile uint32_t secppcintclr;     /* ppc interrupt clear */
-    volatile uint32_t secppcinten;      /* ppc interrupt enable */
-
-    // Master security controller
-    volatile uint32_t secmscintstatus;  /* master security interrupt status */
-    volatile uint32_t secmscintclr;     /* master security interrupt clear */
-    volatile uint32_t secmscintent;     /* master security interrupt enable */
-    
-    //TrustZone GPIO secure interrupt
-    volatile uint32_t secgpiointen;     /* TrustZone GPIO security interrupt enable */
-
-    //Base0 Base1 Base2
-    volatile uint32_t apnnsppcbase0;    /* APB slave PPC Base0 */
-    volatile uint32_t apnnsppcbase1;    /* APB slave PPC Base1 */
-    volatile uint32_t apnnsppcbase2;    /* APB slave PPC Base2 */
-
-    //system control PPC
-    volatile uint32_t apbnsppcsys;      /* system control PPC */
-    
-    //system control peripheral ppc
-    volatile uint32_t apbnsppcperiph0;  /* system control ppc peripheral0 */
-    volatile uint32_t apbnsppcperiph1;  /* system control ppc peripheral1 */
-    
-    //SDIO xip
-    volatile uint32_t ahbnsppcsdio;     /* sdio ppc */
-    volatile uint32_t ahbnsppccxip;     /* xip ppc */
-    
-    //privileged access
-    volatile uint32_t apbsprvppcbase0;  /* privileged access base0 peripherals */
-    volatile uint32_t apbsprvppcbase1;  /* privileged access base0 peripherals */
-    volatile uint32_t apbsprvppcbase2;  /* privileged access base0 peripherals */
-
-    volatile uint32_t apbsprvppcsys;    /* privileged access system controller */
-    
-    volatile uint32_t apbsprvppcperiph0;   /* privileged access peripheral0 */
-    volatile uint32_t apbsprvppcperiph1;   /* privileged access peripheral1 */
-    
-    volatile uint32_t apbsprvppcsdio;   /* privileged access sdio */
-    volatile uint32_t apbsprvppccxip;   /* privileged access xip */
-
-    volatile uint32_t nsmsc;            /* master security controller non-secure access */
-
-    volatile uint32_t nsgpio     ;      /* gpio non-secure access */
-};
-
+#include "inph_security_registers.h"
+#include "inph_nspriv_registers.h"
 
 /* Secure Privilege Control Block aka SPCTRL */
 /* Non-Secure Privilege Control Block aka NSPCTRL */
@@ -93,6 +37,8 @@ struct inph_spctrl_ppc_sse200_t {
 struct inph_ppc_dev_cfg_t {
     uint32_t const spctrl_base;  /*!< SPCTRL base address */
     uint32_t const nspctrl_base; /*!< NSPCTRL base address */
+    uint32_t const snspriv_base; /*!< SNSPRIV base address */
+    uint32_t const nnspriv_base; /*!< NNSPRIV base address */    
 };
 
 /* ARM TrustZone PPC device data structure */
@@ -115,16 +61,16 @@ struct inph_ppc_dev_t {
 };
 
 /* Security attribute used to configure the peripheral */
-enum inph_ppc_sec_attr_t {
-    INPH_PPC_SECURE_ONLY,    /*! Secure access */
+typedef enum inph_ppc_sec_attr {
+    INPH_PPC_SECURE_ONLY = 0,    /*! Secure access */
     INPH_PPC_NONSECURE_ONLY, /*! Non-secure access */
-};
+}inph_ppc_sec_attr_t;
 
 /* Privilege attribute used to configure the peripheral */
-enum inph_ppc_priv_attr_t {
-    INPH_PPC_PRIV_AND_NONPRIV, /*! Privilege and non-Privilege access */
-    INPH_PPC_PRIV_ONLY,        /*! Privilege only access */
-};
+typedef enum inph_ppc_priv_attr {
+    INPH_PPC_NONPRIV_ONLY = 0,           /*! Only privileged access */
+    INPH_PPC_PRIV_ONLY,        /*! Only Non-Privilege only access */
+}inph_ppc_priv_attr_t;
 
 /* ARM PPC error codes */
 enum inph_ppc_error_t {
@@ -134,11 +80,13 @@ enum inph_ppc_error_t {
 
 /* ARM PPC names */
 enum inph_ppc_name_t {
-    AHB_PPC_XIP = 0,  /*!< AHB XIP */
+    AHB_PPC_XIP1 = 0,  /*!< AHB XIP */
+    AHB_PPC_XIP2    ,  /*!< AHB XIP */
     AHB_PPC_SDIO,     /*!< AHB PPC SDIO*/
-    APB_PPC_PERIPH0,  /*!< PERIPHERAL0 PPC */
+    AHB_PPC_PERIPH0,  /*!< PERIPHERAL0 PPC */
     AHB_PPC_PERIPH1,  /*!< PERIPHERAL1 PPC */
     AHB_PPC_SYSTEM,   /*!< AHB SYSTEM CONTROLLER PPC */
+    APB_PPC_SYSTEM,   /*!< APB SYSTEM CONTROLLER PPC */
     APB_PPC_BASE0,    /*!< APB BASE0 PPC */
     APB_PPC_BASE1,    /*!< APB BASE1 PPC */
     APB_PPC_BASE2    /*!< APB BASE2 PPC */

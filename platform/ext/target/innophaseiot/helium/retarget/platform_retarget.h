@@ -58,8 +58,6 @@
 #define MPS2_IO_SCC_BASE_NS    0x40300000
 #define MPS2_IO_FPGAIO_BASE_NS 0x40302000
 
-#define INPH_NSPCTRL_BASE_NS           0x40001000
-
 /* Secure memory map addresses */
 
 #define UART0_BASE_S           0x50080000
@@ -90,7 +88,10 @@
 #define MPC_CODE_ROM_BASE_S     0x40050FFF
 #define MPC_CODE_XIP_BASE_S     0x40051FFF
 
-#define INPH_SPCTRL_BASE_S      0x40030000
+#define INPH_SPCTRL_BASE_S      0x50030000
+#define INPH_SPCTRL_BASE_NS     0x40030000
+#define INPH_NSPRIV_BASE_S      0x50080000
+#define INPH_NSPRIV_BASE_NS     0x40080000
 
 
 /* SRAM MPC ranges and limits */

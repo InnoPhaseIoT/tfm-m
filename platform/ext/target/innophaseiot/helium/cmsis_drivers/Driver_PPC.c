@@ -42,7 +42,8 @@ static ARM_DRIVER_VERSION INPH_PPC_GetVersion(void)
 
 //#if (INPH_HELIUM_A0)
 
-/* APB Hellium A0 Driver wrapper functions */
+/* PPC control for BASE0 peripherals */
+
 static int32_t APB_PPCBASE0_Initialize(void)
 {
     inph_ppc_init(&APB_PPCBASE0_DEV_S, APB_PPC_BASE0);
@@ -58,7 +59,7 @@ static int32_t APB_PPCBASE0_Uninitialize(void)
 
 static int32_t APB_PPCBASE0_ConfigPeriph(uint8_t periph,
                                          ARM_PPC_SecAttr sec_attr,
-                                         ARM_PPC_PrivAttr priv_attr)
+                                         inph_ppc_priv_attr_t priv_attr)
 {
     inph_ppc_config_peripheral(&APB_PPCBASE0_DEV_S, periph,
                                  (enum inph_ppc_sec_attr_t)sec_attr,
@@ -119,7 +120,6 @@ ARM_DRIVER_PPC Driver_APB_PPCBASE0 = {
     .InterruptState    = APB_PPCBASE0_InterruptState
 };
 
-
 static int32_t APB_PPCBASE1_Initialize(void)
 {
     inph_ppc_init(&APB_PPCBASE1_DEV_S, APB_PPC_BASE1);
@@ -135,7 +135,7 @@ static int32_t APB_PPCBASE1_Uninitialize(void)
 
 static int32_t APB_PPCBASE1_ConfigPeriph(uint8_t periph,
                                          ARM_PPC_SecAttr sec_attr,
-                                         ARM_PPC_PrivAttr priv_attr)
+                                         inph_ppc_priv_attr_t priv_attr)
 {
     inph_ppc_config_peripheral(&APB_PPCBASE1_DEV_S, periph,
                                  (enum inph_ppc_sec_attr_t)sec_attr,
@@ -211,7 +211,7 @@ static int32_t APB_PPCBASE2_Uninitialize(void)
 
 static int32_t APB_PPCBASE2_ConfigPeriph(uint8_t periph,
                                          ARM_PPC_SecAttr sec_attr,
-                                         ARM_PPC_PrivAttr priv_attr)
+                                         inph_ppc_priv_attr_t priv_attr)
 {
     inph_ppc_config_peripheral(&APB_PPCBASE2_DEV_S, periph,
                                  (enum inph_ppc_sec_attr_t)sec_attr,
@@ -270,6 +270,147 @@ ARM_DRIVER_PPC Driver_APB_PPCBASE2 = {
     .DisableInterrupt  = APB_PPCBASE2_DisableInterrupt,
     .ClearInterrupt    = APB_PPCBASE2_ClearInterrupt,
     .InterruptState    = APB_PPCBASE2_InterruptState
+};
+
+
+/* PPC controller for Peripheral APB System Control */
+
+static int32_t APB_SYSCNTRL_Initialize(void)
+{
+    inph_ppc_init(&APB_PPCSYSTEM_DEV_S, APB_PPC_SYSTEM);
+
+    return ARM_DRIVER_OK;
+}
+
+static int32_t APB_SYSCNTRL_Uninitialize(void)
+{
+    /* Nothing to be done */
+    return ARM_DRIVER_OK;
+}
+
+static int32_t APB_SYSCNTRL_ConfigPeriph(uint8_t periph,
+                                         inph_ppc_sec_attr_t sec_attr,
+                                         inph_ppc_priv_attr_t priv_attr)
+{
+    inph_ppc_config_peripheral(&APB_PPCSYSTEM_DEV_S, periph,
+                                 (enum inph_ppc_sec_attr_t)sec_attr,
+                                 (enum inph_ppc_priv_attr_t)priv_attr);
+
+    return ARM_DRIVER_OK;
+}
+
+static uint32_t APB_SYSCNTRL_IsPeriphSecure(uint8_t periph)
+{
+    return inph_ppc_is_periph_secure(&APB_PPCSYSTEM_DEV_S, periph);
+}
+
+static uint32_t APB_SYSCNTRL_IsPeriphPrivOnly(uint8_t periph)
+{
+    return inph_ppc_is_periph_priv_only(&APB_PPCSYSTEM_DEV_S, periph);
+}
+
+static int32_t APB_SYSCNTRL_EnableInterrupt(void)
+{
+    return ARM_DRIVER_OK;
+}
+
+static void APB_SYSCNTRL_DisableInterrupt(void)
+{
+    return;
+}
+
+static void APB_SYSCNTRL_ClearInterrupt(void)
+{
+    return;
+}
+
+static uint32_t APB_SYSCNTRL_InterruptState(void)
+{
+    /* Nothing to be done */
+    return ARM_DRIVER_OK;
+}
+
+ARM_DRIVER_PPC Driver_APB_SYSCNTRL = {
+    .GetVersion        = INPH_PPC_GetVersion,
+    .Initialize        = APB_SYSCNTRL_Initialize,
+    .Uninitialize      = APB_SYSCNTRL_Uninitialize,
+    .ConfigPeriph      = APB_SYSCNTRL_ConfigPeriph,
+    .IsPeriphSecure    = APB_SYSCNTRL_IsPeriphSecure,
+    .IsPeriphPrivOnly  = APB_SYSCNTRL_IsPeriphPrivOnly,
+    .EnableInterrupt   = APB_SYSCNTRL_EnableInterrupt,
+    .DisableInterrupt  = APB_SYSCNTRL_DisableInterrupt,
+    .ClearInterrupt    = APB_SYSCNTRL_ClearInterrupt,
+    .InterruptState    = APB_SYSCNTRL_InterruptState
+};
+
+/* PPC controller for Peripheral AHB System Control */
+
+static int32_t AHB_SYSCNTRL_Initialize(void)
+{
+    inph_ppc_init(&AHB_PPCSYSTEM_DEV_S, AHB_PPC_SYSTEM);
+
+    return ARM_DRIVER_OK;
+}
+
+static int32_t AHB_SYSCNTRL_Uninitialize(void)
+{
+    /* Nothing to be done */
+    return ARM_DRIVER_OK;
+}
+
+static int32_t AHB_SYSCNTRL_ConfigPeriph(uint8_t periph,
+                                         inph_ppc_sec_attr_t sec_attr,
+                                         inph_ppc_priv_attr_t priv_attr)
+{
+    inph_ppc_config_peripheral(&AHB_PPCSYSTEM_DEV_S, periph,
+                                 (enum inph_ppc_sec_attr_t)sec_attr,
+                                 (enum inph_ppc_priv_attr_t)priv_attr);
+
+    return ARM_DRIVER_OK;
+}
+
+static uint32_t AHB_SYSCNTRL_IsPeriphSecure(uint8_t periph)
+{
+    return inph_ppc_is_periph_secure(&AHB_PPCSYSTEM_DEV_S, periph);
+}
+
+static uint32_t AHB_SYSCNTRL_IsPeriphPrivOnly(uint8_t periph)
+{
+    return inph_ppc_is_periph_priv_only(&AHB_PPCSYSTEM_DEV_S, periph);
+}
+
+static int32_t AHB_SYSCNTRL_EnableInterrupt(void)
+{
+    return ARM_DRIVER_OK;
+}
+
+static void AHB_SYSCNTRL_DisableInterrupt(void)
+{
+    return;
+}
+
+static void AHB_SYSCNTRL_ClearInterrupt(void)
+{
+    return;
+}
+
+static uint32_t AHB_SYSCNTRL_InterruptState(void)
+{
+    /* Nothing to be done */
+    return ARM_DRIVER_OK;
+}
+
+ARM_DRIVER_PPC Driver_AHB_SYSCNTRL = {
+    .GetVersion        = INPH_PPC_GetVersion,
+    .Initialize        = AHB_SYSCNTRL_Initialize,
+    .Uninitialize      = AHB_SYSCNTRL_Uninitialize,
+    .ConfigPeriph      = AHB_SYSCNTRL_ConfigPeriph,
+    .IsPeriphSecure    = AHB_SYSCNTRL_IsPeriphSecure,
+    .IsPeriphPrivOnly  = AHB_SYSCNTRL_IsPeriphPrivOnly,
+    .EnableInterrupt   = AHB_SYSCNTRL_EnableInterrupt,
+    .DisableInterrupt  = AHB_SYSCNTRL_DisableInterrupt,
+    .ClearInterrupt    = AHB_SYSCNTRL_ClearInterrupt,
+    .InterruptState    = AHB_SYSCNTRL_InterruptState
 };
 //#endif /* INPH_HELIUM_A0 */
 

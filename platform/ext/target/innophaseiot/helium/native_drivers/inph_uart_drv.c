@@ -24,8 +24,6 @@
 
 #include "inph_uart_drv.h"
 
-#define INPH_UART_LCR_DLAB (0x80)
-
 void inph_uart_uninit(USART_Type *base)
 {
     /* reset the FIFOs */

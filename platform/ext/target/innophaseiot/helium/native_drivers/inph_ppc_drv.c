@@ -24,14 +24,16 @@
 
 #include "inph_ppc_drv.h"
 
-#define AHB_PPC_XIP_INT_POS_MASK     (1UL << 7)
-#define AHB_PPC_SDIO_INT_POS_MASK    (1UL << 6)
-#define AHB_PPC_PERIPH1_INT_POS_MASK (1UL << 5)
-#define AHB_PPC_PERIPH0_INT_POS_MASK (1UL << 4)
-#define AHB_PPC_SYSCTRL_INT_POS_MASK (1UL << 3)
-#define AHB_PPC_BASE2_INT_POS_MASK   (1UL << 2)
-#define AHB_PPC_BASE1_INT_POS_MASK   (1UL << 1)
-#define AHB_PPC_BASE0_INT_POS_MASK   (1UL << 0)
+#define AHB_PPC_XIP2_INT_POS_MASK    (1UL << 9)
+#define AHB_PPC_XIP1_INT_POS_MASK    (1UL << 8)
+#define AHB_PPC_SDIO_INT_POS_MASK    (1UL << 7)
+#define AHB_PPC_PERIPH1_INT_POS_MASK (1UL << 6)
+#define AHB_PPC_PERIPH0_INT_POS_MASK (1UL << 5)
+#define AHB_PPC_SYSCTRL_INT_POS_MASK (1UL << 4)
+#define APB_PPC_SYSCTRL_INT_POS_MASK (1UL << 3)
+#define APB_PPC_BASE2_INT_POS_MASK   (1UL << 2)
+#define APB_PPC_BASE1_INT_POS_MASK   (1UL << 1)
+#define APB_PPC_BASE0_INT_POS_MASK   (1UL << 0)
 
 #define AHB_PPC_GPIO_INT_POS_MASK    (1UL << 0)
 
@@ -46,58 +48,74 @@
 void inph_ppc_init(struct inph_ppc_dev_t* dev,
                      enum inph_ppc_name_t ppc_name)
 {
-    struct inph_spctrl_ppc_sse200_t* p_spctrl = 
-                         (struct inph_spctrl_ppc_sse200_t *)dev->cfg->spctrl_base;
+    struct inph_security_cntrl_t* p_spctrl = 
+                         (struct inph_security_cntrl_t *)dev->cfg->spctrl_base;
+    struct inph_nspriv_security_t* p_nspriv = 
+                       (struct inph_nspriv_security_t *)dev->cfg->snspriv_base;
 
     switch(ppc_name) {
-        case AHB_PPC_XIP:
-            dev->data->p_ns_ppc  = &p_spctrl->ahbnsppccxip;
-            dev->data->p_sp_ppc  = &p_spctrl->apbsprvppccxip;
-            dev->data->p_nsp_ppc = &p_spctrl->apbsprvppccxip;
-            dev->data->int_bit_mask = AHB_PPC_XIP_INT_POS_MASK;
+
+    case AHB_PPC_XIP1:
+            dev->data->p_ns_ppc  = &p_spctrl->AHBNSPPCCXIP.bf.PPC_CRYPTO_XIP1_NS_N;
+            dev->data->p_sp_ppc  = &p_spctrl->AHBSPRVPPCCXIP.bf.PPC_CRYPTO_XIP1_PRV_N;
+            dev->data->p_nsp_ppc = &p_nspriv->AHBNSPRVPPCCXIP.bf.PPC_CRYPTO_XIP1_NS_PRV_N;
+            dev->data->int_bit_mask = AHB_PPC_XIP1_INT_POS_MASK;
+            break;
+    
+    case AHB_PPC_XIP2:
+            dev->data->p_ns_ppc  = &p_spctrl->AHBNSPPCCXIP.bf.PPC_CRYPTO_XIP2_NS_N;
+            dev->data->p_sp_ppc  = &p_spctrl->AHBSPRVPPCCXIP.bf.PPC_CRYPTO_XIP2_PRV_N;
+            dev->data->p_nsp_ppc = &p_nspriv->AHBNSPRVPPCCXIP.bf.PPC_CRYPTO_XIP2_NS_PRV_N;
+            dev->data->int_bit_mask = AHB_PPC_XIP2_INT_POS_MASK;
             break;
             
         case AHB_PPC_SDIO:
-            dev->data->p_ns_ppc  = &p_spctrl->ahbnsppcsdio;
-            dev->data->p_sp_ppc  = &p_spctrl->apbsprvppcsdio;
-            dev->data->p_nsp_ppc = &p_spctrl->apbsprvppcsdio;
+            dev->data->p_ns_ppc  = &p_spctrl->AHBNSPPCSDIO.bf.PPC_SDIO_NS_N;
+            dev->data->p_sp_ppc  = &p_spctrl->AHBSPRVPPCSDIO.bf.PPC_SDIO_PRV_N;
+            dev->data->p_nsp_ppc = &p_nspriv->AHBNSPRVPPCSDIO.bf.PPC_SDIO_NS_PRV_N;
             dev->data->int_bit_mask = AHB_PPC_SDIO_INT_POS_MASK;
             break;
         case AHB_PPC_PERIPH1:
-            dev->data->p_ns_ppc  = &p_spctrl->apbnsppcperiph1;
-            dev->data->p_sp_ppc  = &p_spctrl->apbsprvppcperiph1;
-            dev->data->p_nsp_ppc = &p_spctrl->apbsprvppcperiph1;
+            dev->data->p_ns_ppc  = &p_spctrl->APBNSPPCPERIPH1.bf.PPC_PERIPH_1_NS_N;
+            dev->data->p_sp_ppc  = &p_spctrl->APBSPRVPPCPERIPH1.bf.PPC_PERIPH_1_PRV_N;
+            dev->data->p_nsp_ppc = &p_nspriv->APBNSPRVPPCPERIPH1.bf.PPC_PERIPH_1_NS_PRV_N;
             dev->data->int_bit_mask = AHB_PPC_PERIPH1_INT_POS_MASK;
             break;
         case APB_PPC_PERIPH0:
-            dev->data->p_ns_ppc  = &p_spctrl->apbnsppcperiph0;
-            dev->data->p_sp_ppc  = &p_spctrl->apbsprvppcperiph0;
-            dev->data->p_nsp_ppc = &p_spctrl->apbsprvppcperiph0;
+            dev->data->p_ns_ppc  = &p_spctrl->APBNSPPCPERIPH0.bf.PPC_PERIPH_0_NS_N;
+            dev->data->p_sp_ppc  = &p_spctrl->APBSPRVPPCPERIPH0.bf.PPC_PERIPH_0_PRV_N;
+            dev->data->p_nsp_ppc = &p_nspriv->APBNSPRVPPCPERIPH0.bf.PPC_PERIPH_0_NS_PRV_N;
             dev->data->int_bit_mask = AHB_PPC_PERIPH0_INT_POS_MASK;
             break;
         case AHB_PPC_SYSTEM:
-            dev->data->p_ns_ppc  = &p_spctrl->apbnsppcsys;
-            dev->data->p_sp_ppc  = &p_spctrl->apbsprvppcsys;
-            dev->data->p_nsp_ppc = &p_spctrl->apbsprvppcsys;
+            dev->data->p_ns_ppc  = &p_spctrl->AHBNSPPCSYS.bf.PPC_SYS_NS_N;
+            dev->data->p_sp_ppc  = &p_spctrl->AHBSPRVPPCSYS.bf.PPC_AHB_SYS_PRV_N;
+            dev->data->p_nsp_ppc = &p_nspriv->AHBNSPRVPPCSYS.bf.PPC_AHB_SYS_NS_PRV_N;
             dev->data->int_bit_mask = AHB_PPC_SYSCTRL_INT_POS_MASK;
             break;
+        case APB_PPC_SYSTEM:
+            dev->data->p_ns_ppc  = &p_spctrl->APBNSPPCSYS.bf.PPC_SYS_NS_N;
+            dev->data->p_sp_ppc  = &p_spctrl->APBSPRVPPCSYS.bf.PPC_APB_SYS_PRV_N;
+            dev->data->p_nsp_ppc = &p_nspriv->APBNSPRVPPCSYS.bf.PPC_APB_SYS_NS_PRV_N;
+            dev->data->int_bit_mask = APB_PPC_SYSCTRL_INT_POS_MASK;
+            break;            
         case APB_PPC_BASE2:
-            dev->data->p_ns_ppc  = &p_spctrl->apnnsppcbase2;
-            dev->data->p_sp_ppc  = &p_spctrl->apbsprvppcbase2;
-            dev->data->p_nsp_ppc = &p_spctrl->apbsprvppcbase2;
-            dev->data->int_bit_mask = AHB_PPC_BASE2_INT_POS_MASK;
+            dev->data->p_ns_ppc  = &p_spctrl->APBNSPPCBASE2.bf.PPC_BASE_2_NS_N;
+            dev->data->p_sp_ppc  = &p_spctrl->APBSPRVPPCBASE2.bf.PPC_BASE_2_PRV_N;
+            dev->data->p_nsp_ppc = &p_nspriv->APBNSPRVPPCBASE2.bf.PPC_BASE_2_NS_PRV_N;
+            dev->data->int_bit_mask = APB_PPC_BASE2_INT_POS_MASK;
             break;
         case APB_PPC_BASE1:
-            dev->data->p_ns_ppc  = &p_spctrl->apnnsppcbase1;
-            dev->data->p_sp_ppc  = &p_spctrl->apbsprvppcbase1;
-            dev->data->p_nsp_ppc = &p_spctrl->apbsprvppcbase1;
-            dev->data->int_bit_mask = AHB_PPC_BASE1_INT_POS_MASK;
+            dev->data->p_ns_ppc  = &p_spctrl->APBNSPPCBASE1.bf.PPC_BASE_1_NS_N;
+            dev->data->p_sp_ppc  = &p_spctrl->APBSPRVPPCBASE1.bf.PPC_BASE_1_PRV_N;
+            dev->data->p_nsp_ppc = &p_nspriv->APBNSPRVPPCBASE1.bf.PPC_BASE_1_NS_PRV_N;
+            dev->data->int_bit_mask = APB_PPC_BASE1_INT_POS_MASK;
             break;
         case APB_PPC_BASE0:
-            dev->data->p_ns_ppc  = &p_spctrl->apnnsppcbase0;
-            dev->data->p_sp_ppc  = &p_spctrl->apbsprvppcbase0;
-            dev->data->p_nsp_ppc = &p_spctrl->apbsprvppcbase0;
-            dev->data->int_bit_mask = AHB_PPC_BASE0_INT_POS_MASK;
+            dev->data->p_ns_ppc  = &p_spctrl->APBNSPPCBASE0.bf.PPC_BASE_0_NS_N;
+            dev->data->p_sp_ppc  = &p_spctrl->APBSPRVPPCBASE0.bf.PPC_BASE_0_PRV_N;
+            dev->data->p_nsp_ppc = &p_nspriv->APBNSPRVPPCBASE0.bf.PPC_BASE_0_NS_PRV_N;
+            dev->data->int_bit_mask = APB_PPC_BASE0_INT_POS_MASK;
             break;
         
         /* default:  The default is not defined intentionally to force the
@@ -173,8 +191,8 @@ uint32_t inph_ppc_is_periph_priv_only(struct inph_ppc_dev_t* dev,
 
 enum inph_ppc_error_t inph_ppc_irq_enable(struct inph_ppc_dev_t* dev)
 {
-    struct inph_spctrl_ppc_sse200_t* p_spctrl =
-                         (struct inph_spctrl_ppc_sse200_t*)dev->cfg->spctrl_base;
+    struct inph_security_cntrl_t* p_spctrl =
+                         (struct inph_security_cntrl_t*)dev->cfg->spctrl_base;
 
     if(dev->data->state != INPH_PPC_INITIALIZED) {
         return INPH_PPC_NOT_INIT;
@@ -187,8 +205,8 @@ enum inph_ppc_error_t inph_ppc_irq_enable(struct inph_ppc_dev_t* dev)
 
 void inph_ppc_irq_disable(struct inph_ppc_dev_t* dev)
 {
-    struct inph_spctrl_ppc_sse200_t* p_spctrl =
-                         (struct inph_spctrl_ppc_sse200_t*)dev->cfg->spctrl_base;
+    struct inph_security_cntrl_t* p_spctrl =
+                         (struct inph_security_cntrl_t*)dev->cfg->spctrl_base;
 
     if(dev->data->state == INPH_PPC_INITIALIZED) {
         p_spctrl->secppcinten &= ~(dev->data->int_bit_mask);
@@ -197,8 +215,8 @@ void inph_ppc_irq_disable(struct inph_ppc_dev_t* dev)
 
 void inph_ppc_clear_irq(struct inph_ppc_dev_t* dev)
 {
-    struct inph_spctrl_ppc_sse200_t* p_spctrl =
-                         (struct inph_spctrl_ppc_sse200_t*)dev->cfg->spctrl_base;
+    struct inph_security_cntrl_t* p_spctrl =
+                         (struct inph_security_cntrl_t*)dev->cfg->spctrl_base;
 
     if(dev->data->state == INPH_PPC_INITIALIZED) {
         p_spctrl->secppcintclr = dev->data->int_bit_mask;
@@ -207,8 +225,8 @@ void inph_ppc_clear_irq(struct inph_ppc_dev_t* dev)
 
 uint32_t inph_ppc_irq_state(struct inph_ppc_dev_t* dev)
 {
-    struct inph_spctrl_ppc_sse200_t* p_spctrl =
-                         (struct inph_spctrl_ppc_sse200_t*)dev->cfg->spctrl_base;
+    struct inph_security_cntrl_t* p_spctrl =
+                         (struct inph_security_cntrl_t*)dev->cfg->spctrl_base;
 
     if(dev->data->state != INPH_PPC_INITIALIZED) {
         return 0;
