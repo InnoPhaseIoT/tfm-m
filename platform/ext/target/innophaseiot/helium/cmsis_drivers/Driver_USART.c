@@ -33,8 +33,8 @@
 
 /* Driver Version */
 static const ARM_DRIVER_VERSION DriverVersion = {
-    INPH_DRIVER_VERSION_MAJOR_MINOR(1,1),
-    INPH_DRIVER_VERSION_MAJOR_MINOR(1,1)
+    ARM_DRIVER_VERSION_MAJOR_MINOR(1,1),
+    ARM_DRIVER_VERSION_MAJOR_MINOR(1,1)
 };
 
 /* Driver Capabilities */

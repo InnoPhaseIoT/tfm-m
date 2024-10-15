@@ -40,16 +40,44 @@ extern struct arm_uart_dev_t ARM_UART0_DEV_NS;
 
 
 /* ARM PPC driver structures */
-#ifdef AHB_PPC_BASE0_S
+#ifdef RTE_APB_PPC_BASE0
 extern struct inph_ppc_dev_t APB_PPCBASE0_DEV_S;
 #endif
 
-#ifdef AHB_PPC_BASE1_S
+#ifdef RTE_APB_PPC_BASE1
 extern struct inph_ppc_dev_t APB_PPCBASE1_DEV_S;
 #endif
 
-#ifdef AHB_PPC_BASE2_S
+#ifdef RTE_APB_PPC_BASE2
 extern struct inph_ppc_dev_t APB_PPCBASE2_DEV_S;
+#endif
+
+#ifdef RTE_AHB_PPC_PERIPH0
+extern struct inph_ppc_dev_t AHB_PPCPERIPH0_DEV_S;
+#endif
+
+#ifdef RTE_AHB_PPC_PERIPH1
+extern struct inph_ppc_dev_t AHB_PPCPERIPH1_DEV_S;
+#endif
+
+#ifdef RTE_AHB_PPC_XIP1
+extern struct inph_ppc_dev_t AHB_PPCCXIP1_DEV_S;
+#endif
+
+#ifdef RTE_AHB_PPC_XIP2
+extern struct inph_ppc_dev_t AHB_PPCCXIP2_DEV_S;
+#endif
+
+#ifdef RTE_AHB_PPC_SDIO
+extern struct inph_ppc_dev_t AHB_PPCSDIO_DEV_S;
+#endif
+
+#ifdef RTE_APB_PPC_SYSTEM
+extern struct inph_ppc_dev_t APB_PPCSYSTEM_DEV_S;
+#endif
+
+#ifdef RTE_AHB_PPC_SYSTEM
+extern struct inph_ppc_dev_t AHB_PPCSYSTEM_DEV_S;
 #endif
 
 /* ARM MPC SSE 200 driver structures */

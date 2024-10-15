@@ -21,16 +21,6 @@
 
 #include "tfm_utils.h"
 
-#define INPH_DRIVER_VERSION_MAJOR_MINOR(major,minor) (((major) << 8) | (minor))
-
-/**
-\brief Driver Version
-*/
-typedef struct INPH_DRIVER_VERSION {
-  uint16_t api;                         ///< API version
-  uint16_t drv;                         ///< Driver version
-} INPH_DRIVER_VERSION;
-
 /* General return codes */
 #define INPH_DRIVER_OK                 0 ///< Operation succeeded
 #define INPH_DRIVER_ERROR             -1 ///< Unspecified error
@@ -49,10 +39,6 @@ typedef enum _INPH_POWER_STATE {
   INPH_POWER_FULL                        ///< Power on: full operation at maximum performance
 } INPH_POWER_STATE;
 
-#define MPC_SRAM0_S
-#define AHB_PPC_BASE0_S
-#define AHB_PPC_BASE1_S
-#define AHB_PPC_BASE2_S
 
 
 // <e> SPI (Serial Peripheral Interface) [Driver_SPI0]
@@ -165,55 +151,55 @@ typedef enum _INPH_POWER_STATE {
 #define   RTE_CODE_SRAM3_MPC             0
 // </e> MPC (Memory Protection Controller) [Driver_SRAM3_MPC]
 
-// <e> PPC (Peripheral Protection Controller) [Driver_AHB_PPCEXP0]
-// <i> Configuration settings for Driver_AHB_PPCEXP0 in component ::Drivers:MPC
-#define   RTE_AHB_PPCEXP0                0
-// </e> PPC (Peripheral Protection Controller) [Driver_AHB_PPCEXP0]
+// <e> PPC (Peripheral Protection Controller) [Driver_APB_PPCBASE0]
+// <i> Configuration settings for Driver_APB_PPCBASE0in component ::Drivers:PPC
+#define   RTE_APB_PPC_BASE0               1
+// </e> PPC (Peripheral Protection Controller) [Driver_APB_PPCBASE0]
 
-// <e> PPC (Peripheral Protection Controller) [Driver_AHB_PPCEXP1]
-// <i> Configuration settings for Driver_AHB_PPCEXP1 in component ::Drivers:MPC
-#define   RTE_AHB_PPCEXP1                0
-// </e> PPC (Peripheral Protection Controller) [Driver_AHB_PPCEXP1]
+// <e> PPC (Peripheral Protection Controller) [Driver_APB_PPCBASE1]
+// <i> Configuration settings for Driver_APB_PPCBASE1 in component ::Drivers:PPC
+#define   RTE_APB_PPC_BASE1               1
+// </e> PPC (Peripheral Protection Controller) [Driver_APB_PPCBASE1]
 
-// <e> PPC (Peripheral Protection Controller) [Driver_AHB_PPCEXP2]
-// <i> Configuration settings for Driver_AHB_PPCEXP2 in component ::Drivers:MPC
-#define   RTE_AHB_PPCEXP2                0
-// </e> PPC (Peripheral Protection Controller) [Driver_AHB_PPCEXP2]
+// <e> PPC (Peripheral Protection Controller) [Driver_APB_PPCBASE2]
+// <i> Configuration settings for Driver_APB_PPCBASE2 in component ::Drivers:PPC
+#define   RTE_APB_PPC_BASE2               1
+// </e> PPC (Peripheral Protection Controller) [Driver_APB_PPCBASE2]
 
-// <e> PPC (Peripheral Protection Controller) [Driver_AHB_PPCEXP3]
-// <i> Configuration settings for Driver_AHB_PPCEXP3 in component ::Drivers:MPC
-#define   RTE_AHB_PPCEXP3                0
-// </e> PPC (Peripheral Protection Controller) [Driver_AHB_PPCEXP3]
+// <e> PPC (Peripheral Protection Controller) [Driver_AHB_PERIPHERAL0]
+// <i> Configuration settings for Driver_AHB_PERIPHERAL0 in component ::Drivers:PPC
+#define   RTE_AHB_PPC_PERIPH0             1
+// </e> PPC (Peripheral Protection Controller) [Driver_AHB_PERIPHERAL0]
 
-// <e> PPC (Peripheral Protection Controller) [Driver_APB_PPC0]
-// <i> Configuration settings for Driver_APB_PPC0 in component ::Drivers:MPC
-#define   RTE_APB_PPC0                   0
-// </e> PPC (Peripheral Protection Controller) [Driver_APB_PPC0]
+// <e> PPC (Peripheral Protection Controller) [Driver_AHB_PERIPHERAL1]
+// <i> Configuration settings for Driver_AHB_PERIPHERAL1 in component ::Drivers:PPC
+#define   RTE_AHB_PPC_PERIPH1             1
+// </e> PPC (Peripheral Protection Controller) [Driver_AHB_PERIPHERAL1]
 
-// <e> PPC (Peripheral Protection Controller) [Driver_APB_PPC1]
-// <i> Configuration settings for Driver_APB_PPC1 in component ::Drivers:MPC
-#define   RTE_APB_PPC1                   0
-// </e> PPC (Peripheral Protection Controller) [Driver_APB_PPC1]
+// <e> PPC (Peripheral Protection Controller) [Driver_AHB_XIP1]
+// <i> Configuration settings for Driver_AHB_XIP1 in component ::Drivers:PPC
+#define   RTE_AHB_PPC_XIP1                1
+// </e> PPC (Peripheral Protection Controller) [Driver_AHB_XIP1]
 
-// <e> PPC (Peripheral Protection Controller) [Driver_APB_PPCEXP0]
-// <i> Configuration settings for Driver_APB_PPCEXP0 in component ::Drivers:MPC
-#define   RTE_APB_PPCEXP0                0
-// </e> PPC (Peripheral Protection Controller) [Driver_APB_PPCEXP0]
+// <e> PPC (Peripheral Protection Controller) [Driver_AHB_XIP2]
+// <i> Configuration settings for Driver_AHB_XIP2 in component ::Drivers:PPC
+#define   RTE_AHB_PPC_XIP2                1
+// </e> PPC (Peripheral Protection Controller) [Driver_AHB_XIP2]
 
-// <e> PPC (Peripheral Protection Controller) [Driver_APB_PPCEXP1]
-// <i> Configuration settings for Driver_APB_PPCEXP1 in component ::Drivers:MPC
-#define   RTE_APB_PPCEXP1                0
-// </e> PPC (Peripheral Protection Controller) [Driver_APB_PPCEXP1]
+// <e> PPC (Peripheral Protection Controller) [Driver_AHB_SDIO]
+// <i> Configuration settings for Driver_AHB_SDIO in component ::Drivers:PPC
+#define   RTE_AHB_PPC_SDIO                1
+// </e> PPC (Peripheral Protection Controller) [Driver_AHB_SDIO]
 
-// <e> PPC (Peripheral Protection Controller) [Driver_APB_PPCEXP2]
-// <i> Configuration settings for Driver_APB_PPCEXP2 in component ::Drivers:MPC
-#define   RTE_APB_PPCEXP2                1
-// </e> PPC (Peripheral Protection Controller) [Driver_APB_PPCEXP2]
+// <e> PPC (Peripheral Protection Controller) [Driver_APB_SYSCNTRL]
+// <i> Configuration settings for Driver_APB_SYSCNTRL in component ::Drivers:PPC
+#define   RTE_APB_PPC_SYSTEM              1
+// </e> PPC (Peripheral Protection Controller) [Driver_APB_SYSCNTRL]
 
-// <e> PPC (Peripheral Protection Controller) [Driver_APB_PPCEXP3]
-// <i> Configuration settings for Driver_APB_PPCEXP3 in component ::Drivers:MPC
-#define   RTE_APB_PPCEXP3                0
-// </e> PPC (Peripheral Protection Controller) [Driver_APB_PPCEXP3]
+// <e> PPC (Peripheral Protection Controller) [Driver_AHB_SYSCNTRL]
+// <i> Configuration settings for Driver_AHB_SYSCNTRL in component ::Drivers:PPC
+#define   RTE_AHB_PPC_SYSTEM              1
+// </e> PPC (Peripheral Protection Controller) [Driver_AHB_SYSCNTRL]
 
 
 #endif  /* __RTE_DEVICE_H */
