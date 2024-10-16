@@ -26,6 +26,17 @@
 #include "platform_retarget.h"
 #include "inph_mpc_drv.h"
 #include "inph_ppc_drv.h"
+#include "inph_uart_drv.h"
+
+/* UART definitions */
+
+/* USART0 Driver wrapper functions */
+static UARTx_Resources USART0_DEV_S = {
+    .base = (struct inph_uart_base *)INPH_UART0_BASE_S,
+    .tx_nbr_bytes = 0,
+    .rx_nbr_bytes = 0,
+    .is_initialized = 0
+};
 
 /* PPC definitions */
 
@@ -197,22 +208,513 @@ struct inph_ppc_dev_t AHB_PPCSYSTEM_DEV_S = {
     &AHB_PPCSYSTEM_DEV_CFG, &AHB_PPCSYSTEM_DEV_DATA_S };
 
 
-
 /* MPC definitions */
 
+#define MPC_SRAM_RANGE_LIST_LEN  2u
 
-static const struct inph_mpc_sie200_dev_cfg_t MPC_CODE_SRAM0_DEV_CFG_S = {
-    .base = MPC_CODE_SRAM0_BASE_S};
+/* SRAM0 */
+static const struct mpc_sie_memory_range_t MPC_SRAM0_RANGE_S = {
+    .base         = SRAM0_RANGE_BASE_S,
+    .limit        = SRAM0_RANGE_LIMIT_NS,
+    .range_offset = 0,
+    .attr         = MPC_SIE_SEC_ATTR_SECURE
+};
+static const struct mpc_sie_memory_range_t MPC_SRAM0_RANGE_NS = {
+    .base         = SRAM0_RANGE_BASE_NS,
+    .limit        = SRAM0_RANGE_LIMIT_NS,
+    .range_offset = 0,
+    .attr         = MPC_SIE_SEC_ATTR_NONSECURE
+};
+static const struct mpc_sie_memory_range_t*
+    MPC_SRAM0_RANGE_LIST[MPC_SRAM_RANGE_LIST_LEN] = {
+        &MPC_SRAM0_RANGE_S,
+        &MPC_SRAM0_RANGE_NS
+    };
+static struct mpc_sie_dev_cfg_t MPC_SRAM0_DEV_CFG_S = {
+    .base = INPH_SRAM0_BASE_S,
+    .range_list = MPC_SRAM0_RANGE_LIST,
+    .nbr_of_ranges = MPC_SRAM_RANGE_LIST_LEN};
+static struct mpc_sie_dev_data_t MPC_SRAM0_DEV_DATA_S = {
+    .is_initialized = false};
+struct mpc_sie_dev_t MPC_SRAM0_DEV_S = {
+    &(MPC_SRAM0_DEV_CFG_S),
+    &(MPC_SRAM0_DEV_DATA_S)};
 
-static struct inph_mpc_sie200_dev_data_t MPC_CODE_SRAM0_DEV_DATA_S = {
-    .range_list = 0,
-    .nbr_of_ranges = 0,
-    .state = 0,
-    .reserved = 0};
+/* SRAM1 */
+static const struct mpc_sie_memory_range_t MPC_SRAM1_RANGE_S = {
+    .base         = SRAM1_RANGE_BASE_S,
+    .limit        = SRAM1_RANGE_LIMIT_NS,
+    .range_offset = 0,
+    .attr         = MPC_SIE_SEC_ATTR_SECURE
+};
+static const struct mpc_sie_memory_range_t MPC_SRAM1_RANGE_NS = {
+    .base         = SRAM1_RANGE_BASE_NS,
+    .limit        = SRAM1_RANGE_LIMIT_NS,
+    .range_offset = 0,
+    .attr         = MPC_SIE_SEC_ATTR_NONSECURE
+};
+static const struct mpc_sie_memory_range_t*
+    MPC_SRAM1_RANGE_LIST[MPC_SRAM_RANGE_LIST_LEN] = {
+        &MPC_SRAM1_RANGE_S,
+        &MPC_SRAM1_RANGE_NS
+    };
+static struct mpc_sie_dev_cfg_t MPC_SRAM1_DEV_CFG_S = {
+    .base = INPH_SRAM1_BASE_S,
+    .range_list = MPC_SRAM1_RANGE_LIST,
+    .nbr_of_ranges = MPC_SRAM_RANGE_LIST_LEN};
+static struct mpc_sie_dev_data_t MPC_SRAM1_DEV_DATA_S = {
+    .is_initialized = false};
+struct mpc_sie_dev_t MPC_SRAM1_DEV_S = {
+    &(MPC_SRAM1_DEV_CFG_S),
+    &(MPC_SRAM1_DEV_DATA_S)};
 
-struct inph_mpc_sie200_dev_t INPH_MPC_SRAM0_DEV_S = {
-    &(MPC_CODE_SRAM0_DEV_CFG_S),
-    &(MPC_CODE_SRAM0_DEV_DATA_S)};
+/* SRAM2 */
+static const struct mpc_sie_memory_range_t MPC_SRAM2_RANGE_S = {
+    .base         = SRAM2_RANGE_BASE_S,
+    .limit        = SRAM2_RANGE_LIMIT_NS,
+    .range_offset = 0,
+    .attr         = MPC_SIE_SEC_ATTR_SECURE
+};
+static const struct mpc_sie_memory_range_t MPC_SRAM2_RANGE_NS = {
+    .base         = SRAM2_RANGE_BASE_NS,
+    .limit        = SRAM2_RANGE_LIMIT_NS,
+    .range_offset = 0,
+    .attr         = MPC_SIE_SEC_ATTR_NONSECURE
+};
+static const struct mpc_sie_memory_range_t*
+    MPC_SRAM2_RANGE_LIST[MPC_SRAM_RANGE_LIST_LEN] = {
+        &MPC_SRAM2_RANGE_S,
+        &MPC_SRAM2_RANGE_NS
+    };
+static struct mpc_sie_dev_cfg_t MPC_SRAM2_DEV_CFG_S = {
+    .base = INPH_SRAM2_BASE_S,
+    .range_list = MPC_SRAM2_RANGE_LIST,
+    .nbr_of_ranges = MPC_SRAM_RANGE_LIST_LEN};
+static struct mpc_sie_dev_data_t MPC_SRAM2_DEV_DATA_S = {
+    .is_initialized = false};
+struct mpc_sie_dev_t MPC_SRAM2_DEV_S = {
+    &(MPC_SRAM2_DEV_CFG_S),
+    &(MPC_SRAM2_DEV_DATA_S)};
+
+/* SRAM3 */
+static const struct mpc_sie_memory_range_t MPC_SRAM3_RANGE_S = {
+    .base         = SRAM3_RANGE_BASE_S,
+    .limit        = SRAM3_RANGE_LIMIT_NS,
+    .range_offset = 0,
+    .attr         = MPC_SIE_SEC_ATTR_SECURE
+};
+static const struct mpc_sie_memory_range_t MPC_SRAM3_RANGE_NS = {
+    .base         = SRAM3_RANGE_BASE_NS,
+    .limit        = SRAM3_RANGE_LIMIT_NS,
+    .range_offset = 0,
+    .attr         = MPC_SIE_SEC_ATTR_NONSECURE
+};
+static const struct mpc_sie_memory_range_t*
+    MPC_SRAM3_RANGE_LIST[MPC_SRAM_RANGE_LIST_LEN] = {
+        &MPC_SRAM3_RANGE_S,
+        &MPC_SRAM3_RANGE_NS
+    };
+static struct mpc_sie_dev_cfg_t MPC_SRAM3_DEV_CFG_S = {
+    .base = INPH_SRAM3_BASE_S,
+    .range_list = MPC_SRAM3_RANGE_LIST,
+    .nbr_of_ranges = MPC_SRAM_RANGE_LIST_LEN};
+static struct mpc_sie_dev_data_t MPC_SRAM3_DEV_DATA_S = {
+    .is_initialized = false};
+struct mpc_sie_dev_t MPC_SRAM3_DEV_S = {
+    &(MPC_SRAM3_DEV_CFG_S),
+    &(MPC_SRAM3_DEV_DATA_S)};
+
+/* SRAM4 */
+static const struct mpc_sie_memory_range_t MPC_SRAM4_RANGE_S = {
+    .base         = SRAM4_RANGE_BASE_S,
+    .limit        = SRAM4_RANGE_LIMIT_NS,
+    .range_offset = 0,
+    .attr         = MPC_SIE_SEC_ATTR_SECURE
+};
+static const struct mpc_sie_memory_range_t MPC_SRAM4_RANGE_NS = {
+    .base         = SRAM4_RANGE_BASE_NS,
+    .limit        = SRAM4_RANGE_LIMIT_NS,
+    .range_offset = 0,
+    .attr         = MPC_SIE_SEC_ATTR_NONSECURE
+};
+static const struct mpc_sie_memory_range_t*
+    MPC_SRAM4_RANGE_LIST[MPC_SRAM_RANGE_LIST_LEN] = {
+        &MPC_SRAM4_RANGE_S,
+        &MPC_SRAM4_RANGE_NS
+    };
+static struct mpc_sie_dev_cfg_t MPC_SRAM4_DEV_CFG_S = {
+    .base = INPH_SRAM4_BASE_S,
+    .range_list = MPC_SRAM4_RANGE_LIST,
+    .nbr_of_ranges = MPC_SRAM_RANGE_LIST_LEN};
+static struct mpc_sie_dev_data_t MPC_SRAM4_DEV_DATA_S = {
+    .is_initialized = false};
+struct mpc_sie_dev_t MPC_SRAM4_DEV_S = {
+    &(MPC_SRAM4_DEV_CFG_S),
+    &(MPC_SRAM4_DEV_DATA_S)};
+
+/* SRAM5 */
+static const struct mpc_sie_memory_range_t MPC_SRAM5_RANGE_S = {
+    .base         = SRAM5_RANGE_BASE_S,
+    .limit        = SRAM5_RANGE_LIMIT_NS,
+    .range_offset = 0,
+    .attr         = MPC_SIE_SEC_ATTR_SECURE
+};
+static const struct mpc_sie_memory_range_t MPC_SRAM5_RANGE_NS = {
+    .base         = SRAM5_RANGE_BASE_NS,
+    .limit        = SRAM5_RANGE_LIMIT_NS,
+    .range_offset = 0,
+    .attr         = MPC_SIE_SEC_ATTR_NONSECURE
+};
+static const struct mpc_sie_memory_range_t*
+    MPC_SRAM5_RANGE_LIST[MPC_SRAM_RANGE_LIST_LEN] = {
+        &MPC_SRAM5_RANGE_S,
+        &MPC_SRAM5_RANGE_NS
+    };
+static struct mpc_sie_dev_cfg_t MPC_SRAM5_DEV_CFG_S = {
+    .base = INPH_SRAM5_BASE_S,
+    .range_list = MPC_SRAM5_RANGE_LIST,
+    .nbr_of_ranges = MPC_SRAM_RANGE_LIST_LEN};
+static struct mpc_sie_dev_data_t MPC_SRAM5_DEV_DATA_S = {
+    .is_initialized = false};
+struct mpc_sie_dev_t MPC_SRAM5_DEV_S = {
+    &(MPC_SRAM5_DEV_CFG_S),
+    &(MPC_SRAM5_DEV_DATA_S)};
+
+/* SRAM6 */
+static const struct mpc_sie_memory_range_t MPC_SRAM6_RANGE_S = {
+    .base         = SRAM6_RANGE_BASE_S,
+    .limit        = SRAM6_RANGE_LIMIT_NS,
+    .range_offset = 0,
+    .attr         = MPC_SIE_SEC_ATTR_SECURE
+};
+static const struct mpc_sie_memory_range_t MPC_SRAM6_RANGE_NS = {
+    .base         = SRAM6_RANGE_BASE_NS,
+    .limit        = SRAM6_RANGE_LIMIT_NS,
+    .range_offset = 0,
+    .attr         = MPC_SIE_SEC_ATTR_NONSECURE
+};
+static const struct mpc_sie_memory_range_t*
+    MPC_SRAM6_RANGE_LIST[MPC_SRAM_RANGE_LIST_LEN] = {
+        &MPC_SRAM6_RANGE_S,
+        &MPC_SRAM6_RANGE_NS
+    };
+static struct mpc_sie_dev_cfg_t MPC_SRAM6_DEV_CFG_S = {
+    .base = INPH_SRAM6_BASE_S,
+    .range_list = MPC_SRAM6_RANGE_LIST,
+    .nbr_of_ranges = MPC_SRAM_RANGE_LIST_LEN};
+static struct mpc_sie_dev_data_t MPC_SRAM6_DEV_DATA_S = {
+    .is_initialized = false};
+struct mpc_sie_dev_t MPC_SRAM6_DEV_S = {
+    &(MPC_SRAM6_DEV_CFG_S),
+    &(MPC_SRAM6_DEV_DATA_S)};
+
+/* SRAM7 */
+static const struct mpc_sie_memory_range_t MPC_SRAM7_RANGE_S = {
+    .base         = SRAM7_RANGE_BASE_S,
+    .limit        = SRAM7_RANGE_LIMIT_NS,
+    .range_offset = 0,
+    .attr         = MPC_SIE_SEC_ATTR_SECURE
+};
+static const struct mpc_sie_memory_range_t MPC_SRAM7_RANGE_NS = {
+    .base         = SRAM7_RANGE_BASE_NS,
+    .limit        = SRAM7_RANGE_LIMIT_NS,
+    .range_offset = 0,
+    .attr         = MPC_SIE_SEC_ATTR_NONSECURE
+};
+static const struct mpc_sie_memory_range_t*
+    MPC_SRAM7_RANGE_LIST[MPC_SRAM_RANGE_LIST_LEN] = {
+        &MPC_SRAM7_RANGE_S,
+        &MPC_SRAM7_RANGE_NS
+    };
+static struct mpc_sie_dev_cfg_t MPC_SRAM7_DEV_CFG_S = {
+    .base = INPH_SRAM7_BASE_S,
+    .range_list = MPC_SRAM7_RANGE_LIST,
+    .nbr_of_ranges = MPC_SRAM_RANGE_LIST_LEN};
+static struct mpc_sie_dev_data_t MPC_SRAM7_DEV_DATA_S = {
+    .is_initialized = false};
+struct mpc_sie_dev_t MPC_SRAM7_DEV_S = {
+    &(MPC_SRAM7_DEV_CFG_S),
+    &(MPC_SRAM7_DEV_DATA_S)};
+
+/* SRAM8 */
+static const struct mpc_sie_memory_range_t MPC_SRAM8_RANGE_S = {
+    .base         = SRAM8_RANGE_BASE_S,
+    .limit        = SRAM8_RANGE_LIMIT_NS,
+    .range_offset = 0,
+    .attr         = MPC_SIE_SEC_ATTR_SECURE
+};
+static const struct mpc_sie_memory_range_t MPC_SRAM8_RANGE_NS = {
+    .base         = SRAM8_RANGE_BASE_NS,
+    .limit        = SRAM8_RANGE_LIMIT_NS,
+    .range_offset = 0,
+    .attr         = MPC_SIE_SEC_ATTR_NONSECURE
+};
+static const struct mpc_sie_memory_range_t*
+    MPC_SRAM8_RANGE_LIST[MPC_SRAM_RANGE_LIST_LEN] = {
+        &MPC_SRAM8_RANGE_S,
+        &MPC_SRAM8_RANGE_NS
+    };
+static struct mpc_sie_dev_cfg_t MPC_SRAM8_DEV_CFG_S = {
+    .base = INPH_SRAM8_BASE_S,
+    .range_list = MPC_SRAM8_RANGE_LIST,
+    .nbr_of_ranges = MPC_SRAM_RANGE_LIST_LEN};
+static struct mpc_sie_dev_data_t MPC_SRAM8_DEV_DATA_S = {
+    .is_initialized = false};
+struct mpc_sie_dev_t MPC_SRAM8_DEV_S = {
+    &(MPC_SRAM8_DEV_CFG_S),
+    &(MPC_SRAM8_DEV_DATA_S)};
+
+/* SRAM9 */
+static const struct mpc_sie_memory_range_t MPC_SRAM9_RANGE_S = {
+    .base         = SRAM9_RANGE_BASE_S,
+    .limit        = SRAM9_RANGE_LIMIT_NS,
+    .range_offset = 0,
+    .attr         = MPC_SIE_SEC_ATTR_SECURE
+};
+static const struct mpc_sie_memory_range_t MPC_SRAM9_RANGE_NS = {
+    .base         = SRAM9_RANGE_BASE_NS,
+    .limit        = SRAM9_RANGE_LIMIT_NS,
+    .range_offset = 0,
+    .attr         = MPC_SIE_SEC_ATTR_NONSECURE
+};
+static const struct mpc_sie_memory_range_t*
+    MPC_SRAM9_RANGE_LIST[MPC_SRAM_RANGE_LIST_LEN] = {
+        &MPC_SRAM9_RANGE_S,
+        &MPC_SRAM9_RANGE_NS
+    };
+static struct mpc_sie_dev_cfg_t MPC_SRAM9_DEV_CFG_S = {
+    .base = INPH_SRAM9_BASE_S,
+    .range_list = MPC_SRAM9_RANGE_LIST,
+    .nbr_of_ranges = MPC_SRAM_RANGE_LIST_LEN};
+static struct mpc_sie_dev_data_t MPC_SRAM9_DEV_DATA_S = {
+    .is_initialized = false};
+struct mpc_sie_dev_t MPC_SRAM9_DEV_S = {
+    &(MPC_SRAM9_DEV_CFG_S),
+    &(MPC_SRAM9_DEV_DATA_S)};
+
+/* SRAM10 */
+static const struct mpc_sie_memory_range_t MPC_SRAM10_RANGE_S = {
+    .base         = SRAM10_RANGE_BASE_S,
+    .limit        = SRAM10_RANGE_LIMIT_NS,
+    .range_offset = 0,
+    .attr         = MPC_SIE_SEC_ATTR_SECURE
+};
+static const struct mpc_sie_memory_range_t MPC_SRAM10_RANGE_NS = {
+    .base         = SRAM10_RANGE_BASE_NS,
+    .limit        = SRAM10_RANGE_LIMIT_NS,
+    .range_offset = 0,
+    .attr         = MPC_SIE_SEC_ATTR_NONSECURE
+};
+static const struct mpc_sie_memory_range_t*
+    MPC_SRAM10_RANGE_LIST[MPC_SRAM_RANGE_LIST_LEN] = {
+        &MPC_SRAM10_RANGE_S,
+        &MPC_SRAM10_RANGE_NS
+    };
+static struct mpc_sie_dev_cfg_t MPC_SRAM10_DEV_CFG_S = {
+    .base = INPH_SRAM10_BASE_S,
+    .range_list = MPC_SRAM10_RANGE_LIST,
+    .nbr_of_ranges = MPC_SRAM_RANGE_LIST_LEN};
+static struct mpc_sie_dev_data_t MPC_SRAM10_DEV_DATA_S = {
+    .is_initialized = false};
+struct mpc_sie_dev_t MPC_SRAM10_DEV_S = {
+    &(MPC_SRAM10_DEV_CFG_S),
+    &(MPC_SRAM10_DEV_DATA_S)};
+
+/* SRAM11 */
+static const struct mpc_sie_memory_range_t MPC_SRAM11_RANGE_S = {
+    .base         = SRAM11_RANGE_BASE_S,
+    .limit        = SRAM11_RANGE_LIMIT_NS,
+    .range_offset = 0,
+    .attr         = MPC_SIE_SEC_ATTR_SECURE
+};
+static const struct mpc_sie_memory_range_t MPC_SRAM11_RANGE_NS = {
+    .base         = SRAM11_RANGE_BASE_NS,
+    .limit        = SRAM11_RANGE_LIMIT_NS,
+    .range_offset = 0,
+    .attr         = MPC_SIE_SEC_ATTR_NONSECURE
+};
+static const struct mpc_sie_memory_range_t*
+    MPC_SRAM11_RANGE_LIST[MPC_SRAM_RANGE_LIST_LEN] = {
+        &MPC_SRAM11_RANGE_S,
+        &MPC_SRAM11_RANGE_NS
+    };
+static struct mpc_sie_dev_cfg_t MPC_SRAM11_DEV_CFG_S = {
+    .base = INPH_SRAM11_BASE_S,
+    .range_list = MPC_SRAM11_RANGE_LIST,
+    .nbr_of_ranges = MPC_SRAM_RANGE_LIST_LEN};
+static struct mpc_sie_dev_data_t MPC_SRAM11_DEV_DATA_S = {
+    .is_initialized = false};
+struct mpc_sie_dev_t MPC_SRAM11_DEV_S = {
+    &(MPC_SRAM11_DEV_CFG_S),
+    &(MPC_SRAM11_DEV_DATA_S)};
+
+/* SRAM12 */
+static const struct mpc_sie_memory_range_t MPC_SRAM12_RANGE_S = {
+    .base         = SRAM12_RANGE_BASE_S,
+    .limit        = SRAM12_RANGE_LIMIT_NS,
+    .range_offset = 0,
+    .attr         = MPC_SIE_SEC_ATTR_SECURE
+};
+static const struct mpc_sie_memory_range_t MPC_SRAM12_RANGE_NS = {
+    .base         = SRAM12_RANGE_BASE_NS,
+    .limit        = SRAM12_RANGE_LIMIT_NS,
+    .range_offset = 0,
+    .attr         = MPC_SIE_SEC_ATTR_NONSECURE
+};
+static const struct mpc_sie_memory_range_t*
+    MPC_SRAM12_RANGE_LIST[MPC_SRAM_RANGE_LIST_LEN] = {
+        &MPC_SRAM12_RANGE_S,
+        &MPC_SRAM12_RANGE_NS
+    };
+static struct mpc_sie_dev_cfg_t MPC_SRAM12_DEV_CFG_S = {
+    .base = INPH_SRAM12_BASE_S,
+    .range_list = MPC_SRAM12_RANGE_LIST,
+    .nbr_of_ranges = MPC_SRAM_RANGE_LIST_LEN};
+static struct mpc_sie_dev_data_t MPC_SRAM12_DEV_DATA_S = {
+    .is_initialized = false};
+struct mpc_sie_dev_t MPC_SRAM12_DEV_S = {
+    &(MPC_SRAM12_DEV_CFG_S),
+    &(MPC_SRAM12_DEV_DATA_S)};
+
+/* SRAM14 */
+static const struct mpc_sie_memory_range_t MPC_SRAM14_RANGE_S = {
+    .base         = SRAM14_RANGE_BASE_S,
+    .limit        = SRAM14_RANGE_LIMIT_NS,
+    .range_offset = 0,
+    .attr         = MPC_SIE_SEC_ATTR_SECURE
+};
+static const struct mpc_sie_memory_range_t MPC_SRAM14_RANGE_NS = {
+    .base         = SRAM14_RANGE_BASE_NS,
+    .limit        = SRAM14_RANGE_LIMIT_NS,
+    .range_offset = 0,
+    .attr         = MPC_SIE_SEC_ATTR_NONSECURE
+};
+static const struct mpc_sie_memory_range_t*
+    MPC_SRAM14_RANGE_LIST[MPC_SRAM_RANGE_LIST_LEN] = {
+        &MPC_SRAM14_RANGE_S,
+        &MPC_SRAM14_RANGE_NS
+    };
+static struct mpc_sie_dev_cfg_t MPC_SRAM14_DEV_CFG_S = {
+    .base = INPH_SRAM14_BASE_S,
+    .range_list = MPC_SRAM14_RANGE_LIST,
+    .nbr_of_ranges = MPC_SRAM_RANGE_LIST_LEN};
+static struct mpc_sie_dev_data_t MPC_SRAM14_DEV_DATA_S = {
+    .is_initialized = false};
+struct mpc_sie_dev_t MPC_SRAM14_DEV_S = {
+    &(MPC_SRAM14_DEV_CFG_S),
+    &(MPC_SRAM14_DEV_DATA_S)};
+
+/* SRAM15 */
+static const struct mpc_sie_memory_range_t MPC_SRAM15_RANGE_S = {
+    .base         = SRAM15_RANGE_BASE_S,
+    .limit        = SRAM15_RANGE_LIMIT_NS,
+    .range_offset = 0,
+    .attr         = MPC_SIE_SEC_ATTR_SECURE
+};
+static const struct mpc_sie_memory_range_t MPC_SRAM15_RANGE_NS = {
+    .base         = SRAM15_RANGE_BASE_NS,
+    .limit        = SRAM15_RANGE_LIMIT_NS,
+    .range_offset = 0,
+    .attr         = MPC_SIE_SEC_ATTR_NONSECURE
+};
+static const struct mpc_sie_memory_range_t*
+    MPC_SRAM15_RANGE_LIST[MPC_SRAM_RANGE_LIST_LEN] = {
+        &MPC_SRAM15_RANGE_S,
+        &MPC_SRAM15_RANGE_NS
+    };
+static struct mpc_sie_dev_cfg_t MPC_SRAM15_DEV_CFG_S = {
+    .base = INPH_SRAM15_BASE_S,
+    .range_list = MPC_SRAM15_RANGE_LIST,
+    .nbr_of_ranges = MPC_SRAM_RANGE_LIST_LEN};
+static struct mpc_sie_dev_data_t MPC_SRAM15_DEV_DATA_S = {
+    .is_initialized = false};
+struct mpc_sie_dev_t MPC_SRAM15_DEV_S = {
+    &(MPC_SRAM15_DEV_CFG_S),
+    &(MPC_SRAM15_DEV_DATA_S)};
+
+/* ROM */
+static const struct mpc_sie_memory_range_t MPC_ROM_RANGE_S = {
+    .base         = ROM_RANGE_BASE_S,
+    .limit        = ROM_RANGE_LIMIT_NS,
+    .range_offset = 0,
+    .attr         = MPC_SIE_SEC_ATTR_SECURE
+};
+static const struct mpc_sie_memory_range_t MPC_ROM_RANGE_NS = {
+    .base         = ROM_RANGE_BASE_NS,
+    .limit        = ROM_RANGE_LIMIT_NS,
+    .range_offset = 0,
+    .attr         = MPC_SIE_SEC_ATTR_NONSECURE
+};
+static const struct mpc_sie_memory_range_t*
+    MPC_ROM_RANGE_LIST[MPC_SRAM_RANGE_LIST_LEN] = {
+        &MPC_ROM_RANGE_S,
+        &MPC_ROM_RANGE_NS
+    };
+static struct mpc_sie_dev_cfg_t MPC_ROM_DEV_CFG_S = {
+    .base = INPH_ROM_BASE_S,
+    .range_list = MPC_ROM_RANGE_LIST,
+    .nbr_of_ranges = MPC_SRAM_RANGE_LIST_LEN};
+static struct mpc_sie_dev_data_t MPC_ROM_DEV_DATA_S = {
+    .is_initialized = false};
+struct mpc_sie_dev_t MPC_ROM_DEV_S = {
+    &(MPC_ROM_DEV_CFG_S),
+    &(MPC_ROM_DEV_DATA_S)};
+
+/* XSPI1 */
+static const struct mpc_sie_memory_range_t MPC_XSPI1_RANGE_S = {
+    .base         = XSPI1_RANGE_BASE_S,
+    .limit        = XSPI1_RANGE_LIMIT_NS,
+    .range_offset = 0,
+    .attr         = MPC_SIE_SEC_ATTR_SECURE
+};
+static const struct mpc_sie_memory_range_t MPC_XSPI1_RANGE_NS = {
+    .base         = XSPI1_RANGE_BASE_NS,
+    .limit        = XSPI1_RANGE_LIMIT_NS,
+    .range_offset = 0,
+    .attr         = MPC_SIE_SEC_ATTR_NONSECURE
+};
+static const struct mpc_sie_memory_range_t*
+    MPC_XSPI1_RANGE_LIST[MPC_SRAM_RANGE_LIST_LEN] = {
+        &MPC_XSPI1_RANGE_S,
+        &MPC_XSPI1_RANGE_NS
+    };
+static struct mpc_sie_dev_cfg_t MPC_XSPI1_DEV_CFG_S = {
+    .base = INPH_XSPI1_BASE_S,
+    .range_list = MPC_XSPI1_RANGE_LIST,
+    .nbr_of_ranges = MPC_SRAM_RANGE_LIST_LEN};
+static struct mpc_sie_dev_data_t MPC_XSPI1_DEV_DATA_S = {
+    .is_initialized = false};
+struct mpc_sie_dev_t MPC_XSPI1_DEV_S = {
+    &(MPC_XSPI1_DEV_CFG_S),
+    &(MPC_XSPI1_DEV_DATA_S)};
+
+/* XSPI2 */
+static const struct mpc_sie_memory_range_t MPC_XSPI2_RANGE_S = {
+    .base         = XSPI2_RANGE_BASE_S,
+    .limit        = XSPI2_RANGE_LIMIT_NS,
+    .range_offset = 0,
+    .attr         = MPC_SIE_SEC_ATTR_SECURE
+};
+static const struct mpc_sie_memory_range_t MPC_XSPI2_RANGE_NS = {
+    .base         = XSPI2_RANGE_BASE_NS,
+    .limit        = XSPI2_RANGE_LIMIT_NS,
+    .range_offset = 0,
+    .attr         = MPC_SIE_SEC_ATTR_NONSECURE
+};
+static const struct mpc_sie_memory_range_t*
+    MPC_XSPI2_RANGE_LIST[MPC_SRAM_RANGE_LIST_LEN] = {
+        &MPC_XSPI2_RANGE_S,
+        &MPC_XSPI2_RANGE_NS
+    };
+static struct mpc_sie_dev_cfg_t MPC_XSPI2_DEV_CFG_S = {
+    .base = INPH_XSPI2_BASE_S,
+    .range_list = MPC_XSPI2_RANGE_LIST,
+    .nbr_of_ranges = MPC_SRAM_RANGE_LIST_LEN};
+static struct mpc_sie_dev_data_t MPC_XSPI2_DEV_DATA_S = {
+    .is_initialized = false};
+struct mpc_sie_dev_t MPC_XSPI2_DEV_S = {
+    &(MPC_XSPI2_DEV_CFG_S),
+    &(MPC_XSPI2_DEV_DATA_S)};
 
 
 //#endif //INPH_HELIUM_A0

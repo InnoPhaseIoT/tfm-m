@@ -22,198 +22,105 @@
  * @brief   MPC top driver
  */
 
-#include "Driver_MPC.h"
+#include "cmsis_driver_config.h"
 #include "RTE_Device.h"
-#include "platform_retarget.h"
-#include "platform_retarget_dev.h"
-#include "inph_mpc_drv.h"
+#include "Driver_MPC_Sie.h"
 
-/* driver version */
-#define INPH_MPC_DRV_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(1,0)
-#define INPH_MPC_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(1,0)
-
-/* Driver Version */
-static const ARM_DRIVER_VERSION DriverVersion = {
-    INPH_MPC_API_VERSION,
-    INPH_MPC_DRV_VERSION
-};
-
-static ARM_DRIVER_VERSION ARM_MPC_GetVersion(void)
-{
-    return DriverVersion;
-}
-
-/*
- * \brief Translates error codes from native API to CMSIS API.
- *
- * \param[in] err  Error code to translate (\ref inph_mpc_sie200_error_t).
- *
- * \return Returns CMSIS error code.
- */
-static int32_t inph_error_codes(enum inph_mpc_sie200_error_t err)
-{
-    switch(err)
-    {
-        case INPH_MPC_SIE200_ERR_NONE:
-            return INPH_DRIVER_OK;
-        
-        case INPH_MPC_SIE200_INVALID_ARG:
-            return INPH_DRIVER_ERROR_PARAMETER;
-        
-        case INPH_MPC_SIE200_NOT_INIT:
-            return ARM_MPC_ERR_NOT_INIT;
-        
-        case INPH_MPC_SIE200_ERR_NOT_IN_RANGE:
-            return ARM_MPC_ERR_NOT_IN_RANGE;
-        
-        case INPH_MPC_SIE200_ERR_NOT_ALIGNED:
-            return ARM_MPC_ERR_NOT_ALIGNED;
-        
-        case INPH_MPC_SIE200_ERR_INVALID_RANGE:
-            return ARM_MPC_ERR_INVALID_RANGE;
-        
-        case INPH_MPC_SIE200_ERR_RANGE_SEC_ATTR_NON_COMPATIBLE:
-            return ARM_MPC_ERR_RANGE_SEC_ATTR_NON_COMPATIBLE;
-    /* default:  The default is not defined intentionally to force the
-     *           compiler to check that all the enumeration values are
-     *           covered in the switch.
-	 */
-    }
-}
-
-//#if (INPH_MPC_SRAM0_S)
-/* Ranges controlled by this SRAM0_MPC */
-static struct inph_mpc_sie200_memory_range_t INPH_MPC_SRAM0_RANGE_S = {
-    .base  = MPC_CODE_SRAM0_RANGE_BASE_S,
-    .limit = MPC_CODE_SRAM0_RANGE_LIMIT_S,
-    .attr  = INPH_MPC_SIE200_SEC_ATTR_SECURE
-};
-
-static struct inph_mpc_sie200_memory_range_t INPH_MPC_SRAM0_RANGE_NS = {
-    .base  = MPC_CODE_SRAM0_RANGE_BASE_NS,
-    .limit = MPC_CODE_SRAM0_RANGE_LIMIT_NS,
-    .attr  = INPH_MPC_SIE200_SEC_ATTR_NONSECURE
-};
-
-#define INPH_MPC_SRAM0_RANGE_LIST_LEN  2u
-
-static const struct  inph_mpc_sie200_memory_range_t* INPH_MPC_SRAM0_RANGE_LIST[INPH_MPC_SRAM0_RANGE_LIST_LEN]=
-    {&INPH_MPC_SRAM0_RANGE_S, &INPH_MPC_SRAM0_RANGE_NS};
-
-/* SRAM0_MPC Driver wrapper functions */
-static int32_t SRAM0_MPC_Initialize(void)
-{
-    enum inph_mpc_sie200_error_t ret;
-
-    ret = inph_mpc_sie200_init(&INPH_MPC_SRAM0_DEV_S,
-                          INPH_MPC_SRAM0_RANGE_LIST,
-                          INPH_MPC_SRAM0_RANGE_LIST_LEN);
-
-    return inph_error_codes(ret);
-}
-
-static int32_t SRAM0_MPC_Uninitialize(void)
-{
-    /* Nothing to be done */
-    return ARM_DRIVER_OK;
-}
-
-static int32_t SRAM0_MPC_GetBlockSize(uint32_t* blk_size)
-{
-    enum inph_mpc_sie200_error_t ret;
-
-    ret = inph_mpc_sie200_get_block_size(&INPH_MPC_SRAM0_DEV_S, blk_size);
-
-    return inph_error_codes(ret);
-}
-
-static int32_t SRAM0_MPC_GetCtrlConfig(uint32_t* ctrl_val)
-{
-    enum inph_mpc_sie200_error_t ret;
-
-    ret = inph_mpc_sie200_get_ctrl(&INPH_MPC_SRAM0_DEV_S, ctrl_val);
-
-    return inph_error_codes(ret);
-}
-
-static int32_t SRAM0_MPC_SetCtrlConfig(uint32_t ctrl)
-{
-    enum inph_mpc_sie200_error_t ret;
-
-    ret = inph_mpc_sie200_set_ctrl(&INPH_MPC_SRAM0_DEV_S, ctrl);
-
-    return inph_error_codes(ret);
-}
-
-static int32_t SRAM0_MPC_GetRegionConfig(uintptr_t base,
-                                         uintptr_t limit,
-                                         ARM_MPC_SEC_ATTR* attr)
-{
-    enum inph_mpc_sie200_error_t ret;
-
-    ret = inph_mpc_sie200_get_region_config(&INPH_MPC_SRAM0_DEV_S, base, limit, 
-                                       (enum inph_mpc_sie200_sec_attr_t*)attr);
-
-    return inph_error_codes(ret);
-}
-
-static int32_t SRAM0_MPC_ConfigRegion(uintptr_t base,
-                                      uintptr_t limit,
-                                      ARM_MPC_SEC_ATTR attr)
-{
-    enum inph_mpc_sie200_error_t ret;
-
-    ret = inph_mpc_sie200_config_region(&INPH_MPC_SRAM0_DEV_S, base, limit,
-                                   (enum inph_mpc_sie200_sec_attr_t)attr);
-
-    return inph_error_codes(ret);
-}
-
-static int32_t SRAM0_MPC_EnableInterrupt(void)
-{
-    enum inph_mpc_sie200_error_t ret;
-
-    ret = inph_mpc_sie200_irq_enable(&INPH_MPC_SRAM0_DEV_S);
-
-    return inph_error_codes(ret);
-}
-
-static void SRAM0_MPC_DisableInterrupt(void)
-{
-    inph_mpc_sie200_irq_disable(&INPH_MPC_SRAM0_DEV_S);
-}
+#if (defined (RTE_SRAM0_MPC) && (RTE_SRAM0_MPC == 1)) ||             \
+    (defined (RTE_SRAM1_MPC) && (RTE_SRAM1_MPC == 1)) ||             \
+    (defined (RTE_SRAM2_MPC) && (RTE_SRAM2_MPC == 1)) ||             \
+    (defined (RTE_SRAM3_MPC) && (RTE_SRAM3_MPC == 1)) ||             \
+    (defined (RTE_SRAM4_MPC) && (RTE_SRAM4_MPC == 1)) ||             \
+    (defined (RTE_SRAM5_MPC) && (RTE_SRAM5_MPC == 1)) ||             \
+    (defined (RTE_SRAM6_MPC) && (RTE_SRAM6_MPC == 1)) ||             \
+    (defined (RTE_SRAM7_MPC) && (RTE_SRAM7_MPC == 1)) ||             \
+    (defined (RTE_SRAM8_MPC) && (RTE_SRAM8_MPC == 1)) ||             \
+    (defined (RTE_SRAM9_MPC) && (RTE_SRAM9_MPC == 1)) ||             \
+    (defined (RTE_SRAM10_MPC) && (RTE_SRAM10_MPC == 1)) ||           \
+    (defined (RTE_SRAM11_MPC) && (RTE_SRAM11_MPC == 1)) ||           \
+    (defined (RTE_SRAM12_MPC) && (RTE_SRAM12_MPC == 1)) ||           \
+    (defined (RTE_SRAM13_MPC) && (RTE_SRAM13_MPC == 1)) ||           \
+    (defined (RTE_SRAM14_MPC) && (RTE_SRAM14_MPC == 1)) ||           \
+    (defined (RTE_SRAM15_MPC) && (RTE_SRAM15_MPC == 1)) ||           \
+    (defined (RTE_ROM_MPC) && (RTE_ROM_MPC == 1)) ||                 \
+    (defined (RTE_XSPI1_MPC) && (RTE_XSPI1_MPC == 1)) ||             \
+    (defined (RTE_XSPI2_MPC) && (RTE_XSPI2_MPC == 1))
 
 
-static void SRAM0_MPC_ClearInterrupt(void)
-{
-    inph_mpc_sie200_clear_irq(&INPH_MPC_SRAM0_DEV_S);
-}
+#if (defined (RTE_SRAM0_MPC) && (RTE_SRAM0_MPC == 1))
+ARM_DRIVER_MPC(MPC_SRAM0_DEV, Driver_SRAM0_MPC);
+#endif /* RTE_SRAM0_MPC */
 
-static uint32_t SRAM0_MPC_InterruptState(void)
-{
-    return inph_mpc_sie200_irq_state(&INPH_MPC_SRAM0_DEV_S);
-}
+#if (defined (RTE_SRAM1_MPC) && (RTE_SRAM1_MPC == 1))
+ARM_DRIVER_MPC(MPC_SRAM1_DEV, Driver_SRAM1_MPC);
+#endif /* RTE_SRAM1_MPC */
 
-static int32_t SRAM0_MPC_LockDown(void)
-{
-    return inph_mpc_sie200_lock_down(&INPH_MPC_SRAM0_DEV_S);
-}
+#if (defined (RTE_SRAM2_MPC) && (RTE_SRAM2_MPC == 1))
+ARM_DRIVER_MPC(MPC_SRAM2_DEV, Driver_SRAM2_MPC);
+#endif /* RTE_SRAM2_MPC */
 
-/* SRAM0_MPC Driver CMSIS access structure */
-extern ARM_DRIVER_MPC Driver_SRAM0_MPC;
-ARM_DRIVER_MPC Driver_SRAM0_MPC = {
-    .GetVersion       = ARM_MPC_GetVersion,
-    .Initialize       = SRAM0_MPC_Initialize,
-    .Uninitialize     = SRAM0_MPC_Uninitialize,
-    .GetBlockSize     = SRAM0_MPC_GetBlockSize,
-    .GetCtrlConfig    = SRAM0_MPC_GetCtrlConfig,
-    .SetCtrlConfig    = SRAM0_MPC_SetCtrlConfig,
-    .ConfigRegion     = SRAM0_MPC_ConfigRegion,
-    .GetRegionConfig  = SRAM0_MPC_GetRegionConfig,
-    .EnableInterrupt  = SRAM0_MPC_EnableInterrupt,
-    .DisableInterrupt = SRAM0_MPC_DisableInterrupt,
-    .ClearInterrupt   = SRAM0_MPC_ClearInterrupt,
-    .InterruptState   = SRAM0_MPC_InterruptState,
-    .LockDown         = SRAM0_MPC_LockDown
-};
-//#endif /* INPH_MPC_SRAM0_S */
+#if (defined (RTE_SRAM3_MPC) && (RTE_SRAM3_MPC == 1))
+ARM_DRIVER_MPC(MPC_SRAM3_DEV, Driver_SRAM3_MPC);
+#endif /* RTE_SRAM3_MPC */
+
+#if (defined (RTE_SRAM4_MPC) && (RTE_SRAM4_MPC == 1))
+ARM_DRIVER_MPC(MPC_SRAM4_DEV, Driver_SRAM4_MPC);
+#endif /* RTE_SRAM4_MPC */
+
+#if (defined (RTE_SRAM5_MPC) && (RTE_SRAM5_MPC == 1))
+ARM_DRIVER_MPC(MPC_SRAM5_DEV, Driver_SRAM5_MPC);
+#endif /* RTE_SRAM5_MPC */
+
+#if (defined (RTE_SRAM6_MPC) && (RTE_SRAM6_MPC == 1))
+ARM_DRIVER_MPC(MPC_SRAM6_DEV, Driver_SRAM6_MPC);
+#endif /* RTE_SRAM6_MPC */
+
+#if (defined (RTE_SRAM7_MPC) && (RTE_SRAM7_MPC == 1))
+ARM_DRIVER_MPC(MPC_SRAM7_DEV, Driver_SRAM7_MPC);
+#endif /* RTE_SRAM7_MPC */
+
+#if (defined (RTE_SRAM8_MPC) && (RTE_SRAM8_MPC == 1))
+ARM_DRIVER_MPC(MPC_SRAM8_DEV, Driver_SRAM8_MPC);
+#endif /* RTE_SRAM8_MPC */
+
+#if (defined (RTE_SRAM9_MPC) && (RTE_SRAM9_MPC == 1))
+ARM_DRIVER_MPC(MPC_SRAM9_DEV, Driver_SRAM9_MPC);
+#endif /* RTE_SRAM9_MPC */
+
+#if (defined (RTE_SRAM10_MPC) && (RTE_SRAM10_MPC == 1))
+ARM_DRIVER_MPC(MPC_SRAM10_DEV, Driver_SRAM10_MPC);
+#endif /* RTE_SRAM10_MPC */
+
+#if (defined (RTE_SRAM11_MPC) && (RTE_SRAM11_MPC == 1))
+ARM_DRIVER_MPC(MPC_SRAM11_DEV, Driver_SRAM11_MPC);
+#endif /* RTE_SRAM11_MPC */
+
+#if (defined (RTE_SRAM12_MPC) && (RTE_SRAM12_MPC == 1))
+ARM_DRIVER_MPC(MPC_SRAM12_DEV, Driver_SRAM12_MPC);
+#endif /* RTE_SRAM10_MPC */
+
+#if (defined (RTE_SRAM13_MPC) && (RTE_SRAM13_MPC == 1))
+ARM_DRIVER_MPC(MPC_SRAM13_DEV, Driver_SRAM13_MPC);
+#endif /* RTE_SRAM13_MPC */
+
+#if (defined (RTE_SRAM14_MPC) && (RTE_SRAM14_MPC == 1))
+ARM_DRIVER_MPC(MPC_SRAM14_DEV, Driver_SRAM14_MPC);
+#endif /* RTE_SRAM14_MPC */
+
+#if (defined (RTE_SRAM15_MPC) && (RTE_SRAM15_MPC == 1))
+ARM_DRIVER_MPC(MPC_SRAM15_DEV, Driver_SRAM15_MPC);
+#endif /* RTE_SRAM13_MPC */
+
+#if (defined (RTE_ROM_MPC) && (RTE_ROM_MPC == 1))
+ARM_DRIVER_MPC(MPC_ROM_DEV, Driver_ROM_MPC);
+#endif /* RTE_ROM_MPC */
+
+#if (defined (RTE_XSPI1_MPC) && (RTE_XSPI1_MPC == 1))
+ARM_DRIVER_MPC(MPC_XSPI1_DEV, Driver_XSPI1_MPC);
+#endif /* RTE_XSPI1_MPC */
+
+#if (defined (RTE_XSPI2_MPC) && (RTE_XSPI2_MPC == 1))
+ARM_DRIVER_MPC(MPC_XSPI2_DEV, Driver_XSPI2_MPC);
+#endif /* RTE_XSPI2_MPC */
+
+#endif

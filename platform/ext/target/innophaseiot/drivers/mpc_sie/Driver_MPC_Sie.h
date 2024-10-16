@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2023 Arm Limited. All rights reserved.
+ * Copyright (c) 2016-2022 Arm Limited. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -50,6 +50,7 @@ static inline int32_t mpc_sie_error_trans(enum mpc_sie_error_t err)
         return ARM_MPC_ERR_UNSPECIFIED;
     }
 }
+
 
 /*
  * \brief Macro for MPC SIE Driver

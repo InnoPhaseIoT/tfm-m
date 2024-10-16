@@ -32,57 +32,6 @@ extern "C" {
 #endif
 
 
-struct inph_sse200_mpc_t {
-
-    volatile uint32_t ctrl;       /* (R/W) MPC Control */
-    volatile uint32_t reserved[3];/* Reserved */
-    volatile uint32_t blk_max;    /* (R/ ) Maximum value of block based index */
-    volatile uint32_t blk_cfg;    /* (R/ ) Block configuration */
-    volatile uint32_t blk_idx;    /* (R/W) Index value for accessing block
-                                   *       based look up table */
-    volatile uint32_t blk_lutn;   /* (R/W) Block based gating
-                                   *       Look Up Table (LUT) */
-    volatile uint32_t int_stat;   /* (R/ ) Interrupt state */
-    volatile uint32_t int_clear;  /* ( /W) Interrupt clear */
-    volatile uint32_t int_en;     /* (R/W) Interrupt enable */
-    volatile uint32_t int_info1;  /* (R/ ) Interrupt information 1 */
-    volatile uint32_t int_info2;  /* (R/ ) Interrupt information 2 */
-    volatile uint32_t int_set;    /* ( /W) Interrupt set. Debug purpose only */
-    volatile uint32_t reserved2[997]; /* Reserved */
-    volatile uint32_t pidr4;      /* (R/ ) Peripheral ID 4 */
-    volatile uint32_t pidr5;      /* (R/ ) Peripheral ID 5 */
-    volatile uint32_t pidr6;      /* (R/ ) Peripheral ID 6 */
-    volatile uint32_t pidr7;      /* (R/ ) Peripheral ID 7 */
-    volatile uint32_t pidr0;      /* (R/ ) Peripheral ID 0 */
-    volatile uint32_t pidr1;      /* (R/ ) Peripheral ID 1 */
-    volatile uint32_t pidr2;      /* (R/ ) Peripheral ID 2 */
-    volatile uint32_t pidr3;      /* (R/ ) Peripheral ID 3 */
-    volatile uint32_t cidr0;      /* (R/ ) Component ID 0 */
-    volatile uint32_t cidr1;      /* (R/ ) Component ID 1 */
-    volatile uint32_t cidr2;      /* (R/ ) Component ID 2 */
-    volatile uint32_t cidr3;      /* (R/ ) Component ID 3 */
-};
-
-
-/* Error code returned by the driver functions */
-enum inph_mpc_sie200_error_t {
-    INPH_MPC_SIE200_ERR_NONE,          /*!< No error */
-    INPH_MPC_SIE200_INVALID_ARG,       /*!< MPC invalid input arguments */
-    INPH_MPC_SIE200_NOT_INIT,          /*!< MPC not initialized */
-    INPH_MPC_SIE200_ERR_NOT_IN_RANGE,  /*!< Address does not belong to a range
-                                   *   controlled by the MPC */
-    INPH_MPC_SIE200_ERR_NOT_ALIGNED,   /*!< Address is not aligned on the block size
-                                   *   of this MPC */
-    INPH_MPC_SIE200_ERR_INVALID_RANGE, /*!< The given address range to configure
-                                   *   is invalid. This could be because:
-                                   *   - The base and limit swapped
-                                   *   - The base and limit addresses
-                                   *     are in different ranges */
-    INPH_MPC_SIE200_ERR_RANGE_SEC_ATTR_NON_COMPATIBLE, /*!< The given range cannot be
-                                                   *   accessed with the wanted
-                                                   *   security attributes */
-};
-
 /* Security attribute used in various place of the API */
 enum inph_mpc_sie200_sec_attr_t {
     INPH_MPC_SIE200_SEC_ATTR_SECURE,     /*!< Secure attribute */

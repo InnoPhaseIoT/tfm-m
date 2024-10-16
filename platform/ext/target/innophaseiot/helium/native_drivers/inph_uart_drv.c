@@ -24,16 +24,16 @@
 
 #include "inph_uart_drv.h"
 
-void inph_uart_uninit(USART_Type *base)
+void inph_uart_uninit(UARTx_Resources *dev)
 {
     /* reset the FIFOs */
-    INPH_UART_FCR_XFIFOR(base) = 1UL;
-    INPH_UART_FCR_RFIFOR(base) = 1UL;
+    INPH_UART_FCR_XFIFOR(dev->base) = 1UL;
+    INPH_UART_FCR_RFIFOR(dev->base) = 1UL;
 
-    INPH_UART_FCR(base) = 0UL;
-    INPH_UART_IER(base) = 0UL;
-    INPH_UART_LCR(base) = 0UL;
-    INPH_UART_MCR(base) = 0UL;
+    INPH_UART_FCR(dev->base) = 0UL;
+    INPH_UART_IER(dev->base) = 0UL;
+    INPH_UART_LCR(dev->base) = 0UL;
+    INPH_UART_MCR(dev->base) = 0UL;
 }
 
 enum inph_uart_error_t inph_uart_init(UARTx_Resources *dev)

@@ -1,20 +1,25 @@
-/*
- * Copyright (c) 2016-2018 ARM Limited
+/****************************************************************************
+ * @attention
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Copyright (c) 2024, InnoPhase IoT, Inc.
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * AND NONINFRINGEMENT ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER
+ * OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+ * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+ * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-//-------- <<< Use Configuration Wizard in Context Menu >>> --------------------
+ ****************************************************************************/
+/**
+ * @file    RTE_Device.h
+ * @author  InnophaseIOT Firmware Team
+ * @brief   Run Time Environment definitions
 
 #ifndef __RTE_DEVICE_H
 #define __RTE_DEVICE_H
@@ -39,117 +44,129 @@ typedef enum _INPH_POWER_STATE {
   INPH_POWER_FULL                        ///< Power on: full operation at maximum performance
 } INPH_POWER_STATE;
 
-
-
-// <e> SPI (Serial Peripheral Interface) [Driver_SPI0]
-// <i> Configuration settings for Driver_SPI0 in component ::Drivers:SPI
-#define   RTE_SPI0                       0
-// </e> SPI (Serial Peripheral Interface) [Driver_SPI0]
-
-// <e> SPI (Serial Peripheral Interface) [Driver_SPI1]
-// <i> Configuration settings for Driver_SPI1 in component ::Drivers:SPI
-#define   RTE_SPI1                       0
-// </e> SPI (Serial Peripheral Interface) [Driver_SPI1]
-
-// <e> SPI (Serial Peripheral Interface) [Driver_SPI2]
-// <i> Configuration settings for Driver_SPI2 in component ::Drivers:SPI
-#define   RTE_SPI2                       0
-// </e> SPI (Serial Peripheral Interface) [Driver_SPI2]
-
-// <e> SPI (Serial Peripheral Interface) [Driver_SPI3]
-// <i> Configuration settings for Driver_SPI3 in component ::Drivers:SPI
-#define   RTE_SPI3                       0
-// </e> SPI (Serial Peripheral Interface) [Driver_SPI3]
-
-// <e> SPI (Serial Peripheral Interface) [Driver_SPI4]
-// <i> Configuration settings for Driver_SPI4 in component ::Drivers:SPI
-#define   RTE_SPI4                       0
-// </e> SPI (Serial Peripheral Interface) [Driver_SPI4]
-
-// <e> I2C (Inter-integrated Circuit Interface 2) [Driver_I2C0]
-// <i> Configuration settings for Driver_I2C0 in component ::Drivers:I2C
-#define   RTE_I2C0                       0
-// </e> I2C (Inter-integrated Circuit Interface 2) [Driver_I2C0]
-
-// <e> I2C (Inter-integrated Circuit Interface 2) [Driver_I2C1]
-// <i> Configuration settings for Driver_I2C1 in component ::Drivers:I2C
-#define   RTE_I2C1                       0
-// </e> I2C (Inter-integrated Circuit Interface 2) [Driver_I2C1]
-
-// <e> I2C (Inter-integrated Circuit Interface 2) [Driver_I2C2]
-// <i> Configuration settings for Driver_I2C2 in component ::Drivers:I2C
-#define   RTE_I2C2                       0
-// </e> I2C (Inter-integrated Circuit Interface 2) [Driver_I2C2]
-
-// <e> I2C (Inter-integrated Circuit Interface 2) [Driver_I2C3]
-// <i> Configuration settings for Driver_I2C3 in component ::Drivers:I2C
-#define   RTE_I2C3                       0
-// </e> I2C (Inter-integrated Circuit Interface 2) [Driver_I2C3]
+/*****************************************************************************/
+/* UART RUN TIME ENVIRONMENT DECLARATIONS                                     */
+/*****************************************************************************/
+// <e> USART (Universal synchronous - asynchronous receiver transmitter) [Driver_USART0]
+// <i> Configuration settings for Driver_USART0 in component ::Drivers:USART
+#define   RTE_USART0_S                    1
+// </e> USART (Universal synchronous - asynchronous receiver transmitter) [Driver_USART0]
 
 // <e> USART (Universal synchronous - asynchronous receiver transmitter) [Driver_USART0]
 // <i> Configuration settings for Driver_USART0 in component ::Drivers:USART
-#define   RTE_USART0                     1
+#define   RTE_USART0_NS                    0
 // </e> USART (Universal synchronous - asynchronous receiver transmitter) [Driver_USART0]
 
-// <e> USART (Universal synchronous - asynchronous receiver transmitter) [Driver_USART1]
-// <i> Configuration settings for Driver_USART1 in component ::Drivers:USART
-#define   RTE_USART1                     1
-// </e> USART (Universal synchronous - asynchronous receiver transmitter) [Driver_USART1]
-
-// <e> USART (Universal synchronous - asynchronous receiver transmitter) [Driver_USART2]
-// <i> Configuration settings for Driver_USART2 in component ::Drivers:USART
-#define   RTE_USART2                     0
-// </e> USART (Universal synchronous - asynchronous receiver transmitter) [Driver_USART2]
-
-// <e> USART (Universal synchronous - asynchronous receiver transmitter) [Driver_USART3]
-// <i> Configuration settings for Driver_USART3 in component ::Drivers:USART
-#define   RTE_USART3                     0
-// </e> USART (Universal synchronous - asynchronous receiver transmitter) [Driver_USART3]
-
-// <e> USART (Universal synchronous - asynchronous receiver transmitter) [Driver_USART4]
-// <i> Configuration settings for Driver_USART4 in component ::Drivers:USART
-#define   RTE_USART4                     0
-// </e> USART (Universal synchronous - asynchronous receiver transmitter) [Driver_USART4]
-
+/*****************************************************************************/
+/* FLASH RUN TIME ENVIRONMENT DECLARATIONS                                     */
+/*****************************************************************************/
 // <e> FLASH (Flash Memory) [Driver_FLASH0]
 // <i> Configuration settings for Driver_FLASH0 in component ::Drivers:FLASH
 #define   RTE_FLASH0                     1
 // </e> FLASH (Flash Memory) [Driver_FLASH0]
 
-// <e> MPC (Memory Protection Controller) [Driver_ISRAM0_MPC]
-// <i> Configuration settings for Driver_ISRAM0_MPC in component ::Drivers:MPC
-#define   RTE_ISRAM0_MPC                 0
-// </e> MPC (Memory Protection Controller) [Driver_ISRAM0_MPC]
+/*****************************************************************************/
+/* MPC RUN TIME ENVIRONMENT DECLARATIONS                                     */
+/*****************************************************************************/
 
-// <e> MPC (Memory Protection Controller) [Driver_ISRAM1_MPC]
-// <i> Configuration settings for Driver_ISRAM1_MPC in component ::Drivers:MPC
-#define   RTE_ISRAM1_MPC                 0
-// </e> MPC (Memory Protection Controller) [Driver_ISRAM1_MPC]
-
-// <e> MPC (Memory Protection Controller) [Driver_ISRAM2_MPC]
-// <i> Configuration settings for Driver_ISRAM2_MPC in component ::Drivers:MPC
-#define   RTE_ISRAM2_MPC                 0
-// </e> MPC (Memory Protection Controller) [Driver_ISRAM2_MPC]
-
-// <e> MPC (Memory Protection Controller) [Driver_ISRAM3_MPC]
-// <i> Configuration settings for Driver_ISRAM3_MPC in component ::Drivers:MPC
-#define   RTE_ISRAM3_MPC                 0
-// </e> MPC (Memory Protection Controller) [Driver_ISRAM3_MPC]
+// <e> MPC (Memory Protection Controller) [Driver_SRAM0_MPC]
+// <i> Configuration settings for Driver_SRAM0_MPC in component ::Drivers:MPC
+#define   RTE_SRAM0_MPC                  1
+// </e> MPC (Memory Protection Controller) [Driver_SRAM0_MPC]
 
 // <e> MPC (Memory Protection Controller) [Driver_SRAM1_MPC]
 // <i> Configuration settings for Driver_SRAM1_MPC in component ::Drivers:MPC
-#define   RTE_CODE_SRAM1_MPC             0
+#define   RTE_SRAM1_MPC                  1
 // </e> MPC (Memory Protection Controller) [Driver_SRAM1_MPC]
 
 // <e> MPC (Memory Protection Controller) [Driver_SRAM2_MPC]
 // <i> Configuration settings for Driver_SRAM2_MPC in component ::Drivers:MPC
-#define   RTE_CODE_SRAM2_MPC             1
+#define   RTE_SRAM2_MPC                  1
 // </e> MPC (Memory Protection Controller) [Driver_SRAM2_MPC]
 
 // <e> MPC (Memory Protection Controller) [Driver_SRAM3_MPC]
 // <i> Configuration settings for Driver_SRAM3_MPC in component ::Drivers:MPC
-#define   RTE_CODE_SRAM3_MPC             0
+#define   RTE_SRAM3_MPC                  1
 // </e> MPC (Memory Protection Controller) [Driver_SRAM3_MPC]
+
+// <e> MPC (Memory Protection Controller) [Driver_SRAM4_MPC]
+// <i> Configuration settings for Driver_SRAM4_MPC in component ::Drivers:MPC
+#define   RTE_SRAM4_MPC                  1
+// </e> MPC (Memory Protection Controller) [Driver_SRAM4_MPC]
+
+// <e> MPC (Memory Protection Controller) [Driver_SRAM5_MPC]
+// <i> Configuration settings for Driver_SRAM5_MPC in component ::Drivers:MPC
+#define   RTE_SRAM5_MPC                  1
+// </e> MPC (Memory Protection Controller) [Driver_SRAM5_MPC]
+
+// <e> MPC (Memory Protection Controller) [Driver_SRAM6_MPC]
+// <i> Configuration settings for Driver_SRAM6_MPC in component ::Drivers:MPC
+#define   RTE_SRAM6_MPC                  1
+// </e> MPC (Memory Protection Controller) [Driver_SRAM6_MPC]
+
+// <e> MPC (Memory Protection Controller) [Driver_SRAM7_MPC]
+// <i> Configuration settings for Driver_SRAM7_MPC in component ::Drivers:MPC
+#define   RTE_SRAM7_MPC                  1
+// </e> MPC (Memory Protection Controller) [Driver_SRAM7_MPC]
+
+// <e> MPC (Memory Protection Controller) [Driver_SRAM8_MPC]
+// <i> Configuration settings for Driver_SRAM8_MPC in component ::Drivers:MPC
+#define   RTE_SRAM8_MPC                  1
+// </e> MPC (Memory Protection Controller) [Driver_SRAM8_MPC]
+
+// <e> MPC (Memory Protection Controller) [Driver_SRAM9_MPC]
+// <i> Configuration settings for Driver_SRAM9_MPC in component ::Drivers:MPC
+#define   RTE_SRAM9_MPC                  1
+// </e> MPC (Memory Protection Controller) [Driver_SRAM9_MPC]
+
+// <e> MPC (Memory Protection Controller) [Driver_SRAM10_MPC]
+// <i> Configuration settings for Driver_SRAM10_MPC in component ::Drivers:MPC
+#define   RTE_SRAM10_MPC                 1
+// </e> MPC (Memory Protection Controller) [Driver_SRAM10_MPC]
+
+// <e> MPC (Memory Protection Controller) [Driver_SRAM11_MPC]
+// <i> Configuration settings for Driver_SRAM11_MPC in component ::Drivers:MPC
+#define   RTE_SRAM11_MPC                 1
+// </e> MPC (Memory Protection Controller) [Driver_SRAM11_MPC]
+
+// <e> MPC (Memory Protection Controller) [Driver_SRAM12_MPC]
+// <i> Configuration settings for Driver_SRAM12_MPC in component ::Drivers:MPC
+#define   RTE_SRAM12_MPC                 1
+// </e> MPC (Memory Protection Controller) [Driver_SRAM12_MPC]
+
+// <e> MPC (Memory Protection Controller) [Driver_SRAM13_MPC]
+// <i> Configuration settings for Driver_SRAM13_MPC in component ::Drivers:MPC
+#define   RTE_SRAM13_MPC                 1
+// </e> MPC (Memory Protection Controller) [Driver_SRAM13_MPC]
+
+// <e> MPC (Memory Protection Controller) [Driver_SRAM14_MPC]
+// <i> Configuration settings for Driver_SRAM14_MPC in component ::Drivers:MPC
+#define   RTE_SRAM14_MPC                 1
+// </e> MPC (Memory Protection Controller) [Driver_SRAM14_MPC]
+
+// <e> MPC (Memory Protection Controller) [Driver_SRAM15_MPC]
+// <i> Configuration settings for Driver_SRAM15_MPC in component ::Drivers:MPC
+#define   RTE_SRAM15_MPC                 1
+// </e> MPC (Memory Protection Controller) [Driver_SRAM15_MPC]
+
+// <e> MPC (Memory Protection Controller) [Driver_ROM_MPC]
+// <i> Configuration settings for Driver_ROM_MPC in component ::Drivers:MPC
+#define   RTE_ROM_MPC                    1
+// </e> MPC (Memory Protection Controller) [Driver_ROM_MPC]
+
+// <e> MPC (Memory Protection Controller) [Driver_XSPI1_MPC]
+// <i> Configuration settings for Driver_XSPI1_MPC in component ::Drivers:MPC
+#define   RTE_XSPI1_MPC                  1
+// </e> MPC (Memory Protection Controller) [Driver_XSPI1_MPC]
+
+// <e> MPC (Memory Protection Controller) [Driver_XSPI2_MPC]
+// <i> Configuration settings for Driver_XSPI2_MPC in component ::Drivers:MPC
+#define   RTE_XSPI2_MPC                  1
+// </e> MPC (Memory Protection Controller) [Driver_XSPI2_MPC]
+
+/*****************************************************************************/
+/* PPC RUN TIME ENVIRONMENT DECLARATIONS                                     */
+/*****************************************************************************/
 
 // <e> PPC (Peripheral Protection Controller) [Driver_APB_PPCBASE0]
 // <i> Configuration settings for Driver_APB_PPCBASE0in component ::Drivers:PPC

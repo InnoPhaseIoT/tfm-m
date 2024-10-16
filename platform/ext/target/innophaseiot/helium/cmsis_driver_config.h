@@ -21,15 +21,15 @@
 #include "RTE_Device.h"
 #include "target_cfg.h"
 
-#ifdef RTE_USART0
-#define UART0_DEV       ARM_UART0_DEV_NS
+#ifdef RTE_USART0_S
+#define UART_DEV       USART0_DEV_S
 #endif
 
 #ifdef RTE_USART1
 #ifdef SECURE_UART1
-#define UART1_DEV       ARM_UART1_DEV_S
+#define UART_DEV       USART1_DEV_S
 #else
-#define UART1_DEV       ARM_UART1_DEV_NS
+#define UART_DEV       USART0_DEV_NS
 #endif
 #endif
 

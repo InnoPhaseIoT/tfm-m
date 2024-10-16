@@ -1,17 +1,25 @@
-/*
- * Copyright (c) 2016-2018 ARM Limited
+/****************************************************************************
+ * @attention
  *
- * Licensed under the Apache License Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Copyright (c) 2024, InnoPhase IoT, Inc.
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * AND NONINFRINGEMENT ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER
+ * OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+ * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+ * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * Unless required by applicable law or agreed to in writing software
- * distributed under the License is distributed on an "AS IS" BASIS
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ ****************************************************************************/
+/**
+ * @file    platform_retarget_dev.h
+ * @author  InnophaseIOT Firmware Team
+ * @brief   device structure references
  */
 
 /**
@@ -30,14 +38,11 @@
 #include "RTE_Device.h"
 
 /* ======= Defines peripheral configuration structures ======= */
-/* ARM UART driver structures */
-#ifdef ARM_UART0_S
-extern struct arm_uart_dev_t ARM_UART0_DEV_S;
-#endif
-#ifdef ARM_UART0_NS
-extern struct arm_uart_dev_t ARM_UART0_DEV_NS;
-#endif
 
+/* ARM UART driver structures */
+#ifdef RTE_USART0_S
+extern UARTx_Resources USART0_DEV_S;
+#endif
 
 /* ARM PPC driver structures */
 #ifdef RTE_APB_PPC_BASE0
@@ -81,8 +86,80 @@ extern struct inph_ppc_dev_t AHB_PPCSYSTEM_DEV_S;
 #endif
 
 /* ARM MPC SSE 200 driver structures */
-#ifdef MPC_SRAM0_S
+#ifdef RTE_SRAM0_MPC
 extern struct inph_mpc_sie200_dev_t INPH_MPC_SRAM0_DEV_S;
+#endif
+
+#ifdef RTE_SRAM1_MPC
+extern struct inph_mpc_sie200_dev_t INPH_MPC_SRAM1_DEV_S;
+#endif
+
+#ifdef RTE_SRAM2_MPC
+extern struct inph_mpc_sie200_dev_t INPH_MPC_SRAM2_DEV_S;
+#endif
+
+#ifdef RTE_SRAM3_MPC
+extern struct inph_mpc_sie200_dev_t INPH_MPC_SRAM3_DEV_S;
+#endif
+
+#ifdef RTE_SRAM4_MPC
+extern struct inph_mpc_sie200_dev_t INPH_MPC_SRAM4_DEV_S;
+#endif
+
+#ifdef RTE_SRAM5_MPC
+extern struct inph_mpc_sie200_dev_t INPH_MPC_SRAM5_DEV_S;
+#endif
+
+#ifdef RTE_SRAM6_MPC
+extern struct inph_mpc_sie200_dev_t INPH_MPC_SRAM6_DEV_S;
+#endif
+
+#ifdef RTE_SRAM7_MPC
+extern struct inph_mpc_sie200_dev_t INPH_MPC_SRAM7_DEV_S;
+#endif
+
+#ifdef RTE_SRAM8_MPC
+extern struct inph_mpc_sie200_dev_t INPH_MPC_SRAM8_DEV_S;
+#endif
+
+#ifdef RTE_SRAM9_MPC
+extern struct inph_mpc_sie200_dev_t INPH_MPC_SRAM9_DEV_S;
+#endif
+
+#ifdef RTE_SRAM10_MPC
+extern struct inph_mpc_sie200_dev_t INPH_MPC_SRAM10_DEV_S;
+#endif
+
+#ifdef RTE_SRAM11_MPC
+extern struct inph_mpc_sie200_dev_t INPH_MPC_SRAM11_DEV_S;
+#endif
+
+#ifdef RTE_SRAM12_MPC
+extern struct inph_mpc_sie200_dev_t INPH_MPC_SRAM12_DEV_S;
+#endif
+
+#ifdef RTE_SRAM13_MPC
+extern struct inph_mpc_sie200_dev_t INPH_MPC_SRAM13_DEV_S;
+#endif
+
+#ifdef RTE_SRAM14_MPC
+extern struct inph_mpc_sie200_dev_t INPH_MPC_SRAM14_DEV_S;
+#endif
+
+#ifdef RTE_SRAM15_MPC
+extern struct inph_mpc_sie200_dev_t INPH_MPC_SRAM15_DEV_S;
+#endif
+
+#ifdef RTE_ROM_MPC
+extern struct inph_mpc_sie200_dev_t INPH_MPC_ROM_DEV_S;
+#endif
+
+#ifdef RTE_XSPI1_MPC
+extern struct inph_mpc_sie200_dev_t INPH_MPC_XSPI1_DEV_S;
+#endif
+
+#ifdef RTE_XSPI2_MPC
+extern struct inph_mpc_sie200_dev_t INPH_MPC_XSPI2_DEV_S;
 #endif
 
 

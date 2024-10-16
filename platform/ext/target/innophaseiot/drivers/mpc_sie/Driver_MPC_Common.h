@@ -1,29 +1,21 @@
-/****************************************************************************
- * @attention
+/*
+ * Copyright (c) 2016-2022 Arm Limited. All rights reserved.
  *
- * Copyright (c) 2024, InnoPhase IoT, Inc.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * AND NONINFRINGEMENT ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER
- * OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
- * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
- * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
- * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
- * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
- ****************************************************************************/
-/**
- * @file    inph_mpc_commn.c
- * @author  InnophaseIOT Firmware Team
- * @brief   MPC top driver
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
-#ifndef __INPH_MPC_COMMON_H
-#define __INPH_MPC_COMMON_H
+#ifndef __DRIVER_MPC_COMMON_H__
+#define __DRIVER_MPC_COMMON_H__
 
 #include "Driver_MPC.h"
 #include "Driver_Common.h"
@@ -39,4 +31,4 @@ static inline ARM_DRIVER_VERSION ARM_MPC_GetVersion(void)
     return DriverVersion;
 }
 
-#endif /* __INPH_MPC_COMMON_H */
+#endif /* __DRIVER_MPC_COMMON_H__ */

@@ -173,7 +173,7 @@ enum inph_en_uart_rx_trigger {
 #define INPH_UART_INITIALIZED             (0x01)
 
 
-void inph_uart_uninit(USART_Type *base);
+void inph_uart_uninit(UARTx_Resources *dev);
 enum inph_uart_error_t inph_uart_init(UARTx_Resources *dev);
 enum inph_uart_error_t inph_uart_set_baudrate(UARTx_Resources *dev);
 uint32_t inph_uart_get_baudrate(UARTx_Resources* dev);
