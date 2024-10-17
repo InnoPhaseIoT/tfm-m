@@ -244,7 +244,7 @@ typedef union {
     
 }ns_privilege_regs_AHBNSPRVPPCCXIP;
 
-typedef __IOM struct inph_nspriv_security_base{
+typedef volatile struct inph_nspriv_security_base{
     ns_privilege_regs_APBNSPRVPPCBASE0  APBNSPRVPPCBASE0;
     ns_privilege_regs_APBNSPRVPPCBASE1  APBNSPRVPPCBASE1;
     ns_privilege_regs_APBNSPRVPPCBASE2  APBNSPRVPPCBASE2;

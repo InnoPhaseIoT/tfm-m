@@ -1045,7 +1045,7 @@ typedef union {
     
 }security_ctrl_regs_NSGPIO;
 
-typedef __IOM struct inph_security_cntrl_base{
+typedef volatile struct inph_security_cntrl_base{
 
     security_ctrl_regs_SPCSECCTRL  SPCSECCTRL;
     security_ctrl_regs_BUSWAIT  BUSWAIT;

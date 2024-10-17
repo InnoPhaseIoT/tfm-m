@@ -61,16 +61,16 @@ struct inph_ppc_dev_t {
 };
 
 /* Security attribute used to configure the peripheral */
-typedef enum inph_ppc_sec_attr {
+enum inph_ppc_sec_attr_t {
     INPH_PPC_SECURE_ONLY = 0,    /*! Secure access */
     INPH_PPC_NONSECURE_ONLY, /*! Non-secure access */
-}inph_ppc_sec_attr_t;
+};
 
 /* Privilege attribute used to configure the peripheral */
-typedef enum inph_ppc_priv_attr {
+enum inph_ppc_priv_attr_t {
     INPH_PPC_NONPRIV_ONLY = 0,           /*! Only privileged access */
     INPH_PPC_PRIV_ONLY,        /*! Only Non-Privilege only access */
-}inph_ppc_priv_attr_t;
+};
 
 /* ARM PPC error codes */
 enum inph_ppc_error_t {

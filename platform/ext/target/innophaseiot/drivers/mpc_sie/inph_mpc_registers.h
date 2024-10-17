@@ -453,7 +453,7 @@ typedef union {
     
 }sie200ahb5memprot_CIDR3;
 
-typedef __IOM struct inph_mpc_base {
+typedef volatile struct inph_mpc_base {
     sie200ahb5memprot_CTRL  CTRL;
     
     uint8_t filler1[0xC];
@@ -485,7 +485,7 @@ typedef __IOM struct inph_mpc_base {
     sie200ahb5memprot_CIDR3  CIDR3;
     
     
-} inph_mpc_t;
+} inph_mpc_base_t;
 
 
 #endif /* __INPH_MPC_REGISTERS_H */

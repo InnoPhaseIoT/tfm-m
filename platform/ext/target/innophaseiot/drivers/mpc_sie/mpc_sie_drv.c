@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 #include "mpc_sie_drv.h"
-#include "mpc_sie_reg_map.h"
+#include "inph_mpc_registers.h"
 
 #include <stddef.h>
 #include <stdbool.h>
@@ -41,7 +41,7 @@
 #define MPC_SIE300_CTRL_GATE_ACK      (1UL << 7UL)  /* Acknowledge for gating
                                                      * incoming transfers
                                                      */
-#define MPC_SIE_CTRL_AUTOINCREMENT    (1UL << 8UL)  /* BLK_IDX auto increment */
+#define MPC_SIE_CTRL_AUTOINCREMENT    (1UL << 8UL)  /* BLKIDX.bf.BlockIndex auto increment */
 #define MPC_SIE300_CTRL_SEC_RESP      (1UL << 16UL) /* Response type when SW
                                                      * asks to gate the transfer
                                                      */
@@ -68,7 +68,7 @@ enum mpc_sie_intern_error_t {
      * in the driver or if the IP has not enough LUTs to cover the
      * range, due to wrong reported block size for example.
      */
-    MPC_SIE_INTERN_ERR_BLK_IDX_TOO_HIGH = -1,
+     MPC_SIE_INTERN_ERR_BLK_IDX_TOO_HIGH = -1,
 
 };
 
@@ -140,8 +140,8 @@ static enum mpc_sie_intern_error_t get_lut_masks(
     uint32_t mask;
     uint32_t norm_base;
     uint32_t norm_limit;
-    struct mpc_sie_reg_map_t* p_mpc =
-                                   (struct mpc_sie_reg_map_t*)dev->cfg->base;
+    inph_mpc_base_t* p_mpc =
+                                   (inph_mpc_base_t*)dev->cfg->base;
 
     /*
      * Check that the addresses are within the controlled regions
@@ -158,7 +158,7 @@ static enum mpc_sie_intern_error_t get_lut_masks(
     }
     *range = base_range;
 
-    block_size = (1 << (p_mpc->blk_cfg + MPC_SIE_BLK_CFG_OFFSET));
+    block_size = (1 << (p_mpc->BLKMAX.bf.BlockMax + MPC_SIE_BLK_CFG_OFFSET));
 
     /* Base and limit+1 addresses must be aligned on the MPC block size */
     if(base % block_size || (limit+1) % block_size) {
@@ -190,7 +190,7 @@ static enum mpc_sie_intern_error_t get_lut_masks(
     *first_word_idx = base_word_idx;
 
     /* Limit to the highest block that can be configured */
-    blk_max = p_mpc->blk_max;
+    blk_max = p_mpc->BLKMAX.bf.BlockMax;
 
     if((limit_word_idx > blk_max) || (base_word_idx > blk_max)) {
         return MPC_SIE_INTERN_ERR_BLK_IDX_TOO_HIGH;
@@ -247,8 +247,8 @@ enum mpc_sie_error_t mpc_sie_init(struct mpc_sie_dev_t* dev)
 enum mpc_sie_error_t mpc_sie_get_block_size(struct mpc_sie_dev_t* dev,
                                             uint32_t* blk_size)
 {
-    struct mpc_sie_reg_map_t* p_mpc =
-                                   (struct mpc_sie_reg_map_t*)dev->cfg->base;
+    inph_mpc_base_t* p_mpc =
+                                   (inph_mpc_base_t*)dev->cfg->base;
 
     if(dev->data->is_initialized != true) {
         return MPC_SIE_NOT_INIT;
@@ -259,7 +259,7 @@ enum mpc_sie_error_t mpc_sie_get_block_size(struct mpc_sie_dev_t* dev,
     }
 
     /* Calculate the block size in byte according to the manual */
-    *blk_size = (1 << (p_mpc->blk_cfg + MPC_SIE_BLK_CFG_OFFSET));
+    *blk_size = (1 << (p_mpc->BLKCFG.bf.BLKCFG + MPC_SIE_BLK_CFG_OFFSET));
 
     return MPC_SIE_ERR_NONE;
 }
@@ -278,8 +278,8 @@ enum mpc_sie_error_t mpc_sie_config_region(struct mpc_sie_dev_t* dev,
     uint32_t nr_words;
     const struct mpc_sie_memory_range_t* range;
     uint32_t word_value;
-    struct mpc_sie_reg_map_t* p_mpc =
-                                   (struct mpc_sie_reg_map_t*)dev->cfg->base;
+    inph_mpc_base_t* p_mpc =
+                                   (inph_mpc_base_t*)dev->cfg->base;
 
     if(dev->data->is_initialized != true) {
         return MPC_SIE_NOT_INIT;
@@ -314,11 +314,11 @@ enum mpc_sie_error_t mpc_sie_config_region(struct mpc_sie_dev_t* dev,
     __DMB();
 
     /* Set the block index to the first word that will be updated */
-    p_mpc->blk_idx = first_word_idx;
+    p_mpc->BLKIDX.bf.BlockIndex = first_word_idx;
 
     /* If only one word needs to be touched in the LUT */
     if(nr_words == 1) {
-        word_value = p_mpc->blk_lutn;
+        word_value = p_mpc->BLKLUT.bf.BlockLUT;
         if(attr == MPC_SIE_SEC_ATTR_NONSECURE) {
             word_value |= first_word_mask;
         } else {
@@ -329,8 +329,8 @@ enum mpc_sie_error_t mpc_sie_config_region(struct mpc_sie_dev_t* dev,
          * Set the index again because full word read or write could have
          * incremented it
          */
-        p_mpc->blk_idx = first_word_idx;
-        p_mpc->blk_lutn = word_value;
+        p_mpc->BLKIDX.bf.BlockIndex = first_word_idx;
+        p_mpc->BLKLUT.bf.BlockLUT = word_value;
 
         /* Commit the configuration change */
         __DSB();
@@ -340,7 +340,7 @@ enum mpc_sie_error_t mpc_sie_config_region(struct mpc_sie_dev_t* dev,
     }
 
     /* First word */
-    word_value = p_mpc->blk_lutn;
+    word_value = p_mpc->BLKLUT.bf.BlockLUT;
     if(attr == MPC_SIE_SEC_ATTR_NONSECURE) {
         word_value |= first_word_mask;
     } else {
@@ -350,30 +350,30 @@ enum mpc_sie_error_t mpc_sie_config_region(struct mpc_sie_dev_t* dev,
      * Set the index again because full word read or write could have
      * incremented it
      */
-    p_mpc->blk_idx = first_word_idx;
+    p_mpc->BLKIDX.bf.BlockIndex = first_word_idx;
     /* Partially configure the first word */
-    p_mpc->blk_lutn = word_value;
+    p_mpc->BLKLUT.bf.BlockLUT = word_value;
 
     /* Fully configure the intermediate words if there are any */
     for(i=first_word_idx+1; i<limit_word_idx; i++) {
-        p_mpc->blk_idx = i;
+        p_mpc->BLKIDX.bf.BlockIndex = i;
         if(attr == MPC_SIE_SEC_ATTR_NONSECURE) {
-            p_mpc->blk_lutn = 0xFFFFFFFF;
+            p_mpc->BLKLUT.bf.BlockLUT = 0xFFFFFFFF;
         } else {
-            p_mpc->blk_lutn = 0x00000000;
+            p_mpc->BLKLUT.bf.BlockLUT = 0x00000000;
         }
     }
 
     /* Partially configure the limit word */
-    p_mpc->blk_idx = limit_word_idx;
-    word_value = p_mpc->blk_lutn;
+    p_mpc->BLKIDX.bf.BlockIndex = limit_word_idx;
+    word_value = p_mpc->BLKLUT.bf.BlockLUT;
     if(attr == MPC_SIE_SEC_ATTR_NONSECURE) {
         word_value |= limit_word_mask;
     } else {
         word_value &= ~limit_word_mask;
     }
-    p_mpc->blk_idx = limit_word_idx;
-    p_mpc->blk_lutn = word_value;
+    p_mpc->BLKIDX.bf.BlockIndex = limit_word_idx;
+    p_mpc->BLKLUT.bf.BlockLUT = word_value;
 
     /* Commit the configuration change */
     __DSB();
@@ -397,8 +397,8 @@ enum mpc_sie_error_t mpc_sie_get_region_config(
     uint32_t limit_word_idx;
     uint32_t limit_word_mask;
     uint32_t nr_words;
-    struct mpc_sie_reg_map_t* p_mpc =
-                                   (struct mpc_sie_reg_map_t*)dev->cfg->base;
+    inph_mpc_base_t* p_mpc =
+                                   (inph_mpc_base_t*)dev->cfg->base;
     const struct mpc_sie_memory_range_t* range;
     uint32_t word_value;
 
@@ -422,7 +422,7 @@ enum mpc_sie_error_t mpc_sie_get_region_config(
      * If the base and limit are not aligned, align them and make sure
      * that the resulting region fully includes the original region
      */
-    block_size = (1 << (p_mpc->blk_cfg + MPC_SIE_BLK_CFG_OFFSET));
+    block_size = (1 << (p_mpc->BLKCFG.bf.BLKCFG + MPC_SIE_BLK_CFG_OFFSET));
 
     block_size_mask = block_size - 1;
     base &= ~(block_size_mask);
@@ -447,11 +447,11 @@ enum mpc_sie_error_t mpc_sie_get_region_config(
     }
 
     /* Set the block index to the first word that will be updated */
-    p_mpc->blk_idx = first_word_idx;
+    p_mpc->BLKIDX.bf.BlockIndex = first_word_idx;
 
     /* If only one word needs to be touched in the LUT */
     if(nr_words == 1) {
-        word_value = p_mpc->blk_lutn;
+        word_value = p_mpc->BLKLUT.bf.BlockLUT;
         word_value &= first_word_mask;
         if(word_value == 0) {
             *attr = MPC_SIE_SEC_ATTR_SECURE;
@@ -468,7 +468,7 @@ enum mpc_sie_error_t mpc_sie_get_region_config(
     }
 
     /* Get the partial configuration of the first word */
-    word_value = p_mpc->blk_lutn & first_word_mask;
+    word_value = p_mpc->BLKLUT.bf.BlockLUT & first_word_mask;
     if(word_value == 0x00000000) {
         *attr = MPC_SIE_SEC_ATTR_SECURE;
     } else if(word_value ^ first_word_mask) {
@@ -489,8 +489,8 @@ enum mpc_sie_error_t mpc_sie_get_region_config(
 
     /* Get the configuration of the intermediate words if there are any */
     for(i=first_word_idx+1; i<limit_word_idx; i++) {
-        p_mpc->blk_idx = i;
-        word_value = p_mpc->blk_lutn;
+        p_mpc->BLKIDX.bf.BlockIndex = i;
+        word_value = p_mpc->BLKLUT.bf.BlockLUT;
         if(word_value == 0x00000000) {
             *attr = MPC_SIE_SEC_ATTR_SECURE;
         } else if(word_value == 0xFFFFFFFF) {
@@ -509,8 +509,8 @@ enum mpc_sie_error_t mpc_sie_get_region_config(
     }
 
     /* Get the partial configuration of the limit word */
-    p_mpc->blk_idx = limit_word_idx;
-    word_value = p_mpc->blk_lutn & limit_word_mask;
+    p_mpc->BLKIDX.bf.BlockIndex = limit_word_idx;
+    word_value = p_mpc->BLKLUT.bf.BlockLUT & limit_word_mask;
     if(word_value == 0x00000000) {
         *attr = MPC_SIE_SEC_ATTR_SECURE;
     } else if(word_value ^ first_word_mask) {
@@ -531,8 +531,8 @@ enum mpc_sie_error_t mpc_sie_get_region_config(
 enum mpc_sie_error_t mpc_sie_get_ctrl(struct mpc_sie_dev_t* dev,
                                       uint32_t* ctrl_val)
 {
-    struct mpc_sie_reg_map_t* p_mpc =
-                                   (struct mpc_sie_reg_map_t*)dev->cfg->base;
+    inph_mpc_base_t* p_mpc =
+                                   (inph_mpc_base_t*)dev->cfg->base;
 
     if(dev->data->is_initialized != true) {
         return MPC_SIE_NOT_INIT;
@@ -542,7 +542,7 @@ enum mpc_sie_error_t mpc_sie_get_ctrl(struct mpc_sie_dev_t* dev,
         return MPC_SIE_INVALID_ARG;
     }
 
-    *ctrl_val = p_mpc->ctrl;
+    *ctrl_val = p_mpc->CTRL.dw;
 
     return MPC_SIE_ERR_NONE;
 }
@@ -550,14 +550,14 @@ enum mpc_sie_error_t mpc_sie_get_ctrl(struct mpc_sie_dev_t* dev,
 enum mpc_sie_error_t mpc_sie_set_ctrl(struct mpc_sie_dev_t* dev,
                                       uint32_t mpc_ctrl)
 {
-    struct mpc_sie_reg_map_t* p_mpc =
-                                   (struct mpc_sie_reg_map_t*)dev->cfg->base;
+    inph_mpc_base_t* p_mpc =
+                                   (inph_mpc_base_t*)dev->cfg->base;
 
     if(dev->data->is_initialized != true) {
         return MPC_SIE_NOT_INIT;
     }
 
-    p_mpc->ctrl = mpc_ctrl;
+    p_mpc->CTRL.dw = mpc_ctrl;
 
     return MPC_SIE_ERR_NONE;
 }
@@ -565,8 +565,8 @@ enum mpc_sie_error_t mpc_sie_set_ctrl(struct mpc_sie_dev_t* dev,
 enum mpc_sie_error_t mpc_sie_get_sec_resp(struct mpc_sie_dev_t* dev,
                                           enum mpc_sie_sec_resp_t* sec_rep)
 {
-    struct mpc_sie_reg_map_t* p_mpc =
-                                   (struct mpc_sie_reg_map_t*)dev->cfg->base;
+    inph_mpc_base_t* p_mpc =
+                                   (inph_mpc_base_t*)dev->cfg->base;
     bool gating_present = false;
 
     if(dev->data->is_initialized != true) {
@@ -578,7 +578,7 @@ enum mpc_sie_error_t mpc_sie_get_sec_resp(struct mpc_sie_dev_t* dev,
     }
 
     if (dev->data->sie_version == SIE200) {
-        if(p_mpc->ctrl & MPC_SIE200_CTRL_SEC_RESP) {
+        if(p_mpc->CTRL.dw & MPC_SIE200_CTRL_SEC_RESP) {
             *sec_rep = MPC_SIE_RESP_BUS_ERROR;
         } else {
             *sec_rep = MPC_SIE_RESP_RAZ_WI;
@@ -590,7 +590,7 @@ enum mpc_sie_error_t mpc_sie_get_sec_resp(struct mpc_sie_dev_t* dev,
             return MPC_SIE_ERR_GATING_NOT_PRESENT;
         }
 
-        if(p_mpc->ctrl & MPC_SIE300_CTRL_SEC_RESP) {
+        if(p_mpc->CTRL.dw & MPC_SIE300_CTRL_SEC_RESP) {
             /* MPC returns a BUS ERROR response */
             *sec_rep = MPC_SIE_RESP_BUS_ERROR;
         } else {
@@ -607,8 +607,8 @@ enum mpc_sie_error_t mpc_sie_get_sec_resp(struct mpc_sie_dev_t* dev,
 enum mpc_sie_error_t  mpc_sie_set_sec_resp(struct mpc_sie_dev_t* dev,
                                            enum mpc_sie_sec_resp_t sec_rep)
 {
-    struct mpc_sie_reg_map_t* p_mpc =
-                                   (struct mpc_sie_reg_map_t*)dev->cfg->base;
+    inph_mpc_base_t* p_mpc =
+                                   (inph_mpc_base_t*)dev->cfg->base;
     bool gating_present = false;
 
     if(dev->data->is_initialized != true) {
@@ -617,9 +617,9 @@ enum mpc_sie_error_t  mpc_sie_set_sec_resp(struct mpc_sie_dev_t* dev,
 
     if (dev->data->sie_version == SIE200) {
         if (sec_rep == MPC_SIE_RESP_BUS_ERROR) {
-            p_mpc->ctrl |= MPC_SIE200_CTRL_SEC_RESP;
+            p_mpc->CTRL.dw |= MPC_SIE200_CTRL_SEC_RESP;
         } else if (sec_rep == MPC_SIE_RESP_RAZ_WI) {
-            p_mpc->ctrl &= ~MPC_SIE200_CTRL_SEC_RESP;
+            p_mpc->CTRL.dw &= ~MPC_SIE200_CTRL_SEC_RESP;
         } else {
             return MPC_SIE_INVALID_ARG;
         }
@@ -631,9 +631,9 @@ enum mpc_sie_error_t  mpc_sie_set_sec_resp(struct mpc_sie_dev_t* dev,
         }
 
         if (sec_rep == MPC_SIE_RESP_BUS_ERROR) {
-            p_mpc->ctrl |= MPC_SIE300_CTRL_SEC_RESP;
+            p_mpc->CTRL.dw |= MPC_SIE300_CTRL_SEC_RESP;
         } else if (sec_rep == MPC_SIE_RESP_WAIT_GATING_DISABLED) {
-            p_mpc->ctrl &= ~MPC_SIE300_CTRL_SEC_RESP;
+            p_mpc->CTRL.dw &= ~MPC_SIE300_CTRL_SEC_RESP;
         } else {
             return MPC_SIE_INVALID_ARG;
         }
@@ -647,52 +647,52 @@ enum mpc_sie_error_t  mpc_sie_set_sec_resp(struct mpc_sie_dev_t* dev,
 
 enum mpc_sie_error_t mpc_sie_irq_enable(struct mpc_sie_dev_t* dev)
 {
-    struct mpc_sie_reg_map_t* p_mpc =
-                                   (struct mpc_sie_reg_map_t*)dev->cfg->base;
+    inph_mpc_base_t* p_mpc =
+                                   (inph_mpc_base_t*)dev->cfg->base;
 
     if(dev->data->is_initialized != true) {
         return MPC_SIE_NOT_INIT;
     }
 
-    p_mpc->int_en |= MPC_SIE_INT_BIT;
+   p_mpc->INTEN.bf.MPCIRQEnable |= MPC_SIE_INT_BIT;
 
     return MPC_SIE_ERR_NONE;
 }
 
 void mpc_sie_irq_disable(struct mpc_sie_dev_t* dev)
 {
-    struct mpc_sie_reg_map_t* p_mpc =
-                                   (struct mpc_sie_reg_map_t*)dev->cfg->base;
+    inph_mpc_base_t* p_mpc =
+                                   (inph_mpc_base_t*)dev->cfg->base;
 
-    p_mpc->int_en &= ~MPC_SIE_INT_BIT;
+    p_mpc->INTEN.bf.MPCIRQEnable &= ~MPC_SIE_INT_BIT;
 }
 
 void mpc_sie_clear_irq(struct mpc_sie_dev_t* dev)
 {
-    struct mpc_sie_reg_map_t* p_mpc =
-                                   (struct mpc_sie_reg_map_t*)dev->cfg->base;
+    inph_mpc_base_t* p_mpc =
+                                   (inph_mpc_base_t*)dev->cfg->base;
 
-    p_mpc->int_clear = MPC_SIE_INT_BIT;
+    p_mpc->INTCLEAR.bf.MPCIRQClear = MPC_SIE_INT_BIT;
 }
 
 uint32_t mpc_sie_irq_state(struct mpc_sie_dev_t* dev)
 {
-    struct mpc_sie_reg_map_t* p_mpc =
-                                   (struct mpc_sie_reg_map_t*)dev->cfg->base;
+    inph_mpc_base_t* p_mpc =
+                                   (inph_mpc_base_t*)dev->cfg->base;
 
-    return (p_mpc->int_stat & MPC_SIE_INT_BIT);
+    return (p_mpc->INTSTAT.bf.MPCIRQTriggered & MPC_SIE_INT_BIT);
 }
 
 enum mpc_sie_error_t mpc_sie_lock_down(struct mpc_sie_dev_t* dev)
 {
-    struct mpc_sie_reg_map_t* p_mpc =
-                                   (struct mpc_sie_reg_map_t*)dev->cfg->base;
+    inph_mpc_base_t* p_mpc =
+                                   (inph_mpc_base_t*)dev->cfg->base;
 
     if(dev->data->is_initialized != true) {
         return MPC_SIE_NOT_INIT;
     }
 
-    p_mpc->ctrl |= (MPC_SIE_CTRL_AUTOINCREMENT
+    p_mpc->CTRL.dw |= (MPC_SIE_CTRL_AUTOINCREMENT
                     | MPC_SIE_CTRL_SEC_LOCK_DOWN);
 
     return MPC_SIE_ERR_NONE;
@@ -701,8 +701,8 @@ enum mpc_sie_error_t mpc_sie_lock_down(struct mpc_sie_dev_t* dev)
 enum mpc_sie_error_t mpc_sie_is_gating_present(struct mpc_sie_dev_t* dev,
                                                bool* gating_present)
 {
-    struct mpc_sie_reg_map_t* p_mpc =
-                                   (struct mpc_sie_reg_map_t*)dev->cfg->base;
+    inph_mpc_base_t* p_mpc =
+                                   (inph_mpc_base_t*)dev->cfg->base;
 
     if(dev->data->is_initialized != true) {
         return MPC_SIE_NOT_INIT;
@@ -712,39 +712,39 @@ enum mpc_sie_error_t mpc_sie_is_gating_present(struct mpc_sie_dev_t* dev,
         return MPC_SIE_UNSUPPORTED_HARDWARE_VERSION;
     }
 
-    *gating_present = (bool)(p_mpc->ctrl & MPC_SIE300_CTRL_GATE_PRESENT);
+    *gating_present = (bool)(p_mpc->CTRL.dw & MPC_SIE300_CTRL_GATE_PRESENT);
 
     return MPC_SIE_ERR_NONE;
 }
 
 uint32_t get_sie_version(struct mpc_sie_dev_t* dev)
 {
-    struct mpc_sie_reg_map_t* p_mpc =
-                                   (struct mpc_sie_reg_map_t*)dev->cfg->base;
+    inph_mpc_base_t* p_mpc =
+                                   (inph_mpc_base_t*)dev->cfg->base;
 
-    return p_mpc->pidr0 & MPC_PIDR0_SIE_VERSION_MASK;
+    return p_mpc->PIDR0.bf.PART0 & MPC_PIDR0_SIE_VERSION_MASK;
 }
 
 bool mpc_sie_get_gate_ack(struct mpc_sie_dev_t* dev)
 {
-    struct mpc_sie_reg_map_t* p_mpc =
-                                   (struct mpc_sie_reg_map_t*)dev->cfg->base;
+    inph_mpc_base_t* p_mpc =
+                                   (inph_mpc_base_t*)dev->cfg->base;
 
-    return (bool)(p_mpc->ctrl & MPC_SIE300_CTRL_GATE_ACK);
+    return (bool)(p_mpc->CTRL.dw & MPC_SIE300_CTRL_GATE_ACK);
 }
 
 void mpc_sie_request_gating(struct mpc_sie_dev_t* dev)
 {
-    struct mpc_sie_reg_map_t* p_mpc =
-                                   (struct mpc_sie_reg_map_t*)dev->cfg->base;
+    inph_mpc_base_t* p_mpc =
+                                   (inph_mpc_base_t*)dev->cfg->base;
 
-    p_mpc->ctrl |= MPC_SIE300_CTRL_GATE_REQ;
+    p_mpc->CTRL.dw |= MPC_SIE300_CTRL_GATE_REQ;
 }
 
 void mpc_sie_release_gating(struct mpc_sie_dev_t* dev)
 {
-    struct mpc_sie_reg_map_t* p_mpc =
-                                   (struct mpc_sie_reg_map_t*)dev->cfg->base;
+    inph_mpc_base_t* p_mpc =
+                                   (inph_mpc_base_t*)dev->cfg->base;
 
-    p_mpc->ctrl &= ~MPC_SIE300_CTRL_GATE_REQ;
+    p_mpc->CTRL.dw &= ~MPC_SIE300_CTRL_GATE_REQ;
 }

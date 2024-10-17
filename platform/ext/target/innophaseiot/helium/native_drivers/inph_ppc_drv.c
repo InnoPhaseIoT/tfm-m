@@ -48,10 +48,10 @@
 void inph_ppc_init(struct inph_ppc_dev_t* dev,
                      enum inph_ppc_name_t ppc_name)
 {
-    struct inph_security_cntrl_t* p_spctrl = 
-                         (struct inph_security_cntrl_t *)dev->cfg->spctrl_base;
-    struct inph_nspriv_security_t* p_nspriv = 
-                       (struct inph_nspriv_security_t *)dev->cfg->snspriv_base;
+    inph_security_cntrl_t* p_spctrl = 
+                         (inph_security_cntrl_t *)dev->cfg->spctrl_base;
+    inph_nspriv_security_t* p_nspriv = 
+                       (inph_nspriv_security_t *)dev->cfg->snspriv_base;
 
     switch(ppc_name) {
 
@@ -81,7 +81,7 @@ void inph_ppc_init(struct inph_ppc_dev_t* dev,
             dev->data->p_nsp_ppc = &p_nspriv->APBNSPRVPPCPERIPH1.bf.PPC_PERIPH_1_NS_PRV_N;
             dev->data->int_bit_mask = AHB_PPC_PERIPH1_INT_POS_MASK;
             break;
-        case APB_PPC_PERIPH0:
+        case AHB_PPC_PERIPH0:
             dev->data->p_ns_ppc  = &p_spctrl->APBNSPPCPERIPH0.bf.PPC_PERIPH_0_NS_N;
             dev->data->p_sp_ppc  = &p_spctrl->APBSPRVPPCPERIPH0.bf.PPC_PERIPH_0_PRV_N;
             dev->data->p_nsp_ppc = &p_nspriv->APBNSPRVPPCPERIPH0.bf.PPC_PERIPH_0_NS_PRV_N;
@@ -191,46 +191,46 @@ uint32_t inph_ppc_is_periph_priv_only(struct inph_ppc_dev_t* dev,
 
 enum inph_ppc_error_t inph_ppc_irq_enable(struct inph_ppc_dev_t* dev)
 {
-    struct inph_security_cntrl_t* p_spctrl =
-                         (struct inph_security_cntrl_t*)dev->cfg->spctrl_base;
+    inph_security_cntrl_t* p_spctrl =
+                         (inph_security_cntrl_t*)dev->cfg->spctrl_base;
 
     if(dev->data->state != INPH_PPC_INITIALIZED) {
         return INPH_PPC_NOT_INIT;
     }
 
-    p_spctrl->secppcinten |= dev->data->int_bit_mask;
+    p_spctrl->SECPPCINTEN.dw |= dev->data->int_bit_mask;
 
     return INPH_PPC_ERR_NONE;
 }
 
 void inph_ppc_irq_disable(struct inph_ppc_dev_t* dev)
 {
-    struct inph_security_cntrl_t* p_spctrl =
-                         (struct inph_security_cntrl_t*)dev->cfg->spctrl_base;
+    inph_security_cntrl_t* p_spctrl =
+                         (inph_security_cntrl_t*)dev->cfg->spctrl_base;
 
     if(dev->data->state == INPH_PPC_INITIALIZED) {
-        p_spctrl->secppcinten &= ~(dev->data->int_bit_mask);
+        p_spctrl->SECPPCINTEN.dw &= ~(dev->data->int_bit_mask);
     }
 }
 
 void inph_ppc_clear_irq(struct inph_ppc_dev_t* dev)
 {
-    struct inph_security_cntrl_t* p_spctrl =
-                         (struct inph_security_cntrl_t*)dev->cfg->spctrl_base;
+    inph_security_cntrl_t* p_spctrl =
+                         (inph_security_cntrl_t*)dev->cfg->spctrl_base;
 
     if(dev->data->state == INPH_PPC_INITIALIZED) {
-        p_spctrl->secppcintclr = dev->data->int_bit_mask;
+        p_spctrl->SECPPCINTCLR.dw = dev->data->int_bit_mask;
     }
 }
 
 uint32_t inph_ppc_irq_state(struct inph_ppc_dev_t* dev)
 {
-    struct inph_security_cntrl_t* p_spctrl =
-                         (struct inph_security_cntrl_t*)dev->cfg->spctrl_base;
+    inph_security_cntrl_t* p_spctrl =
+                         (inph_security_cntrl_t*)dev->cfg->spctrl_base;
 
     if(dev->data->state != INPH_PPC_INITIALIZED) {
         return 0;
     }
 
-    return ((p_spctrl->secppcintstatus & dev->data->int_bit_mask) != 0);
+    return ((p_spctrl->SECPPCINTSTATUS.dw & dev->data->int_bit_mask) != 0);
 }
