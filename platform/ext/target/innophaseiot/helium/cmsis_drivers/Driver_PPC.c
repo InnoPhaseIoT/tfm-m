@@ -58,8 +58,8 @@ static int32_t APB_PPCBASE0_Uninitialize(void)
 }
 
 static int32_t APB_PPCBASE0_ConfigPeriph(uint8_t periph,
-                                         inph_ppc_sec_attr_t sec_attr,
-                                         inph_ppc_priv_attr_t priv_attr)
+                                         ARM_PPC_SecAttr sec_attr,
+                                         ARM_PPC_PrivAttr priv_attr)
 {
     inph_ppc_config_peripheral(&APB_PPCBASE0_DEV_S, periph,
                                  (enum inph_ppc_sec_attr_t)sec_attr,
@@ -134,8 +134,8 @@ static int32_t APB_PPCBASE1_Uninitialize(void)
 }
 
 static int32_t APB_PPCBASE1_ConfigPeriph(uint8_t periph,
-                                         inph_ppc_sec_attr_t sec_attr,
-                                         inph_ppc_priv_attr_t priv_attr)
+                                         ARM_PPC_SecAttr sec_attr,
+                                         ARM_PPC_PrivAttr priv_attr)
 {
     inph_ppc_config_peripheral(&APB_PPCBASE1_DEV_S, periph,
                                  (enum inph_ppc_sec_attr_t)sec_attr,
@@ -210,8 +210,8 @@ static int32_t APB_PPCBASE2_Uninitialize(void)
 }
 
 static int32_t APB_PPCBASE2_ConfigPeriph(uint8_t periph,
-                                         inph_ppc_sec_attr_t sec_attr,
-                                         inph_ppc_priv_attr_t priv_attr)
+                                         ARM_PPC_SecAttr sec_attr,
+                                         ARM_PPC_PrivAttr priv_attr)
 {
     inph_ppc_config_peripheral(&APB_PPCBASE2_DEV_S, periph,
                                  (enum inph_ppc_sec_attr_t)sec_attr,
@@ -289,8 +289,8 @@ static int32_t APB_SYSCNTRL_Uninitialize(void)
 }
 
 static int32_t APB_SYSCNTRL_ConfigPeriph(uint8_t periph,
-                                         inph_ppc_sec_attr_t sec_attr,
-                                         inph_ppc_priv_attr_t priv_attr)
+                                         ARM_PPC_SecAttr sec_attr,
+                                         ARM_PPC_PrivAttr priv_attr)
 {
     inph_ppc_config_peripheral(&APB_PPCSYSTEM_DEV_S, periph,
                                  (enum inph_ppc_sec_attr_t)sec_attr,
@@ -366,8 +366,8 @@ static int32_t AHB_SYSCNTRL_Uninitialize(void)
 }
 
 static int32_t AHB_SYSCNTRL_ConfigPeriph(uint8_t periph,
-                                         inph_ppc_sec_attr_t sec_attr,
-                                         inph_ppc_priv_attr_t priv_attr)
+                                         ARM_PPC_SecAttr sec_attr,
+                                         ARM_PPC_PrivAttr priv_attr)
 {
     inph_ppc_config_peripheral(&AHB_PPCSYSTEM_DEV_S, periph,
                                  (enum inph_ppc_sec_attr_t)sec_attr,
@@ -443,8 +443,8 @@ static int32_t AHB_PERIPHERAL0_Uninitialize(void)
 }
 
 static int32_t AHB_PERIPHERAL0_ConfigPeriph(uint8_t periph,
-                                         inph_ppc_sec_attr_t sec_attr,
-                                         inph_ppc_priv_attr_t priv_attr)
+                                      ARM_PPC_SecAttr sec_attr,
+                                      ARM_PPC_PrivAttr priv_attr)
 {
     inph_ppc_config_peripheral(&AHB_PPCPERIPH0_DEV_S, periph,
                                  (enum inph_ppc_sec_attr_t)sec_attr,
@@ -520,8 +520,8 @@ static int32_t AHB_PERIPHERAL1_Uninitialize(void)
 }
 
 static int32_t AHB_PERIPHERAL1_ConfigPeriph(uint8_t periph,
-                                         inph_ppc_sec_attr_t sec_attr,
-                                         inph_ppc_priv_attr_t priv_attr)
+                                      ARM_PPC_SecAttr sec_attr,
+                                      ARM_PPC_PrivAttr priv_attr)
 {
     inph_ppc_config_peripheral(&AHB_PPCPERIPH1_DEV_S, periph,
                                  (enum inph_ppc_sec_attr_t)sec_attr,
@@ -597,8 +597,8 @@ static int32_t AHB_SDIO_Uninitialize(void)
 }
 
 static int32_t AHB_SDIO_ConfigPeriph(uint8_t periph,
-                                         inph_ppc_sec_attr_t sec_attr,
-                                         inph_ppc_priv_attr_t priv_attr)
+                                     ARM_PPC_SecAttr sec_attr,
+                                     ARM_PPC_PrivAttr priv_attr)
 {
     inph_ppc_config_peripheral(&AHB_PPCSDIO_DEV_S, periph,
                                  (enum inph_ppc_sec_attr_t)sec_attr,
@@ -674,8 +674,8 @@ static int32_t AHB_XIP1_Uninitialize(void)
 }
 
 static int32_t AHB_XIP1_ConfigPeriph(uint8_t periph,
-                                         inph_ppc_sec_attr_t sec_attr,
-                                         inph_ppc_priv_attr_t priv_attr)
+                                     ARM_PPC_SecAttr sec_attr,
+                                     ARM_PPC_PrivAttr priv_attr)
 {
     inph_ppc_config_peripheral(&AHB_PPCCXIP1_DEV_S, periph,
                                  (enum inph_ppc_sec_attr_t)sec_attr,
@@ -751,8 +751,8 @@ static int32_t AHB_XIP2_Uninitialize(void)
 }
 
 static int32_t AHB_XIP2_ConfigPeriph(uint8_t periph,
-                                         inph_ppc_sec_attr_t sec_attr,
-                                         inph_ppc_priv_attr_t priv_attr)
+                                     ARM_PPC_SecAttr sec_attr,
+                                     ARM_PPC_PrivAttr priv_attr)
 {
     inph_ppc_config_peripheral(&AHB_PPCCXIP2_DEV_S, periph,
                                  (enum inph_ppc_sec_attr_t)sec_attr,

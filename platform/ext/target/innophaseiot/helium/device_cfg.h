@@ -27,8 +27,8 @@
  */
 
 /* ARM Memory Protection Controller (MPC) */
-#define MPC_CODE_SRAM1_S
-#define MPC_CODE_SRAM2_S
+//#define MPC_CODE_SRAM1_S
+//#define MPC_CODE_SRAM2_S
 
 /* ARM Peripheral Protection Controllers (PPC) */
 #define APB_PPCEXP2_S

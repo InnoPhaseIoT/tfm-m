@@ -64,6 +64,9 @@ target_include_directories(platform_s
         cmsis_core
         native_drivers/timer_cmsdk
         ${PLATFORM_DIR}/ext/target/innophaseiot/drivers/mpc_sie
+        ${PLATFORM_DIR}/ext/target/innophaseiot/drivers/uart
+        ${PLATFORM_DIR}/ext/target/innophaseiot/drivers/common
+        ${PLATFORM_DIR}/ext/target/innophaseiot/drivers/flash
         ${PLATFORM_DIR}/..
 )
 
@@ -79,8 +82,9 @@ target_sources(platform_s
         cmsis_core/system_core_init.c
         native_drivers/mpu_armv8m_drv.c
         native_drivers/inph_ppc_drv.c
-        native_drivers/inph_uart_drv.c
+#        native_drivers/inph_uart_drv.c
         ${PLATFORM_DIR}/ext/target/innophaseiot/drivers/mpc_sie/mpc_sie_drv.c
+        ${PLATFORM_DIR}/ext/target/innophaseiot/drivers/uart/inph_uart_drv.c        
 #        $<$<AND:$<NOT:$<BOOL:${TFM_PARTITION_SLIH_TEST}>>,$<NOT:$<BOOL:${TFM_PARTITION_FLIH_TEST}>>>:${CMAKE_CURRENT_SOURCE_DIR}/native_drivers/timer_cmsdk/timer_cmsdk.c>
         $<$<OR:$<BOOL:${TFM_S_REG_TEST}>,$<BOOL:${TFM_NS_REG_TEST}>>:${CMAKE_CURRENT_SOURCE_DIR}/plat_test.c>
         $<$<BOOL:${TFM_PARTITION_PLATFORM}>:${CMAKE_CURRENT_SOURCE_DIR}/services/src/tfm_platform_system.c>
@@ -112,7 +116,7 @@ if(BL2)
             retarget/platform_retarget_dev.c
             cmsis_core/system_core_init.c
             cmsis_drivers/Driver_Flash.c
-            native_drivers/inph_uart_drv.c
+#            native_drivers/inph_uart_drv.c
             cmsis_drivers/Driver_USART.c
     )
 
@@ -125,7 +129,7 @@ if(BL2)
             .
             ${PLATFORM_DIR}/..
             native_drivers
-            native_drivers/timer_cmsdk
+#            native_drivers/timer_cmsdk
     )
 endif()
 
@@ -143,7 +147,8 @@ target_sources(tfm_spm
 #========================= Files for building NS platform =====================#
 
 install(FILES       ${PLATFORM_DIR}/ext/common/test_interrupt.c
-                    ${TARGET_PLATFORM_PATH}/native_drivers/inph_uart_drv.c
+#                    ${TARGET_PLATFORM_PATH}/native_drivers/inph_uart_drv.c
+                    ${PLATFORM_DIR}/ext/target/innophaseiot/drivers/uart/inph_uart_drv.c
 #                    ${TARGET_PLATFORM_PATH}/native_drivers/timer_cmsdk/timer_cmsdk.c
                     ${TARGET_PLATFORM_PATH}/cmsis_drivers/Driver_USART.c
                     ${TARGET_PLATFORM_PATH}/retarget/platform_retarget_dev.c
@@ -158,11 +163,17 @@ install(DIRECTORY   ${PLATFORM_DIR}/ext/driver
 
 install(FILES       ${TARGET_PLATFORM_PATH}/partition/region_defs.h
                     ${TARGET_PLATFORM_PATH}/partition/flash_layout.h
-                    ${TARGET_PLATFORM_PATH}/native_drivers/inph_uart_drv.h
-                    ${TARGET_PLATFORM_PATH}/native_drivers/inph_uart_registers.h     
+                    ${PLATFORM_DIR}/ext/target/innophaseiot/drivers/uart/inph_uart_registers.h     
+                    ${PLATFORM_DIR}/ext/target/innophaseiot/drivers/uart/Driver_USART_Common.h
+                    ${PLATFORM_DIR}/ext/target/innophaseiot/drivers/uart/Driver_USART_CMSDK.h
+                    ${PLATFORM_DIR}/ext/target/innophaseiot/drivers/uart/inph_uart_drv.h                                                            
+                    ${PLATFORM_DIR}/ext/target/innophaseiot/drivers/common/helium_macros.h                    
                     ${TARGET_PLATFORM_PATH}/native_drivers/inph_security_registers.h               
 #                    ${TARGET_PLATFORM_PATH}/native_drivers/timer_cmsdk/timer_cmsdk.h
                     ${PLATFORM_DIR}/ext/target/innophaseiot/drivers/mpc_sie/mpc_sie_drv.h
+                    ${PLATFORM_DIR}/ext/target/innophaseiot/drivers/mpc_sie/inph_mpc_registers.h
+                    ${PLATFORM_DIR}/ext/target/innophaseiot/drivers/mpc_sie/inph_MPC_Common.h                                         
+                    ${PLATFORM_DIR}/ext/target/innophaseiot/drivers/mpc_sie/inph_MPC_Sie.h                    
                     ${TARGET_PLATFORM_PATH}/native_drivers/inph_ppc_drv.h
                     ${TARGET_PLATFORM_PATH}/retarget/platform_retarget.h
 #                    ${TARGET_PLATFORM_PATH}/retarget/platform_retarget_pins.h

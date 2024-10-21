@@ -61,65 +61,6 @@ typedef enum inph_en_uart_polarity {
 
 typedef inph_uart_t USART_Type;
 
-typedef struct usart_config {
-/* Width of UART data (valid range is 5 to 8) */
-inph_en_uart_data_width_t dataWidth;
-bool_t enableMsbFirst; // not supported
-/* stop bits */
-inph_en_uart_stop_bits_t stopBits;
-/* Configures the UART parity */
-inph_en_uart_parity_t parity;
-
-/* enables the usage of the CTS input signal for the transmitter. The
- * transmitter waits for CTS to be active before sending data
- */
-bool_t enableCts;
-
-/* Sets the CTS Polarity */
-inph_en_uart_polarity_t ctsPolarity;
-
-/* When the RX FIFO has fewer entries than rtsRxFifoLevel, the
- * RTS signal is active (note to disable RTS, set this field to zero)
- */
-uint32_t rtsRxFifoLevel;
-
-/* Specifies the number of bits to detect a break condition */
-uint32_t breakWidth;
-bool_t breaklevel;
-
-/* When there are more entries in the RX FIFO than this level
- * the RX trigger output goes high. This output can be connected
- * to a DMA channel through a trigger transfer.
- */
-uint32_t rxFifoTriggerLevel;
-
-/* The bits set in this mask allow the event to cause an interrupt */
-uint32_t rxFifoIntEnableMask;
-
-/*
- * When there are fewer entries in the TX FIFO then this level
- * the TX trigger output goes high. This output can be connected
- * to a DMA channel through a trigger mux.
- */
-uint32_t txFifoTriggerLevel;
-
-/* Bits set in this mask allows the event to cause an interrupt */
-uint32_t txFifoIntEnableMask;
-
-uint32_t baudRate;
-uint32_t clockRate;
-
-} usart_config_t;
-
-typedef struct {
-    USART_Type      *base;          /* USART base */
-    usart_config_t  config;         /* USART configuration structure */
-    uint32_t        tx_nbr_bytes;   /* Number of bytes transfered */
-    uint32_t        rx_nbr_bytes;   /* Number of bytes recevied */
-    bool            is_initialized; /* true if initialized */
-    ARM_USART_SignalEvent_t cb_event;
-} UARTx_Resources;
-
 /* UART device configuration structure */
 struct inph_uart_dev_cfg_t {
     const uint32_t base;              /*!< UART base address */
@@ -130,14 +71,15 @@ struct inph_uart_dev_cfg_t {
 struct inph_uart_dev_data_t {
     uint32_t state;       /*!< Indicates if the uart driver
                                is initialized and enabled */
-    uint32_t system_clk;  /*!< System clock */
+    uint32_t system_clk;
     uint32_t baudrate;    /*!< Baudrate */
+    
 };
 
 /*  UART device structure */
 struct inph_uart_dev_t {
-    const struct arm_uart_dev_cfg_t* const cfg;  /*!< UART configuration */
-    struct arm_uart_dev_data_t* const data;      /*!< UART data */
+    const struct inph_uart_dev_cfg_t* const cfg;  /*!< UART configuration */
+    struct inph_uart_dev_data_t* const data;      /*!< UART data */
 };
 
 /*  UART enumeration types */
@@ -162,27 +104,27 @@ enum inph_en_uart_rx_trigger {
     INPH_UART_14_BYTES,    /* 7/8 full     */
 };
 
-#define INPH_UART_FIFO_SIZE               (16UL)
 #define INPH_UART_FCR_XMIT_F_RST          (0x4)
 #define INPH_UART_FCR_RCVR_F_RST          (0x02)
 #define INPH_UART_LCR_PARITY_EN           (0x8)
-#define INPH_UART_IIR_INT_ID_SHIFT        (0x01)
-#define INPH_UART_IIR_INT_ID_MASK         (0x07)
-//#define INPH_UART_LCR_DLAB                (0x80)
-#define INPH_UART_FCR_RCVR_TRIG_LSB_SHIFT (0x06)
 #define INPH_UART_INITIALIZED             (0x01)
+#define INPH_UART_DLF_SIZE_ADJUSTED       (0x40)
+#define INPH_UART_LCR_DLAB_MASK           (0x80)
 
 
-void inph_uart_uninit(UARTx_Resources *dev);
-enum inph_uart_error_t inph_uart_init(UARTx_Resources *dev);
-enum inph_uart_error_t inph_uart_set_baudrate(UARTx_Resources *dev);
-uint32_t inph_uart_get_baudrate(UARTx_Resources* dev);
-enum inph_uart_error_t inph_uart_set_clock(UARTx_Resources* dev,
+void inph_uart_uninit(struct inph_uart_dev_t *dev);
+
+enum inph_uart_error_t inph_uart_init(struct inph_uart_dev_t *dev,
+                                      uint32_t system_clk);
+enum inph_uart_error_t inph_uart_set_baudrate(struct inph_uart_dev_t *dev);
+enum inph_uart_error_t inph_uart_set_clock(struct inph_uart_dev_t *dev,
                                          uint32_t system_clk);
-enum inph_uart_error_t inph_uart_read(USART_Type *dev, uint8_t* byte);
-enum inph_uart_error_t inph_uart_write(USART_Type *base, uint8_t byte);
-uint32_t inph_uart_tx_ready(UARTx_Resources *dev);
-uint32_t inph_uart_rx_ready(UARTx_Resources *dev);
+enum inph_uart_error_t inph_uart_read(struct inph_uart_dev_t *dev, uint8_t* byte);
+enum inph_uart_error_t inph_uart_write(struct inph_uart_dev_t *dev, uint8_t byte);
+
+uint32_t inph_uart_tx_ready(struct inph_uart_dev_t *dev);
+uint32_t inph_uart_rx_ready(struct inph_uart_dev_t *dev);
+uint32_t inph_uart_get_baudrate(struct inph_uart_dev_t  *dev);
 
 
 /*******************************************************************************
@@ -730,6 +672,24 @@ __STATIC_INLINE void Inph_UART_EnableFifo(USART_Type *base)
 __STATIC_INLINE void Inph_UART_DisableLsrInt(USART_Type *base)
 {
     INPH_UART_IER_ELSI(base) = 0;
+}
+
+/*******************************************************************************
+ * Function Name: Inph_UART_SetTriggleLevel
+ ****************************************************************************//**
+*
+* @brief Receiver FIFO trigger level set
+*
+* @param[in] base          The pointer to the UART base instance.
+* @param[in] level         Trigger level
+* 
+* @return    none
+*
+*******************************************************************************/
+__STATIC_INLINE void Inph_UART_SetTriggleLevel(USART_Type *base, enum 
+                                               inph_en_uart_rx_trigger level)
+{
+    INPH_UART_FCR_RT(base) = level;
 }
 
 #ifdef __cplusplus

@@ -24,18 +24,27 @@
 
 #include "platform_retarget_dev.h"
 #include "platform_retarget.h"
-#include "inph_mpc_drv.h"
+#include "mpc_sie_drv.h"
 #include "inph_ppc_drv.h"
 #include "inph_uart_drv.h"
+#include "device_cfg.h"
 
 /* UART definitions */
 
 /* USART0 Driver wrapper functions */
-static UARTx_Resources USART0_DEV_S = {
-    .base = (struct inph_uart_base *)INPH_UART0_BASE_S,
-    .tx_nbr_bytes = 0,
-    .rx_nbr_bytes = 0,
-    .is_initialized = 0
+/* UART CMSDK driver structures */
+static const struct inph_uart_dev_cfg_t UART0_CMSDK_DEV_CFG_S = {
+    .base = INPH_UART0_BASE_S,
+    .default_baudrate = DEFAULT_UART_BAUDRATE
+};
+static struct inph_uart_dev_data_t UART0_CMSDK_DEV_DATA_S = {
+    .state = 0,
+    .system_clk = 0,
+    .baudrate = 0
+};
+struct inph_uart_dev_t UART0_CMSDK_DEV_S = {
+    &(UART0_CMSDK_DEV_CFG_S),
+    &(UART0_CMSDK_DEV_DATA_S)
 };
 
 /* PPC definitions */

@@ -41,7 +41,7 @@
 
 /* ARM UART driver structures */
 #ifdef RTE_USART0_S
-extern UARTx_Resources USART0_DEV_S;
+extern struct inph_uart_dev_t UART0_CMSDK_DEV_S;
 #endif
 
 /* ARM PPC driver structures */
@@ -87,79 +87,79 @@ extern struct inph_ppc_dev_t AHB_PPCSYSTEM_DEV_S;
 
 /* ARM MPC SSE 200 driver structures */
 #ifdef RTE_SRAM0_MPC
-extern struct inph_mpc_sie200_dev_t INPH_MPC_SRAM0_DEV_S;
+extern struct mpc_sie_dev_t MPC_SRAM0_DEV_S;
 #endif
 
 #ifdef RTE_SRAM1_MPC
-extern struct inph_mpc_sie200_dev_t INPH_MPC_SRAM1_DEV_S;
+extern struct mpc_sie_dev_t MPC_SRAM1_DEV_S;
 #endif
 
 #ifdef RTE_SRAM2_MPC
-extern struct inph_mpc_sie200_dev_t INPH_MPC_SRAM2_DEV_S;
+extern struct mpc_sie_dev_t MPC_SRAM2_DEV_S;
 #endif
 
 #ifdef RTE_SRAM3_MPC
-extern struct inph_mpc_sie200_dev_t INPH_MPC_SRAM3_DEV_S;
+extern struct mpc_sie_dev_t MPC_SRAM3_DEV_S;
 #endif
 
 #ifdef RTE_SRAM4_MPC
-extern struct inph_mpc_sie200_dev_t INPH_MPC_SRAM4_DEV_S;
+extern struct mpc_sie_dev_t MPC_SRAM4_DEV_S;
 #endif
 
 #ifdef RTE_SRAM5_MPC
-extern struct inph_mpc_sie200_dev_t INPH_MPC_SRAM5_DEV_S;
+extern struct mpc_sie_dev_t MPC_SRAM5_DEV_S;
 #endif
 
 #ifdef RTE_SRAM6_MPC
-extern struct inph_mpc_sie200_dev_t INPH_MPC_SRAM6_DEV_S;
+extern struct mpc_sie_dev_t MPC_SRAM6_DEV_S;
 #endif
 
 #ifdef RTE_SRAM7_MPC
-extern struct inph_mpc_sie200_dev_t INPH_MPC_SRAM7_DEV_S;
+extern struct mpc_sie_dev_t MPC_SRAM7_DEV_S;
 #endif
 
 #ifdef RTE_SRAM8_MPC
-extern struct inph_mpc_sie200_dev_t INPH_MPC_SRAM8_DEV_S;
+extern struct mpc_sie_dev_t MPC_SRAM8_DEV_S;
 #endif
 
 #ifdef RTE_SRAM9_MPC
-extern struct inph_mpc_sie200_dev_t INPH_MPC_SRAM9_DEV_S;
+extern struct mpc_sie_dev_t MPC_SRAM9_DEV_S;
 #endif
 
 #ifdef RTE_SRAM10_MPC
-extern struct inph_mpc_sie200_dev_t INPH_MPC_SRAM10_DEV_S;
+extern struct mpc_sie_dev_t MPC_SRAM10_DEV_S;
 #endif
 
 #ifdef RTE_SRAM11_MPC
-extern struct inph_mpc_sie200_dev_t INPH_MPC_SRAM11_DEV_S;
+extern struct mpc_sie_dev_t MPC_SRAM11_DEV_S;
 #endif
 
 #ifdef RTE_SRAM12_MPC
-extern struct inph_mpc_sie200_dev_t INPH_MPC_SRAM12_DEV_S;
+extern struct mpc_sie_dev_t MPC_SRAM12_DEV_S;
 #endif
 
 #ifdef RTE_SRAM13_MPC
-extern struct inph_mpc_sie200_dev_t INPH_MPC_SRAM13_DEV_S;
+extern struct mpc_sie_dev_t MPC_SRAM13_DEV_S;
 #endif
 
 #ifdef RTE_SRAM14_MPC
-extern struct inph_mpc_sie200_dev_t INPH_MPC_SRAM14_DEV_S;
+extern struct mpc_sie_dev_t MPC_SRAM14_DEV_S;
 #endif
 
 #ifdef RTE_SRAM15_MPC
-extern struct inph_mpc_sie200_dev_t INPH_MPC_SRAM15_DEV_S;
+extern struct mpc_sie_dev_t MPC_SRAM15_DEV_S;
 #endif
 
 #ifdef RTE_ROM_MPC
-extern struct inph_mpc_sie200_dev_t INPH_MPC_ROM_DEV_S;
+extern struct mpc_sie_dev_t MPC_ROM_DEV_S;
 #endif
 
 #ifdef RTE_XSPI1_MPC
-extern struct inph_mpc_sie200_dev_t INPH_MPC_XSPI1_DEV_S;
+extern struct mpc_sie_dev_t MPC_XSPI1_DEV_S;
 #endif
 
 #ifdef RTE_XSPI2_MPC
-extern struct inph_mpc_sie200_dev_t INPH_MPC_XSPI2_DEV_S;
+extern struct mpc_sie_dev_t MPC_XSPI2_DEV_S;
 #endif
 
 

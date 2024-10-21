@@ -56,65 +56,65 @@ void inph_ppc_init(struct inph_ppc_dev_t* dev,
     switch(ppc_name) {
 
     case AHB_PPC_XIP1:
-            dev->data->p_ns_ppc  = &p_spctrl->AHBNSPPCCXIP.bf.PPC_CRYPTO_XIP1_NS_N;
-            dev->data->p_sp_ppc  = &p_spctrl->AHBSPRVPPCCXIP.bf.PPC_CRYPTO_XIP1_PRV_N;
-            dev->data->p_nsp_ppc = &p_nspriv->AHBNSPRVPPCCXIP.bf.PPC_CRYPTO_XIP1_NS_PRV_N;
+            dev->data->p_ns_ppc  = &p_spctrl->AHBNSPPCCXIP.dw;
+            dev->data->p_sp_ppc  = &p_spctrl->AHBSPRVPPCCXIP.dw;
+            dev->data->p_nsp_ppc = &p_nspriv->AHBNSPRVPPCCXIP.dw;
             dev->data->int_bit_mask = AHB_PPC_XIP1_INT_POS_MASK;
             break;
     
     case AHB_PPC_XIP2:
-            dev->data->p_ns_ppc  = &p_spctrl->AHBNSPPCCXIP.bf.PPC_CRYPTO_XIP2_NS_N;
-            dev->data->p_sp_ppc  = &p_spctrl->AHBSPRVPPCCXIP.bf.PPC_CRYPTO_XIP2_PRV_N;
-            dev->data->p_nsp_ppc = &p_nspriv->AHBNSPRVPPCCXIP.bf.PPC_CRYPTO_XIP2_NS_PRV_N;
+            dev->data->p_ns_ppc  = &p_spctrl->AHBNSPPCCXIP.dw;
+            dev->data->p_sp_ppc  = &p_spctrl->AHBSPRVPPCCXIP.dw;
+            dev->data->p_nsp_ppc = &p_nspriv->AHBNSPRVPPCCXIP.dw;
             dev->data->int_bit_mask = AHB_PPC_XIP2_INT_POS_MASK;
             break;
             
         case AHB_PPC_SDIO:
-            dev->data->p_ns_ppc  = &p_spctrl->AHBNSPPCSDIO.bf.PPC_SDIO_NS_N;
-            dev->data->p_sp_ppc  = &p_spctrl->AHBSPRVPPCSDIO.bf.PPC_SDIO_PRV_N;
-            dev->data->p_nsp_ppc = &p_nspriv->AHBNSPRVPPCSDIO.bf.PPC_SDIO_NS_PRV_N;
+            dev->data->p_ns_ppc  = &p_spctrl->AHBNSPPCSDIO.dw;
+            dev->data->p_sp_ppc  = &p_spctrl->AHBSPRVPPCSDIO.dw;
+            dev->data->p_nsp_ppc = &p_nspriv->AHBNSPRVPPCSDIO.dw;
             dev->data->int_bit_mask = AHB_PPC_SDIO_INT_POS_MASK;
             break;
         case AHB_PPC_PERIPH1:
-            dev->data->p_ns_ppc  = &p_spctrl->APBNSPPCPERIPH1.bf.PPC_PERIPH_1_NS_N;
-            dev->data->p_sp_ppc  = &p_spctrl->APBSPRVPPCPERIPH1.bf.PPC_PERIPH_1_PRV_N;
-            dev->data->p_nsp_ppc = &p_nspriv->APBNSPRVPPCPERIPH1.bf.PPC_PERIPH_1_NS_PRV_N;
+            dev->data->p_ns_ppc  = &p_spctrl->APBNSPPCPERIPH1.dw;
+            dev->data->p_sp_ppc  = &p_spctrl->APBSPRVPPCPERIPH1.dw;
+            dev->data->p_nsp_ppc = &p_nspriv->APBNSPRVPPCPERIPH1.dw;
             dev->data->int_bit_mask = AHB_PPC_PERIPH1_INT_POS_MASK;
             break;
         case AHB_PPC_PERIPH0:
-            dev->data->p_ns_ppc  = &p_spctrl->APBNSPPCPERIPH0.bf.PPC_PERIPH_0_NS_N;
-            dev->data->p_sp_ppc  = &p_spctrl->APBSPRVPPCPERIPH0.bf.PPC_PERIPH_0_PRV_N;
-            dev->data->p_nsp_ppc = &p_nspriv->APBNSPRVPPCPERIPH0.bf.PPC_PERIPH_0_NS_PRV_N;
+            dev->data->p_ns_ppc  = &p_spctrl->APBNSPPCPERIPH0.dw;
+            dev->data->p_sp_ppc  = &p_spctrl->APBSPRVPPCPERIPH0.dw;
+            dev->data->p_nsp_ppc = &p_nspriv->APBNSPRVPPCPERIPH0.dw;
             dev->data->int_bit_mask = AHB_PPC_PERIPH0_INT_POS_MASK;
             break;
         case AHB_PPC_SYSTEM:
-            dev->data->p_ns_ppc  = &p_spctrl->AHBNSPPCSYS.bf.PPC_SYS_NS_N;
-            dev->data->p_sp_ppc  = &p_spctrl->AHBSPRVPPCSYS.bf.PPC_AHB_SYS_PRV_N;
-            dev->data->p_nsp_ppc = &p_nspriv->AHBNSPRVPPCSYS.bf.PPC_AHB_SYS_NS_PRV_N;
+            dev->data->p_ns_ppc  = &p_spctrl->AHBNSPPCSYS.dw;
+            dev->data->p_sp_ppc  = &p_spctrl->AHBSPRVPPCSYS.dw;
+            dev->data->p_nsp_ppc = &p_nspriv->AHBNSPRVPPCSYS.dw;
             dev->data->int_bit_mask = AHB_PPC_SYSCTRL_INT_POS_MASK;
             break;
         case APB_PPC_SYSTEM:
-            dev->data->p_ns_ppc  = &p_spctrl->APBNSPPCSYS.bf.PPC_SYS_NS_N;
-            dev->data->p_sp_ppc  = &p_spctrl->APBSPRVPPCSYS.bf.PPC_APB_SYS_PRV_N;
-            dev->data->p_nsp_ppc = &p_nspriv->APBNSPRVPPCSYS.bf.PPC_APB_SYS_NS_PRV_N;
+            dev->data->p_ns_ppc  = &p_spctrl->APBNSPPCSYS.dw;
+            dev->data->p_sp_ppc  = &p_spctrl->APBSPRVPPCSYS.dw;
+            dev->data->p_nsp_ppc = &p_nspriv->APBNSPRVPPCSYS.dw;
             dev->data->int_bit_mask = APB_PPC_SYSCTRL_INT_POS_MASK;
             break;            
         case APB_PPC_BASE2:
-            dev->data->p_ns_ppc  = &p_spctrl->APBNSPPCBASE2.bf.PPC_BASE_2_NS_N;
-            dev->data->p_sp_ppc  = &p_spctrl->APBSPRVPPCBASE2.bf.PPC_BASE_2_PRV_N;
-            dev->data->p_nsp_ppc = &p_nspriv->APBNSPRVPPCBASE2.bf.PPC_BASE_2_NS_PRV_N;
+            dev->data->p_ns_ppc  = &p_spctrl->APBNSPPCBASE2.dw;
+            dev->data->p_sp_ppc  = &p_spctrl->APBSPRVPPCBASE2.dw;
+            dev->data->p_nsp_ppc = &p_nspriv->APBNSPRVPPCBASE2.dw;
             dev->data->int_bit_mask = APB_PPC_BASE2_INT_POS_MASK;
             break;
         case APB_PPC_BASE1:
-            dev->data->p_ns_ppc  = &p_spctrl->APBNSPPCBASE1.bf.PPC_BASE_1_NS_N;
-            dev->data->p_sp_ppc  = &p_spctrl->APBSPRVPPCBASE1.bf.PPC_BASE_1_PRV_N;
-            dev->data->p_nsp_ppc = &p_nspriv->APBNSPRVPPCBASE1.bf.PPC_BASE_1_NS_PRV_N;
+            dev->data->p_ns_ppc  = &p_spctrl->APBNSPPCBASE1.dw;
+            dev->data->p_sp_ppc  = &p_spctrl->APBSPRVPPCBASE1.dw;
+            dev->data->p_nsp_ppc = &p_nspriv->APBNSPRVPPCBASE1.dw;
             dev->data->int_bit_mask = APB_PPC_BASE1_INT_POS_MASK;
             break;
         case APB_PPC_BASE0:
-            dev->data->p_ns_ppc  = &p_spctrl->APBNSPPCBASE0.bf.PPC_BASE_0_NS_N;
-            dev->data->p_sp_ppc  = &p_spctrl->APBSPRVPPCBASE0.bf.PPC_BASE_0_PRV_N;
-            dev->data->p_nsp_ppc = &p_nspriv->APBNSPRVPPCBASE0.bf.PPC_BASE_0_NS_PRV_N;
+            dev->data->p_ns_ppc  = &p_spctrl->APBNSPPCBASE0.dw;
+            dev->data->p_sp_ppc  = &p_spctrl->APBSPRVPPCBASE0.dw;
+            dev->data->p_nsp_ppc = &p_nspriv->APBNSPRVPPCBASE0.dw;
             dev->data->int_bit_mask = APB_PPC_BASE0_INT_POS_MASK;
             break;
         

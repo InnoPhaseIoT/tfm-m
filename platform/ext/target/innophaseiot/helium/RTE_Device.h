@@ -20,6 +20,7 @@
  * @file    RTE_Device.h
  * @author  InnophaseIOT Firmware Team
  * @brief   Run Time Environment definitions
+ */
 
 #ifndef __RTE_DEVICE_H
 #define __RTE_DEVICE_H
