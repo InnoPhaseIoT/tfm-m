@@ -125,6 +125,10 @@ if(BL2)
             partition
             cmsis_core
             retarget
+            ${PLATFORM_DIR}/ext/target/innophaseiot/drivers/mpc_sie
+            ${PLATFORM_DIR}/ext/target/innophaseiot/drivers/uart
+            ${PLATFORM_DIR}/ext/target/innophaseiot/drivers/common
+            ${PLATFORM_DIR}/ext/target/innophaseiot/drivers/flash
         PRIVATE
             .
             ${PLATFORM_DIR}/..
@@ -170,10 +174,10 @@ install(FILES       ${TARGET_PLATFORM_PATH}/partition/region_defs.h
                     ${PLATFORM_DIR}/ext/target/innophaseiot/drivers/common/helium_macros.h                    
                     ${TARGET_PLATFORM_PATH}/native_drivers/inph_security_registers.h               
 #                    ${TARGET_PLATFORM_PATH}/native_drivers/timer_cmsdk/timer_cmsdk.h
-                    ${PLATFORM_DIR}/ext/target/innophaseiot/drivers/mpc_sie/mpc_sie_drv.h
+                    ${PLATFORM_DIR}/ext/target/innophaseiot/drivers/mpc_sie/Driver_MPC_Sie.h
                     ${PLATFORM_DIR}/ext/target/innophaseiot/drivers/mpc_sie/inph_mpc_registers.h
-                    ${PLATFORM_DIR}/ext/target/innophaseiot/drivers/mpc_sie/inph_MPC_Common.h                                         
-                    ${PLATFORM_DIR}/ext/target/innophaseiot/drivers/mpc_sie/inph_MPC_Sie.h                    
+                    ${PLATFORM_DIR}/ext/target/innophaseiot/drivers/mpc_sie/Driver_MPC_Common.h                                         
+                    ${PLATFORM_DIR}/ext/target/innophaseiot/drivers/mpc_sie/mpc_sie_drv.h                    
                     ${TARGET_PLATFORM_PATH}/native_drivers/inph_ppc_drv.h
                     ${TARGET_PLATFORM_PATH}/retarget/platform_retarget.h
 #                    ${TARGET_PLATFORM_PATH}/retarget/platform_retarget_pins.h

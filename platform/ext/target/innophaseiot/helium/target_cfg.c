@@ -96,15 +96,19 @@ extern ARM_DRIVER_MPC Driver_SRAM0_MPC;
                         NIDEN_SEL_STATUS | DBGEN_SEL_STATUS)
 
 struct platform_data_t tfm_peripheral_std_uart = {
-        UART0_BASE_NS,
-        UART0_BASE_NS + 0xFFF,
+//        UART0_BASE_NS,
+//        UART0_BASE_NS + 0xFFF,
+        INPH_UART0_BASE_S,
+        INPH_UART0_BASE_S + 0xFFF,
         PPC_SP_DO_NOT_CONFIGURE,
         -1
 };
 
 struct platform_data_t tfm_peripheral_uart1 = {
-        UART1_BASE_S,
-        UART1_BASE_S + 0xFFF,
+//        UART1_BASE_S,
+//        UART1_BASE_S + 0xFFF,
+        INPH_UART1_BASE_S,
+        INPH_UART1_BASE_S + 0xFFF,
         PPC_SP_APB_PPC_EXP1,
         CMSDK_UART1_APB_PPC_POS
 };

@@ -62,15 +62,15 @@ enum inph_uart_error_t inph_uart_init(struct inph_uart_dev_t *dev,
 enum inph_uart_error_t inph_uart_set_baudrate(struct inph_uart_dev_t *dev)
 {
     uint8_t temp;
-    uint32_t ti, tf;
-    float dlf, dli;
+    uint32_t dli, tf;
+    float dlf;
     
     if (dev->data->state != INPH_UART_INITIALIZED)
     {
         return INPH_UART_ERR_NOT_INIT;
     }
 
-    ti = (uint32_t)(dev->data->system_clk / (16 * dev->data->baudrate));
+    dli = (uint32_t)(dev->data->system_clk / (16 * dev->data->baudrate));
     dlf = ((float)(dev->data->system_clk)) / (float)((16 * dev->data->baudrate) - dli);
     /* adjust to upper integer value */
     tf = (uint32_t)((INPH_UART_DLF_SIZE_ADJUSTED * dlf) + 0.5);
@@ -80,8 +80,8 @@ enum inph_uart_error_t inph_uart_set_baudrate(struct inph_uart_dev_t *dev)
     INPH_UART_LCR(dev->cfg->base) = INPH_UART_LCR_DLAB_MASK | temp;
 
     /* set the latch values now */
-    INPH_UART_DLL(dev->cfg->base) = (ti & 0xFF);
-    INPH_UART_DLH(dev->cfg->base) = (ti >> 0x08) & 0xFF;
+    INPH_UART_DLL(dev->cfg->base) = (dli & 0xFF);
+    INPH_UART_DLH(dev->cfg->base) = (dli >> 0x08) & 0xFF;
     /* device latch fractional size is 6 */
     INPH_UART_DLF(dev->cfg->base) = (tf & 0x3F);
     INPH_UART_LCR(dev->cfg->base) = temp;
