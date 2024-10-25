@@ -27,6 +27,7 @@
 #include "mpc_sie_drv.h"
 #include "inph_ppc_drv.h"
 #include "inph_uart_drv.h"
+#include "inph_tzm_drv.h"
 #include "device_cfg.h"
 
 /* UART definitions */
@@ -47,6 +48,11 @@ struct inph_uart_dev_t UART0_CMSDK_DEV_S = {
     &(UART0_CMSDK_DEV_DATA_S)
 };
 
+/* TZM definitions */
+struct inph_tzm_dev_t TZM_DEV_S = {
+    .spctrl_base = INPH_SPCTRL_BASE_S,
+    .state = INPH_TZM_INITIALIZED
+};
 /* PPC definitions */
 
 static struct inph_ppc_dev_cfg_t APB_PPCBASE0_DEV_CFG = {

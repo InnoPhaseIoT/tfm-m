@@ -44,6 +44,10 @@
 extern struct inph_uart_dev_t UART0_CMSDK_DEV_S;
 #endif
 
+#ifdef RTE_TZM_S
+extern struct inph_tzm_dev_t TZM_DEV_S;
+#endif
+
 /* ARM PPC driver structures */
 #ifdef RTE_APB_PPC_BASE0
 extern struct inph_ppc_dev_t APB_PPCBASE0_DEV_S;

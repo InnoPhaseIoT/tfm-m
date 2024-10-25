@@ -46,6 +46,14 @@ typedef enum _INPH_POWER_STATE {
 } INPH_POWER_STATE;
 
 /*****************************************************************************/
+/* TZM RUN TIME ENVIRONMENT DECLARATIONS                                     */
+/*****************************************************************************/
+// <e> TZM (Trust Zone Control Master) [RTE_TZM_S]
+// <i> Configuration settings for Driver_USART0 in component ::Drivers:USART
+#define   RTE_TZM_S                       1
+// </e> TZM (Trust Zone Control Master) [RTE_TZM_S]
+
+/*****************************************************************************/
 /* UART RUN TIME ENVIRONMENT DECLARATIONS                                     */
 /*****************************************************************************/
 // <e> USART (Universal synchronous - asynchronous receiver transmitter) [Driver_USART0]

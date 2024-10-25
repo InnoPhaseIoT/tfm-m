@@ -82,6 +82,7 @@ target_sources(platform_s
         cmsis_core/system_core_init.c
         native_drivers/mpu_armv8m_drv.c
         native_drivers/inph_ppc_drv.c
+        native_drivers/inph_tzm_drv.c
 #        native_drivers/inph_uart_drv.c
         ${PLATFORM_DIR}/ext/target/innophaseiot/drivers/mpc_sie/mpc_sie_drv.c
         ${PLATFORM_DIR}/ext/target/innophaseiot/drivers/uart/inph_uart_drv.c        
@@ -179,6 +180,7 @@ install(FILES       ${TARGET_PLATFORM_PATH}/partition/region_defs.h
                     ${PLATFORM_DIR}/ext/target/innophaseiot/drivers/mpc_sie/Driver_MPC_Common.h                                         
                     ${PLATFORM_DIR}/ext/target/innophaseiot/drivers/mpc_sie/mpc_sie_drv.h                    
                     ${TARGET_PLATFORM_PATH}/native_drivers/inph_ppc_drv.h
+                    ${TARGET_PLATFORM_PATH}/native_drivers/inph_tzm_drv.h
                     ${TARGET_PLATFORM_PATH}/retarget/platform_retarget.h
 #                    ${TARGET_PLATFORM_PATH}/retarget/platform_retarget_pins.h
                     ${TARGET_PLATFORM_PATH}/target_cfg.h

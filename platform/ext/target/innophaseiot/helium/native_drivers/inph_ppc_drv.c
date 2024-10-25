@@ -17,7 +17,7 @@
  *
  ****************************************************************************/
 /**
- * @file    inph_ppc_drv.h
+ * @file    inph_ppc_drv.c
  * @author  InnophaseIOT Firmware Team
  * @brief   PPC functions
  */
