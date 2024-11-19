@@ -27,19 +27,11 @@
  */
 
 /* ARM Memory Protection Controller (MPC) */
-//#define MPC_CODE_SRAM1_S
-//#define MPC_CODE_SRAM2_S
 
 /* ARM Peripheral Protection Controllers (PPC) */
-#define APB_PPCEXP2_S
 
 /* ARM UART */
 #define DEFAULT_UART_CONTROL 0
 #define DEFAULT_UART_BAUDRATE  115200
-#define ARM_UART0_S
-#define ARM_UART0_NS
-#define ARM_UART1_S
-#define ARM_UART1_NS
-
 
 #endif  /* __ARM_LTD_DEVICE_CFG_H__ */

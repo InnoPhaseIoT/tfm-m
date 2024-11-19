@@ -22,10 +22,13 @@
 #include "tfm_hal_device_header.h"
 
  /* Define clocks */
-#define  XTAL             (40000000UL)
-#define  PERIPHERAL_XTAL  (50000000UL)
+//#define  XTAL             (40000000UL) //MHK
+#define  XTAL             (64000000UL)
+//#define  PERIPHERAL_XTAL  (50000000UL) //MHK
+#define  PERIPHERAL_XTAL  (40000000UL)
 #define  SYSTEM_CLOCK     (XTAL/2)
-#define  PERIPHERAL_CLOCK (PERIPHERAL_XTAL/2)
+//#define  PERIPHERAL_CLOCK (PERIPHERAL_XTAL/2) //MHK
+#define  PERIPHERAL_CLOCK (PERIPHERAL_XTAL/8)
 
 /* System Core Clock Variable */
 uint32_t SystemCoreClock = SYSTEM_CLOCK;

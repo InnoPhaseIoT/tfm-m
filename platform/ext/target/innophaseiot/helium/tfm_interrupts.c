@@ -17,6 +17,7 @@
 #include "interrupt.h"
 #include "load/interrupt_defs.h"
 
+#if 0 //MHK
 static struct irq_t timer0_irq = {0};
 
 void TFM_TIMER0_IRQ_Handler(void)
@@ -60,3 +61,5 @@ enum tfm_hal_status_t ff_test_uart_irq_init(void *p_pt,
 }
 
 #endif
+
+#endif //MHK

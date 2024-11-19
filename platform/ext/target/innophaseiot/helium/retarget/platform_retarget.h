@@ -27,9 +27,10 @@
 #define __PLATFORM_RETARGET_DEV_H
 
 /* Memory size definitions */
-#define ROM_SIZE        (0x10000)     /* 64 kB */
-#define SRAM_SIZE       (0X10000)     /* 64 KB */
-#define XSPI_SIZE       (0x02000000)  /* 32 MB */
+#define ROM_SIZE        (0x8000)     /* 32 kB */
+#define SRAM_SIZE       (0X10000)    /* 64 KB */
+#define XSPI_SIZE       (0x800000)   /* 8 MB  */
+#define AIP_SIZE        (0x800000)   /* 8 MB  */
 
 
 /* ======= Defines peripherals memory map addresses ======= */
@@ -64,9 +65,9 @@
 #define MPS2_IO_FPGAIO_BASE_NS 0x40302000
 
 /* Flash memory emulated over external SSRAM memory */
-#define FLASH0_BASE_S                  0x10000000
+#define FLASH0_BASE_S                  0x00000000
 #define FLASH0_BASE_NS                 0x00000000
-#define FLASH0_SIZE                    0x00400000  /* 4 MB */
+#define FLASH0_SIZE                    0x00800000  /* 8 MB */
 #define FLASH0_SECTOR_SIZE             0x00001000  /* 4 kB */
 #define FLASH0_PAGE_SIZE               0x00001000  /* 4 kB */
 #define FLASH0_PROGRAM_UNIT            0x1         /* Minimum write size */
@@ -236,6 +237,13 @@
 #define XSPI1_RANGE_LIMIT_S        (XSPI1_RANGE_BASE_S + XSPI_SIZE-1)
 #define XSPI1_RANGE_OFFSET_S       (0x0)
 
+#define XSPI1_RANGE_BASE_NS_DEC    0x04000000
+#define XSPI1_RANGE_LIMIT_NS_DEC   (XSPI1_RANGE_BASE_NS_DEC + XSPI_SIZE-1)
+#define XSPI1_RANGE_OFFSET_NS_DEC  (0x0)
+#define XSPI1_RANGE_BASE_S_DEC     0x14000000
+#define XSPI1_RANGE_LIMIT_S_DEC    (XSPI1_RANGE_BASE_S_DEC + XSPI_SIZE-1)
+#define XSPI1_RANGE_OFFSET_S_DEC   (0x0)
+
 #define XSPI2_RANGE_BASE_NS        0x06000000
 #define XSPI2_RANGE_LIMIT_NS       (XSPI2_RANGE_BASE_NS + XSPI_SIZE-1)
 #define XSPI2_RANGE_OFFSET_NS      (0x0)
@@ -243,6 +251,40 @@
 #define XSPI2_RANGE_LIMIT_S        (XSPI2_RANGE_BASE_S + XSPI_SIZE-1)
 #define XSPI2_RANGE_OFFSET_S       (0x0)
 
+#define XSPI2_RANGE_BASE_NS_DEC    0x08000000
+#define XSPI2_RANGE_LIMIT_NS_DEC   (XSPI2_RANGE_BASE_NS_DEC + XSPI_SIZE-1)
+#define XSPI2_RANGE_OFFSET_NS_DEC  (0x0)
+#define XSPI2_RANGE_BASE_S_DEC     0x18000000
+#define XSPI2_RANGE_LIMIT_S_DEC    (XSPI2_RANGE_BASE_S_DEC + XSPI_SIZE-1)
+#define XSPI2_RANGE_OFFSET_S_DEC   (0x0)
+
+#define AIP1_RANGE_BASE_NS        0x62000000
+#define AIP1_RANGE_LIMIT_NS       (AIP1_RANGE_BASE_NS + AIP_SIZE-1)
+#define AIP1_RANGE_OFFSET_NS      (0x0)
+#define AIP1_RANGE_BASE_S         0x72000000
+#define AIP1_RANGE_LIMIT_S        (AIP1_RANGE_BASE_S + AIP_SIZE-1)
+#define AIP1_RANGE_OFFSET_S       (0x0)
+
+#define AIP1_RANGE_BASE_NS_DEC    0x64000000
+#define AIP1_RANGE_LIMIT_NS_DEC   (AIP1_RANGE_BASE_NS_DEC + AIP_SIZE-1)
+#define AIP1_RANGE_OFFSET_NS_DEC  (0x0)
+#define AIP1_RANGE_BASE_S_DEC     0x74000000
+#define AIP1_RANGE_LIMIT_S_DEC    (AIP1_RANGE_BASE_S_DEC + AIP_SIZE-1)
+#define AIP1_RANGE_OFFSET_S_DEC   (0x0)
+
+#define AIP2_RANGE_BASE_NS        0x66000000
+#define AIP2_RANGE_LIMIT_NS       (AIP2_RANGE_BASE_NS + AIP_SIZE-1)
+#define AIP2_RANGE_OFFSET_NS      (0x0)
+#define AIP2_RANGE_BASE_S         0x76000000
+#define AIP2_RANGE_LIMIT_S        (AIP2_RANGE_BASE_S + AIP_SIZE-1)
+#define AIP2_RANGE_OFFSET_S       (0x0)
+
+#define AIP2_RANGE_BASE_NS_DEC    0x68000000
+#define AIP2_RANGE_LIMIT_NS_DEC   (AIP2_RANGE_BASE_NS_DEC + AIP_SIZE-1)
+#define AIP2_RANGE_OFFSET_NS_DEC  (0x0)
+#define AIP2_RANGE_BASE_S_DEC     0x78000000
+#define AIP2_RANGE_LIMIT_S_DEC    (AIP2_RANGE_BASE_S_DEC + AIP_SIZE-1)
+#define AIP2_RANGE_OFFSET_S_DEC   (0x0)
 
 
 #endif  /* __PLATFORM_RETARGET_DEV_H */

@@ -26,323 +26,101 @@
 #define __INPH_HELIUM_REGS_H__
 
 #include <stdint.h>
+#include "inph_security_registers.h"
+#include "inph_nspriv_registers.h"
 
-/* System information (SYSINFO) */
-#define CMSDK_SYSINFO_BASE_NS  0x40020000
-#define CMSDK_SYSINFO_BASE_S   0x50020000
 
-/* System info memory mapped register access structure */
-struct sysinfo_t {
-    volatile uint32_t sys_version;      /* (R/ ) System version */
-    volatile uint32_t sys_config;       /* (R/ ) System configuration */
-    volatile uint32_t reserved0[1008];
-    volatile uint32_t pidr4;            /* (R/ ) Peripheral ID 4 */
-    volatile uint32_t reserved1[3];
-    volatile uint32_t pidr0;            /* (R/ ) Peripheral ID 0 */
-    volatile uint32_t pidr1;            /* (R/ ) Peripheral ID 1 */
-    volatile uint32_t pidr2;            /* (R/ ) Peripheral ID 2 */
-    volatile uint32_t pidr3;            /* (R/ ) Peripheral ID 3 */
-    volatile uint32_t cidr0;            /* (R/ ) Component ID 0 */
-    volatile uint32_t cidr1;            /* (R/ ) Component ID 1 */
-    volatile uint32_t cidr2;            /* (R/ ) Component ID 2 */
-    volatile uint32_t cidr3;            /* (R/ ) Component ID 3 */
-};
+/* ARM AHB PPC peripherals definition */
 
-/* System Control (SYSCTRL) */
-#define CMSDK_SYSCTRL_BASE_S   0x50021000
+#define SPCNTL_XIP1_CXIP1_POS  0U
+#define SPCNTL_XIP2_CXIP2_POS  0U
 
-/* System control memory mapped register access structure */
-struct sysctrl_t {
-    volatile uint32_t secdbgstat;     /* (R/ ) Secure Debug Configuration
-                                       *       Status Register */
-    volatile uint32_t secdbgset;      /* ( /W) Secure Debug Configuration
-                                       *       Set Register */
-    volatile uint32_t secdbgclr;      /* ( /W) Secure Debug Configuration
-                                       *       Clear Register */
-    volatile uint32_t scsecctrl;      /* (R/W) System Control Security
-                                       *       Control Register */
-    volatile uint32_t fclk_div;       /* (R/W) Fast Clock Divider
-                                       *       Configuration Register */
-    volatile uint32_t sysclk_div;     /* (R/W) System Clock Divider
-                                       *       Configuration Register */
-    volatile uint32_t clockforce;     /* (R/W) Clock Forces */
-    volatile uint32_t reserved0[57];
-    volatile uint32_t resetsyndrome;  /* (R/W) Reset syndrome */
-    volatile uint32_t resetmask;      /* (R/W) Reset MASK */
-    volatile uint32_t swreset;        /* ( /W) Software Reset */
-    volatile uint32_t gretreg;        /* (R/W) General Purpose Retention
-                                       *       Register */
-    volatile uint32_t initsvtor0;     /* (R/W) Initial Secure Reset Vector
-                                       *       Register For CPU 0 */
-    volatile uint32_t initsvtor1;     /* (R/W) Initial Secure Reset
-                                       *       Vector Register For CPU 1*/
-    volatile uint32_t cpuwait;        /* (R/W) CPU Boot wait control
-                                       *       after reset */
-    volatile uint32_t nmi_enable;     /* (R/W) NAMI Enable Register */
-    volatile uint32_t wicctrl;        /* (R/W) CPU WIC Request and
-                                       *       Acknowledgement */
-    volatile uint32_t ewctrl;         /* (R/W) External Wakeup Control */
-    volatile uint32_t reserved1[54];
-    volatile uint32_t pdcm_pd_sys_sense;      /* (R/W) Power Control Dependency
-                                               * Matrix PD_SYS
-                                               * Power Domain Sensitivity.*/
-    volatile uint32_t reserved2[2];           /* Reserved */
-    volatile uint32_t pdcm_pd_sram0_sense;    /* (R/W) Power Control Dependency
-                                               * Matrix PD_SRAM0 Power
-                                               * Domain Sensitivity.*/
-    volatile uint32_t pdcm_pd_sram1_sense;    /* (R/W) Power Control Dependency
-                                               * Matrix PD_SRAM1 Power
-                                               * Domain Sensitivity.*/
-    volatile uint32_t pdcm_pd_sram2_sense;    /* (R/W) Power Control Dependency
-                                               * Matrix PD_SRAM2 Power
-                                               * Domain Sensitivity.*/
-    volatile uint32_t pdcm_pd_sram3_sense;    /* (R/W) Power Control Dependency
-                                               * Matrix PD_SRAM3 Power
-                                               * Domain Sensitivity.*/
-    volatile uint32_t reserved3[877];         /* Reserved */
-    volatile uint32_t pidr4;                  /* (R/ ) Peripheral ID 4 */
-    volatile uint32_t reserved4[3];
-    volatile uint32_t pidr0;                  /* (R/ ) Peripheral ID 0 */
-    volatile uint32_t pidr1;                  /* (R/ ) Peripheral ID 1 */
-    volatile uint32_t pidr2;                  /* (R/ ) Peripheral ID 2 */
-    volatile uint32_t pidr3;                  /* (R/ ) Peripheral ID 3 */
-    volatile uint32_t cidr0;                  /* (R/ ) Component ID 0 */
-    volatile uint32_t cidr1;                  /* (R/ ) Component ID 1 */
-    volatile uint32_t cidr2;                  /* (R/ ) Component ID 2 */
-    volatile uint32_t cidr3;                  /* (R/ ) Component ID 3 */
-};
+#define SPCNTL_SYS_SMU_POS   0U
+#define SPCNTL_SYS_AON_POS   1U
+#define SPCNTL_SYS_RTC_POS   2U
+#define SPCNTL_SYS_LPT_POS   3U
+#define SPCNTL_SYS_WDT_POS   4U
+#define SPCNTL_SYS_MISC_POS  5U
+#define SPCNTL_SYS_MISC2_POS 6U
+#define SPCNTL_SYS_PMU_POS   7U
+#define SPCNTL_SYS_RFA_POS   8U
+#define SPCNTL_SYS_DFA_POS   9U
+#define SPCNTL_SYS_HKADC_POS 10U
 
-/* Secure Privilege Control */
-#define CMSDK_SPCTRL_BASE_S  0x50080000
-#define CMSDK_SPCTRL  ((struct spctrl_def*)CMSDK_SPCTRL_BASE_S)
+#define SPCNTL_BASE0_SEC_POS   0U
+#define SPCNTL_BASE0_DT0_POS   1U
+#define SPCNTL_BASE0_DT1_POS   2U
+#define SPCNTL_BASE0_DT2_POS   3U
+#define SPCNTL_BASE0_DT3_POS   4U
+#define SPCNTL_BASE0_OTP_POS   5U
+#define SPCNTL_BASE0_RESV_POS  6U
+#define SPCNTL_BASE0_NPU_POS   7U
+#define SPCNTL_BASE0_NSP_POS   8U
 
-/* SPCTRL memory mapped register access structure */
-struct spctrl_def {
-    volatile uint32_t reserved[4];
-    volatile uint32_t secrespcfg;
-    volatile uint32_t nsccfg;
-    volatile uint32_t reserved2;
-    volatile uint32_t secmpcintstatus;
-    volatile uint32_t secppcintstat;
-    volatile uint32_t secppcintclr;
-    volatile uint32_t secppcinten;
-    volatile uint32_t reserved3;
-    volatile uint32_t secmscintstat;
-    volatile uint32_t secmscintclr;
-    volatile uint32_t secmscinten;
-    volatile uint32_t reserved4;
-    volatile uint32_t brgintstat;
-    volatile uint32_t brgintclr;
-    volatile uint32_t brginten;
-    volatile uint32_t reserved5;
-    volatile uint32_t ahbnsppc0;
-    volatile uint32_t reserved6[3];
-    volatile uint32_t ahbnsppcexp0;
-    volatile uint32_t ahbnsppcexp1;
-    volatile uint32_t ahbnsppcexp2;
-    volatile uint32_t ahbnsppcexp3;
-    volatile uint32_t apbnsppc0;
-    volatile uint32_t apbnsppc1;
-    volatile uint32_t reserved7[2];
-    volatile uint32_t apbnsppcexp0;
-    volatile uint32_t apbnsppcexp1;
-    volatile uint32_t apbnsppcexp2;
-    volatile uint32_t apbnsppcexp3;
-    volatile uint32_t ahbspppc0;
-    volatile uint32_t reserved8[3];
-    volatile uint32_t ahbspppcexp0;
-    volatile uint32_t ahbspppcexp1;
-    volatile uint32_t ahbspppcexp2;
-    volatile uint32_t ahbspppcexp3;
-    volatile uint32_t apbspppc0;
-    volatile uint32_t apbspppc1;
-    volatile uint32_t reserved9[2];
-    volatile uint32_t apbspppcexp0;
-    volatile uint32_t apbspppcexp1;
-    volatile uint32_t apbspppcexp2;
-    volatile uint32_t apbspppcexp3;
-    volatile uint32_t nsmscexp;
-    volatile uint32_t reserved10[959];
-    volatile uint32_t pid4;
-    volatile uint32_t pid5;
-    volatile uint32_t pid6;
-    volatile uint32_t pid7;
-    volatile uint32_t pid0;
-    volatile uint32_t pid1;
-    volatile uint32_t pid2;
-    volatile uint32_t pid3;
-    volatile uint32_t cid0;
-    volatile uint32_t cid1;
-    volatile uint32_t cid2;
-    volatile uint32_t cid3;
-};
+#define SPCNTL_BASE1_SRAM0_POS   0U
+#define SPCNTL_BASE1_SRAM1_POS   1U
+#define SPCNTL_BASE1_SRAM2_POS   2U
+#define SPCNTL_BASE1_SRAM3_POS   3U
+#define SPCNTL_BASE1_SRAM4_POS   4U
+#define SPCNTL_BASE1_SRAM5_POS   5U
+#define SPCNTL_BASE1_SRAM6_POS   6U
+#define SPCNTL_BASE1_SRAM7_POS   7U
+#define SPCNTL_BASE1_SRAM8_POS   8U
+#define SPCNTL_BASE1_SRAM9_POS   9U
+#define SPCNTL_BASE1_SRAM10_POS  10U
+#define SPCNTL_BASE1_SRAM11_POS  11U
+#define SPCNTL_BASE1_SRAM12_POS  12U
+#define SPCNTL_BASE1_SRAM13_POS  13U
+#define SPCNTL_BASE1_SRAM14_POS  14U
+#define SPCNTL_BASE1_SRAM15_POS  15U
+
+#define SPCNTL_BASE2_ROMMPC_POS     0U
+#define SPCNTL_BASE2_XSPI1MPC_POS   1U
+#define SPCNTL_BASE2_XSPI1CFG_POS   2U
+#define SPCNTL_BASE2_UDMA_POS       3U
+#define SPCNTL_BASE2_XSPI1CRYP_POS  4U
+#define SPCNTL_BASE2_XSPI2CFG_POS   5U
+#define SPCNTL_BASE2_XIP2MPC_POS    6U
+#define SPCNTL_BASE2_XSPI2CRYP_POS  7U
+
+#define SPCNTL_PERIPH0_UART0_POS   0U
+#define SPCNTL_PERIPH0_UART1_POS   1U
+#define SPCNTL_PERIPH0_UART2_POS   2U
+#define SPCNTL_PERIPH0_SPI0_POS    3U
+#define SPCNTL_PERIPH0_SPI1_POS    4U
+#define SPCNTL_PERIPH0_I2S_POS     5U
+#define SPCNTL_PERIPH0_I2C0_POS    6U
+#define SPCNTL_PERIPH0_I2C1_POS    7U
+#define SPCNTL_PERIPH0_PDM_POS     8U
+#define SPCNTL_PERIPH0_HKADC_POS   9U
+
+#define SPCNTL_PERIPH1_GPIO0_POS   0U
+#define SPCNTL_PERIPH1_GPIO1_POS   1U
+#define SPCNTL_PERIPH1_TCPWM0_POS  2U
+#define SPCNTL_PERIPH1_TCPWM1_POS  3U
+#define SPCNTL_PERIPH1_TCPWM2_POS  4U
+#define SPCNTL_PERIPH1_TCPWM3_POS  5U
+#define SPCNTL_PERIPH1_TCPWM4_POS  6U
+#define SPCNTL_PERIPH1_TCPWM5_POS  7U
+#define SPCNTL_PERIPH1_TRIG_POS    8U
+
+#define SPCNTL_SDIO_CNTRL_POS   0U
+#define SPCNTL_SDIO_DPRAM_POS   1U
+
+#define NSPPCNTL_PERIPH0_UART0_POS   1U
 
 /* PPC interrupt position mask */
-#define CMSDK_APB_PPC0_INT_POS_MASK     (1UL << 0)
-#define CMSDK_APB_PPC1_INT_POS_MASK     (1UL << 1)
-#define CMSDK_APB_PPCEXP0_INT_POS_MASK  (1UL << 4)
-#define CMSDK_APB_PPCEXP1_INT_POS_MASK  (1UL << 5)
-#define CMSDK_APB_PPCEXP2_INT_POS_MASK  (1UL << 6)
-#define CMSDK_APB_PPCEXP3_INT_POS_MASK  (1UL << 7)
-#define CMSDK_AHB_PPC0_INT_POS_MASK     (1UL << 16)
-#define CMSDK_AHB_PPCEXP0_INT_POS_MASK  (1UL << 20)
-#define CMSDK_AHB_PPCEXP1_INT_POS_MASK  (1UL << 21)
-#define CMSDK_AHB_PPCEXP2_INT_POS_MASK  (1UL << 22)
-#define CMSDK_AHB_PPCEXP3_INT_POS_MASK  (1UL << 23)
+#define SPCNTL_BASE0_INT_POS_MASK     (1UL << 0)
+#define SPCNTL_BASE1_INT_POS_MASK     (1UL << 1)
+#define SPCNTL_BASE2_INT_POS_MASK     (1UL << 2)
+#define SPCNTL_SYSAHB_INT_POS_MASK    (1UL << 3)
+#define SPCNTL_SYSAPB_INT_POS_MASK    (1UL << 4)
+#define SPCNTL_PERIPH0_INT_POS_MASK   (1UL << 5)
+#define SPCNTL_PERIPH1_INT_POS_MASK   (1UL << 6)
+#define SPCNTL_SDIO_INT_POS_MASK      (1UL << 7)
+#define SPCNTL_CXIP1_INT_POS_MASK     (1UL << 8)
+#define SPCNTL_CXIP2_INT_POS_MASK     (1UL << 9)
 
-/* Non-Secure Access slave PPCs register addresses */
-#define CMSDK_SPCTRL_AHB_NS_PPC0     (CMSDK_SPCTRL_BASE_S + 0x050)
-#define CMSDK_SPCTRL_AHB_NS_PPCEXP0  (CMSDK_SPCTRL_BASE_S + 0x060)
-#define CMSDK_SPCTRL_AHB_NS_PPCEXP1  (CMSDK_SPCTRL_BASE_S + 0x064)
-#define CMSDK_SPCTRL_AHB_NS_PPCEXP2  (CMSDK_SPCTRL_BASE_S + 0x068)
-#define CMSDK_SPCTRL_AHB_NS_PPCEXP3  (CMSDK_SPCTRL_BASE_S + 0x06C)
-#define CMSDK_SPCTRL_APB_NS_PPC0     (CMSDK_SPCTRL_BASE_S + 0x070)
-#define CMSDK_SPCTRL_APB_NS_PPC1     (CMSDK_SPCTRL_BASE_S + 0x074)
-#define CMSDK_SPCTRL_APB_NS_PPCEXP0  (CMSDK_SPCTRL_BASE_S + 0x080)
-#define CMSDK_SPCTRL_APB_NS_PPCEXP1  (CMSDK_SPCTRL_BASE_S + 0x084)
-#define CMSDK_SPCTRL_APB_NS_PPCEXP2  (CMSDK_SPCTRL_BASE_S + 0x088)
-#define CMSDK_SPCTRL_APB_NS_PPCEXP3  (CMSDK_SPCTRL_BASE_S + 0x08C)
 
-/* Secure Unprivileged (SP) Access slave PPCs register addresses */
-#define CMSDK_SPCTRL_AHB_PPC0_SP     (CMSDK_SPCTRL_BASE_S + 0x090)
-#define CMSDK_SPCTRL_AHB_PPCEXP0_SP  (CMSDK_SPCTRL_BASE_S + 0x0A0)
-#define CMSDK_SPCTRL_AHB_PPCEXP1_SP  (CMSDK_SPCTRL_BASE_S + 0x0A4)
-#define CMSDK_SPCTRL_AHB_PPCEXP2_SP  (CMSDK_SPCTRL_BASE_S + 0x0A8)
-#define CMSDK_SPCTRL_AHB_PPCEXP3_SP  (CMSDK_SPCTRL_BASE_S + 0x0AC)
-#define CMSDK_SPCTRL_APB_PPC0_SP     (CMSDK_SPCTRL_BASE_S + 0x0B0)
-#define CMSDK_SPCTRL_APB_PPC1_SP     (CMSDK_SPCTRL_BASE_S + 0x0B4)
-#define CMSDK_SPCTRL_APB_PPCEXP0_SP  (CMSDK_SPCTRL_BASE_S + 0x0C0)
-#define CMSDK_SPCTRL_APB_PPCEXP1_SP  (CMSDK_SPCTRL_BASE_S + 0x0C4)
-#define CMSDK_SPCTRL_APB_PPCEXP2_SP  (CMSDK_SPCTRL_BASE_S + 0x0C8)
-#define CMSDK_SPCTRL_APB_PPCEXP3_SP  (CMSDK_SPCTRL_BASE_S + 0x0CC)
-
-/* Non-Secure Privilege Control */
-#define CMSDK_NSPCTRL_BASE_NS  0x40080000
-#define CMSDK_NSPCTRL  ((struct nspctrl_def*)CMSDK_NSPCTRL_BASE_NS)
-
-/* NSPCTRL memory mapped register access structure */
-struct nspctrl_def {
-    volatile uint32_t reserved[36];
-    volatile uint32_t ahbnspppc0;
-    volatile uint32_t reserved3[3];
-    volatile uint32_t ahbnspppcexp0;
-    volatile uint32_t ahbnspppcexp1;
-    volatile uint32_t ahbnspppcexp2;
-    volatile uint32_t ahbnspppcexp3;
-    volatile uint32_t apbnspppc0;
-    volatile uint32_t apbnspppc1;
-    volatile uint32_t reserved4[2];
-    volatile uint32_t apbnspppcexp0;
-    volatile uint32_t apbnspppcexp1;
-    volatile uint32_t apbnspppcexp2;
-    volatile uint32_t apbnspppcexp3;
-    volatile uint32_t reserved5[960];
-    volatile uint32_t pidr4;
-    volatile uint32_t reserved7; /* pidr5 */
-    volatile uint32_t reserved8; /* pidr6 */
-    volatile uint32_t reserved9; /* pidr7 */
-    volatile uint32_t pidr0;
-    volatile uint32_t pidr1;
-    volatile uint32_t pidr2;
-    volatile uint32_t pidr3;
-    volatile uint32_t cidr0;
-    volatile uint32_t cidr1;
-    volatile uint32_t cidr2;
-    volatile uint32_t cidr3;
-};
-
-/* Non-Secure Unprivileged Access (NSP) Access slave PPCs register addresses */
-#define CMSDK_NSPCTRL_AHB_PPC0_NSP     (CMSDK_NSPCTRL_BASE_NS + 0x090)
-#define CMSDK_NSPCTRL_AHB_PPCEXP0_NSP  (CMSDK_NSPCTRL_BASE_NS + 0x0A0)
-#define CMSDK_NSPCTRL_AHB_PPCEXP1_NSP  (CMSDK_NSPCTRL_BASE_NS + 0x0A4)
-#define CMSDK_NSPCTRL_AHB_PPCEXP2_NSP  (CMSDK_NSPCTRL_BASE_NS + 0x0A8)
-#define CMSDK_NSPCTRL_AHB_PPCEXP3_NSP  (CMSDK_NSPCTRL_BASE_NS + 0x0AC)
-#define CMSDK_NSPCTRL_APB_PPC0_NSP     (CMSDK_NSPCTRL_BASE_NS + 0x0B0)
-#define CMSDK_NSPCTRL_APB_PPC1_NSP     (CMSDK_NSPCTRL_BASE_NS + 0x0B4)
-#define CMSDK_NSPCTRL_APB_PPCEXP0_NSP  (CMSDK_NSPCTRL_BASE_NS + 0x0C0)
-#define CMSDK_NSPCTRL_APB_PPCEXP1_NSP  (CMSDK_NSPCTRL_BASE_NS + 0x0C4)
-#define CMSDK_NSPCTRL_APB_PPCEXP2_NSP  (CMSDK_NSPCTRL_BASE_NS + 0x0C8)
-#define CMSDK_NSPCTRL_APB_PPCEXP3_NSP  (CMSDK_NSPCTRL_BASE_NS + 0x0CC)
-
-/* ARM APB PPC0 peripherals definition */
-#define CMSDK_TIMER0_APB_PPC_POS  0U
-#define CMSDK_TIMER1_APB_PPC_POS  1U
-#define CMSDK_DTIMER_APB_PPC_POS  2U
-#define CMSDK_MHU0_APB_PPC_POS    3U
-#define CMSDK_MHU1_APB_PPC_POS    4U
-/* The bits 31:5 are reserved */
-/* End ARM APB PPC0 peripherals definition */
-
-/* ARM APB PPC1 peripherals definition */
-#define CMSDK_S32K_TIMER_PPC_POS 0U
-/* The bits 31:1 are reserved */
-/* End ARM APB PPC1 peripherals definition */
-
-/* ARM APB PPCEXP0 peripherals definition */
-#define CMSDK_SSRAM1_APB_PPC_POS  0U
-#define CMSDK_SSRAM2_APB_PPC_POS  1U
-#define CMSDK_SSRAM3_APB_PPC_POS  2U
-/* The bits 31:3 are reserved */
-/* End ARM APB PPCEXP0 peripherals definition */
-
-/* ARM APB PPCEXP1 peripherals definition */
-#define CMSDK_SPI0_APB_PPC_POS   0U
-#define CMSDK_SPI1_APB_PPC_POS   1U
-#define CMSDK_SPI2_APB_PPC_POS   2U
-#define CMSDK_SPI3_APB_PPC_POS   3U
-#define CMSDK_SPI4_APB_PPC_POS   4U
-#define CMSDK_UART0_APB_PPC_POS  5U
-#define CMSDK_UART1_APB_PPC_POS  6U
-#define CMSDK_UART2_APB_PPC_POS  7U
-#define CMSDK_UART3_APB_PPC_POS  8U
-#define CMSDK_UART4_APB_PPC_POS  9U
-#define CMSDK_I2C0_APB_PPC_POS   10U
-#define CMSDK_I2C1_APB_PPC_POS   11U
-#define CMSDK_I2C2_APB_PPC_POS   12U
-#define CMSDK_I2C3_APB_PPC_POS   13U
-/* The bits 31:14 are reserved */
-/* End ARM APB PPCEXP1 peripherals definition */
-
-/* ARM APB PPCEXP2 peripherals definition */
-#define CMSDK_FPGA_SCC_PPC_POS    0U
-#define CMSDK_FPGA_AUDIO_PPC_POS  1U
-#define CMSDK_FPGA_IO_PPC_POS     2U
-/* The bits 31:3 are reserved */
-/* End ARM APB PPCEXP2 peripherals definition */
-
-/* ARM APB PPCEXP3 peripherals definition */
-/* The bits 31:0 are reserved */
-/* End ARM APB PPCEXP3 peripherals definition */
-
-/* ARM AHB PPC0 peripherals definition */
-/* The bits 31:0 are reserved */
-/* End of ARM AHB PPC0 peripherals definition */
-
-/* ARM AHB PPCEXP0 peripherals definition */
-#define CMSDK_VGA_PPC_POS       0U
-#define CMSDK_GPIO0_PPC_POS     1U
-#define CMSDK_GPIO1_PPC_POS     2U
-#define CMSDK_GPIO2_PPC_POS     3U
-#define CMSDK_GPIO3_PPC_POS     4U
-#define MPS2_ETHERNET_PPC_POS   5U
-/* The bits 31:6 are reserved */
-/* End of ARM AHB PPCEXP0 peripherals definition */
-
-/* ARM AHB PPCEXP1 peripherals definition */
-#define CMSDK_DMA0_PPC_POS  0U
-#define CMSDK_DMA1_PPC_POS  1U
-#define CMSDK_DMA2_PPC_POS  2U
-#define CMSDK_DMA3_PPC_POS  3U
-/* The bits 31:4 are reserved */
-/* End of ARM AHB PPCEXP1 peripherals definition */
-
-/* ARM AHB PPCEXP2 peripherals definition */
-/* The bits 31:0 are reserved */
-/* End of ARM AHB PPCEXP2 peripherals definition */
-
-/* ARM AHB PPCEXP3 peripherals definition */
-/* The bits 31:0 are reserved */
-
-/* End of ARM AHB PPCEXP3 peripherals definition */
 
 #endif /* __INPH_HELIUM_REGS_H__ */

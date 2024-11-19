@@ -33,22 +33,16 @@
 enum ppc_bank_e
 {
     PPC_SP_DO_NOT_CONFIGURE = -1,
-    PPC_SP_AHB_PPC0 = 0,
-    PPC_SP_RES0,
-    PPC_SP_RES1,
-    PPC_SP_RES2,
-    PPC_SP_AHB_PPC_EXP0,
-    PPC_SP_AHB_PPC_EXP1,
-    PPC_SP_AHB_PPC_EXP2,
-    PPC_SP_AHB_PPC_EXP3,
-    PPC_SP_APB_PPC0,
-    PPC_SP_APB_PPC1,
-    PPC_SP_RES3,
-    PPC_SP_RES4,
-    PPC_SP_APB_PPC_EXP0,
-    PPC_SP_APB_PPC_EXP1,
-    PPC_SP_APB_PPC_EXP2,
-    PPC_SP_APB_PPC_EXP3,
+    APB_PPC_BASE0 = 0,     /*!< APB BASE0 PPC */
+    APB_PPC_BASE1,         /*!< APB BASE1 PPC */
+    APB_PPC_BASE2,         /*!< APB BASE2 PPC */
+    APB_PPC_SYSTEM,        /*!< APB SYSTEM CONTROLLER PPC */
+    AHB_PPC_SYSTEM,        /*!< AHB SYSTEM CONTROLLER PPC */
+    AHB_PPC_PERIPH0,       /*!< PERIPHERAL0 PPC */
+    AHB_PPC_PERIPH1,       /*!< PERIPHERAL1 PPC */    
+    AHB_PPC_SDIO,          /*!< AHB PPC SDIO*/    
+    AHB_PPC_XIP1,          /*!< AHB XIP */
+    AHB_PPC_XIP2           /*!< AHB XIP */    
 };
 
 /**

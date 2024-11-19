@@ -250,7 +250,8 @@ static struct mpc_sie_dev_cfg_t MPC_SRAM0_DEV_CFG_S = {
     .range_list = MPC_SRAM0_RANGE_LIST,
     .nbr_of_ranges = MPC_SRAM_RANGE_LIST_LEN};
 static struct mpc_sie_dev_data_t MPC_SRAM0_DEV_DATA_S = {
-    .is_initialized = false};
+    .is_initialized = false,
+    .sie_version = SIE200};
 struct mpc_sie_dev_t MPC_SRAM0_DEV_S = {
     &(MPC_SRAM0_DEV_CFG_S),
     &(MPC_SRAM0_DEV_DATA_S)};
@@ -278,7 +279,8 @@ static struct mpc_sie_dev_cfg_t MPC_SRAM1_DEV_CFG_S = {
     .range_list = MPC_SRAM1_RANGE_LIST,
     .nbr_of_ranges = MPC_SRAM_RANGE_LIST_LEN};
 static struct mpc_sie_dev_data_t MPC_SRAM1_DEV_DATA_S = {
-    .is_initialized = false};
+    .is_initialized = false,
+    .sie_version = SIE200};
 struct mpc_sie_dev_t MPC_SRAM1_DEV_S = {
     &(MPC_SRAM1_DEV_CFG_S),
     &(MPC_SRAM1_DEV_DATA_S)};
@@ -306,7 +308,8 @@ static struct mpc_sie_dev_cfg_t MPC_SRAM2_DEV_CFG_S = {
     .range_list = MPC_SRAM2_RANGE_LIST,
     .nbr_of_ranges = MPC_SRAM_RANGE_LIST_LEN};
 static struct mpc_sie_dev_data_t MPC_SRAM2_DEV_DATA_S = {
-    .is_initialized = false};
+    .is_initialized = false,
+    .sie_version = SIE200};
 struct mpc_sie_dev_t MPC_SRAM2_DEV_S = {
     &(MPC_SRAM2_DEV_CFG_S),
     &(MPC_SRAM2_DEV_DATA_S)};
@@ -334,7 +337,8 @@ static struct mpc_sie_dev_cfg_t MPC_SRAM3_DEV_CFG_S = {
     .range_list = MPC_SRAM3_RANGE_LIST,
     .nbr_of_ranges = MPC_SRAM_RANGE_LIST_LEN};
 static struct mpc_sie_dev_data_t MPC_SRAM3_DEV_DATA_S = {
-    .is_initialized = false};
+    .is_initialized = false,
+    .sie_version = SIE200};
 struct mpc_sie_dev_t MPC_SRAM3_DEV_S = {
     &(MPC_SRAM3_DEV_CFG_S),
     &(MPC_SRAM3_DEV_DATA_S)};
@@ -362,7 +366,8 @@ static struct mpc_sie_dev_cfg_t MPC_SRAM4_DEV_CFG_S = {
     .range_list = MPC_SRAM4_RANGE_LIST,
     .nbr_of_ranges = MPC_SRAM_RANGE_LIST_LEN};
 static struct mpc_sie_dev_data_t MPC_SRAM4_DEV_DATA_S = {
-    .is_initialized = false};
+    .is_initialized = false,
+    .sie_version = SIE200};
 struct mpc_sie_dev_t MPC_SRAM4_DEV_S = {
     &(MPC_SRAM4_DEV_CFG_S),
     &(MPC_SRAM4_DEV_DATA_S)};
@@ -390,7 +395,8 @@ static struct mpc_sie_dev_cfg_t MPC_SRAM5_DEV_CFG_S = {
     .range_list = MPC_SRAM5_RANGE_LIST,
     .nbr_of_ranges = MPC_SRAM_RANGE_LIST_LEN};
 static struct mpc_sie_dev_data_t MPC_SRAM5_DEV_DATA_S = {
-    .is_initialized = false};
+    .is_initialized = false,
+    .sie_version = SIE200};
 struct mpc_sie_dev_t MPC_SRAM5_DEV_S = {
     &(MPC_SRAM5_DEV_CFG_S),
     &(MPC_SRAM5_DEV_DATA_S)};
@@ -418,7 +424,8 @@ static struct mpc_sie_dev_cfg_t MPC_SRAM6_DEV_CFG_S = {
     .range_list = MPC_SRAM6_RANGE_LIST,
     .nbr_of_ranges = MPC_SRAM_RANGE_LIST_LEN};
 static struct mpc_sie_dev_data_t MPC_SRAM6_DEV_DATA_S = {
-    .is_initialized = false};
+    .is_initialized = false,
+    .sie_version = SIE200};
 struct mpc_sie_dev_t MPC_SRAM6_DEV_S = {
     &(MPC_SRAM6_DEV_CFG_S),
     &(MPC_SRAM6_DEV_DATA_S)};
@@ -446,7 +453,8 @@ static struct mpc_sie_dev_cfg_t MPC_SRAM7_DEV_CFG_S = {
     .range_list = MPC_SRAM7_RANGE_LIST,
     .nbr_of_ranges = MPC_SRAM_RANGE_LIST_LEN};
 static struct mpc_sie_dev_data_t MPC_SRAM7_DEV_DATA_S = {
-    .is_initialized = false};
+    .is_initialized = false,
+    .sie_version = SIE200};
 struct mpc_sie_dev_t MPC_SRAM7_DEV_S = {
     &(MPC_SRAM7_DEV_CFG_S),
     &(MPC_SRAM7_DEV_DATA_S)};
@@ -474,7 +482,8 @@ static struct mpc_sie_dev_cfg_t MPC_SRAM8_DEV_CFG_S = {
     .range_list = MPC_SRAM8_RANGE_LIST,
     .nbr_of_ranges = MPC_SRAM_RANGE_LIST_LEN};
 static struct mpc_sie_dev_data_t MPC_SRAM8_DEV_DATA_S = {
-    .is_initialized = false};
+    .is_initialized = false,
+    .sie_version = SIE200};
 struct mpc_sie_dev_t MPC_SRAM8_DEV_S = {
     &(MPC_SRAM8_DEV_CFG_S),
     &(MPC_SRAM8_DEV_DATA_S)};
@@ -502,7 +511,8 @@ static struct mpc_sie_dev_cfg_t MPC_SRAM9_DEV_CFG_S = {
     .range_list = MPC_SRAM9_RANGE_LIST,
     .nbr_of_ranges = MPC_SRAM_RANGE_LIST_LEN};
 static struct mpc_sie_dev_data_t MPC_SRAM9_DEV_DATA_S = {
-    .is_initialized = false};
+    .is_initialized = false,
+    .sie_version = SIE200};
 struct mpc_sie_dev_t MPC_SRAM9_DEV_S = {
     &(MPC_SRAM9_DEV_CFG_S),
     &(MPC_SRAM9_DEV_DATA_S)};
@@ -530,7 +540,8 @@ static struct mpc_sie_dev_cfg_t MPC_SRAM10_DEV_CFG_S = {
     .range_list = MPC_SRAM10_RANGE_LIST,
     .nbr_of_ranges = MPC_SRAM_RANGE_LIST_LEN};
 static struct mpc_sie_dev_data_t MPC_SRAM10_DEV_DATA_S = {
-    .is_initialized = false};
+    .is_initialized = false,
+    .sie_version = SIE200};
 struct mpc_sie_dev_t MPC_SRAM10_DEV_S = {
     &(MPC_SRAM10_DEV_CFG_S),
     &(MPC_SRAM10_DEV_DATA_S)};
@@ -558,7 +569,8 @@ static struct mpc_sie_dev_cfg_t MPC_SRAM11_DEV_CFG_S = {
     .range_list = MPC_SRAM11_RANGE_LIST,
     .nbr_of_ranges = MPC_SRAM_RANGE_LIST_LEN};
 static struct mpc_sie_dev_data_t MPC_SRAM11_DEV_DATA_S = {
-    .is_initialized = false};
+    .is_initialized = false,
+    .sie_version = SIE200};
 struct mpc_sie_dev_t MPC_SRAM11_DEV_S = {
     &(MPC_SRAM11_DEV_CFG_S),
     &(MPC_SRAM11_DEV_DATA_S)};
@@ -586,7 +598,8 @@ static struct mpc_sie_dev_cfg_t MPC_SRAM12_DEV_CFG_S = {
     .range_list = MPC_SRAM12_RANGE_LIST,
     .nbr_of_ranges = MPC_SRAM_RANGE_LIST_LEN};
 static struct mpc_sie_dev_data_t MPC_SRAM12_DEV_DATA_S = {
-    .is_initialized = false};
+    .is_initialized = false,
+    .sie_version = SIE200};
 struct mpc_sie_dev_t MPC_SRAM12_DEV_S = {
     &(MPC_SRAM12_DEV_CFG_S),
     &(MPC_SRAM12_DEV_DATA_S)};
@@ -614,7 +627,8 @@ static struct mpc_sie_dev_cfg_t MPC_SRAM14_DEV_CFG_S = {
     .range_list = MPC_SRAM14_RANGE_LIST,
     .nbr_of_ranges = MPC_SRAM_RANGE_LIST_LEN};
 static struct mpc_sie_dev_data_t MPC_SRAM14_DEV_DATA_S = {
-    .is_initialized = false};
+    .is_initialized = false,
+    .sie_version = SIE200};
 struct mpc_sie_dev_t MPC_SRAM14_DEV_S = {
     &(MPC_SRAM14_DEV_CFG_S),
     &(MPC_SRAM14_DEV_DATA_S)};
@@ -642,7 +656,8 @@ static struct mpc_sie_dev_cfg_t MPC_SRAM15_DEV_CFG_S = {
     .range_list = MPC_SRAM15_RANGE_LIST,
     .nbr_of_ranges = MPC_SRAM_RANGE_LIST_LEN};
 static struct mpc_sie_dev_data_t MPC_SRAM15_DEV_DATA_S = {
-    .is_initialized = false};
+    .is_initialized = false,
+    .sie_version = SIE200};
 struct mpc_sie_dev_t MPC_SRAM15_DEV_S = {
     &(MPC_SRAM15_DEV_CFG_S),
     &(MPC_SRAM15_DEV_DATA_S)};
@@ -670,7 +685,8 @@ static struct mpc_sie_dev_cfg_t MPC_ROM_DEV_CFG_S = {
     .range_list = MPC_ROM_RANGE_LIST,
     .nbr_of_ranges = MPC_SRAM_RANGE_LIST_LEN};
 static struct mpc_sie_dev_data_t MPC_ROM_DEV_DATA_S = {
-    .is_initialized = false};
+    .is_initialized = false,
+    .sie_version = SIE200};
 struct mpc_sie_dev_t MPC_ROM_DEV_S = {
     &(MPC_ROM_DEV_CFG_S),
     &(MPC_ROM_DEV_DATA_S)};
@@ -698,7 +714,8 @@ static struct mpc_sie_dev_cfg_t MPC_XSPI1_DEV_CFG_S = {
     .range_list = MPC_XSPI1_RANGE_LIST,
     .nbr_of_ranges = MPC_SRAM_RANGE_LIST_LEN};
 static struct mpc_sie_dev_data_t MPC_XSPI1_DEV_DATA_S = {
-    .is_initialized = false};
+    .is_initialized = false,
+    .sie_version = SIE200};
 struct mpc_sie_dev_t MPC_XSPI1_DEV_S = {
     &(MPC_XSPI1_DEV_CFG_S),
     &(MPC_XSPI1_DEV_DATA_S)};
@@ -726,7 +743,8 @@ static struct mpc_sie_dev_cfg_t MPC_XSPI2_DEV_CFG_S = {
     .range_list = MPC_XSPI2_RANGE_LIST,
     .nbr_of_ranges = MPC_SRAM_RANGE_LIST_LEN};
 static struct mpc_sie_dev_data_t MPC_XSPI2_DEV_DATA_S = {
-    .is_initialized = false};
+    .is_initialized = false,
+    .sie_version = SIE200};
 struct mpc_sie_dev_t MPC_XSPI2_DEV_S = {
     &(MPC_XSPI2_DEV_CFG_S),
     &(MPC_XSPI2_DEV_DATA_S)};

@@ -24,12 +24,12 @@
 
 #include "inph_ppc_drv.h"
 
-#define AHB_PPC_XIP2_INT_POS_MASK    (1UL << 8)
-#define AHB_PPC_XIP1_INT_POS_MASK    (1UL << 7)
-#define AHB_PPC_SDIO_INT_POS_MASK    (1UL << 6)
-#define AHB_PPC_PERIPH1_INT_POS_MASK (1UL << 5)
-#define AHB_PPC_PERIPH0_INT_POS_MASK (1UL << 4)
-#define AHB_PPC_SYSCTRL_INT_POS_MASK (1UL << 3)
+#define AHB_PPC_XIP2_INT_POS_MASK    (1UL << 9)
+#define AHB_PPC_XIP1_INT_POS_MASK    (1UL << 8)
+#define AHB_PPC_SDIO_INT_POS_MASK    (1UL << 7)
+#define AHB_PPC_PERIPH1_INT_POS_MASK (1UL << 6)
+#define AHB_PPC_PERIPH0_INT_POS_MASK (1UL << 5)
+#define AHB_PPC_SYSCTRL_INT_POS_MASK (1UL << 4)
 #define APB_PPC_SYSCTRL_INT_POS_MASK (1UL << 3)
 #define APB_PPC_BASE2_INT_POS_MASK   (1UL << 2)
 #define APB_PPC_BASE1_INT_POS_MASK   (1UL << 1)

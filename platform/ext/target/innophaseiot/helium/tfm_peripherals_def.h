@@ -32,23 +32,16 @@ struct platform_data_t;
 
 extern struct platform_data_t tfm_peripheral_std_uart;
 extern struct platform_data_t tfm_peripheral_uart1;
+extern struct platform_data_t tfm_peripheral_uart2;
 extern struct platform_data_t tfm_peripheral_timer0;
 
 #define TFM_PERIPHERAL_STD_UART  (&tfm_peripheral_std_uart)
 #define TFM_PERIPHERAL_UART1     (&tfm_peripheral_uart1)
-#define TFM_PERIPHERAL_TIMER0    (&tfm_peripheral_timer0)
+#define TFM_PERIPHERAL_UART2     (&tfm_peripheral_uart2)
+//#define TFM_PERIPHERAL_TIMER0    (&tfm_peripheral_timer0)
 
 #ifdef PSA_API_TEST_IPC
-extern struct platform_data_t tfm_peripheral_FF_TEST_UART_REGION;
-extern struct platform_data_t tfm_peripheral_FF_TEST_WATCHDOG_REGION;
-extern struct platform_data_t tfm_peripheral_FF_TEST_NVMEM_REGION;
-extern struct platform_data_t tfm_peripheral_FF_TEST_SERVER_PARTITION_MMIO;
-extern struct platform_data_t tfm_peripheral_FF_TEST_DRIVER_PARTITION_MMIO;
-#define FF_TEST_UART_REGION           (&tfm_peripheral_FF_TEST_UART_REGION)
-#define FF_TEST_WATCHDOG_REGION       (&tfm_peripheral_FF_TEST_WATCHDOG_REGION)
-#define FF_TEST_NVMEM_REGION          (&tfm_peripheral_FF_TEST_NVMEM_REGION)
-#define FF_TEST_SERVER_PARTITION_MMIO (&tfm_peripheral_FF_TEST_SERVER_PARTITION_MMIO)
-#define FF_TEST_DRIVER_PARTITION_MMIO (&tfm_peripheral_FF_TEST_DRIVER_PARTITION_MMIO)
+
 #endif /* PSA_API_TEST_IPC */
 
 #ifdef __cplusplus

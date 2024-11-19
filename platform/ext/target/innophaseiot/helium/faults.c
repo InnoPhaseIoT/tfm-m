@@ -18,7 +18,8 @@ extern ARM_DRIVER_MPC Driver_SRAM0_MPC;
 void C_MPC_Handler(void)
 {
     /* Clear MPC interrupt flag and pending MPC IRQ */
-    Driver_SRAM0_MPC.ClearInterrupt();
+    
+    mpc_clear_irq();
     NVIC_ClearPendingIRQ(MPC_IRQn);
 
     /* Print fault message and block execution */
@@ -39,12 +40,6 @@ __attribute__((naked)) void MPC_Handler(void)
 
 void C_PPC_Handler(void)
 {
-    /*
-     * Due to an issue on the FVP, the PPC fault doesn't trigger a
-     * PPC IRQ which is handled by the PPC_handler.
-     * In the FVP execution, this code is not execute.
-     */
-
     /* Clear PPC interrupt flag and pending PPC IRQ */
     ppc_clear_irq();
     NVIC_ClearPendingIRQ(PPC_IRQn);

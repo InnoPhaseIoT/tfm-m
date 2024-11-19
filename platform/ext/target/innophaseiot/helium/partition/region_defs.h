@@ -26,17 +26,13 @@
 #define S_HEAP_SIZE             (0x00000200)
 #endif
 
-#ifdef TFM_FIH_PROFILE_ON
-#define S_MSP_STACK_SIZE        (0x00000A40)
-#else
 #define S_MSP_STACK_SIZE        (0x00000800)
-#endif
 #define S_PSP_STACK_SIZE        (0x00000800)
 
 #define NS_HEAP_SIZE            (0x00001000)
-#define NS_STACK_SIZE           (0x000001E0)
+#define NS_STACK_SIZE           (0x00001000)
 
-/* MPC granularity is 128 KB on AN521 Castor MPS2 FPGA image. Alignment
+/* MPC granularity is 64 KB on Helium A0 FPGA image. Alignment
  * of partitions is defined in accordance with this constraint.
  */
 
@@ -49,7 +45,8 @@
 #define S_IMAGE_SECONDARY_PARTITION_OFFSET (FLASH_AREA_0_OFFSET)
 #endif /* !LINK_TO_SECONDARY_PARTITION */
 #else
-#define S_IMAGE_PRIMARY_PARTITION_OFFSET (0x0)
+//#define S_IMAGE_PRIMARY_PARTITION_OFFSET (0x0)
+#define S_IMAGE_PRIMARY_PARTITION_OFFSET (0x1000)
 #endif /* BL2 */
 
 #ifndef LINK_TO_SECONDARY_PARTITION
@@ -101,8 +98,8 @@
 #define S_CODE_SIZE     (IMAGE_S_CODE_SIZE)
 #define S_CODE_LIMIT    (S_CODE_START + S_CODE_SIZE - 1)
 
-/* Size of vector table: 139 interrupt handlers + 4 bytes MPS initial value */
-#define S_CODE_VECTOR_TABLE_SIZE    (0x230)
+/* Size of vector table: 260 interrupt handlers + 4 bytes MPS initial value */
+#define S_CODE_VECTOR_TABLE_SIZE    (0x410)
 
 #define S_DATA_START    (S_RAM_ALIAS(0x0))
 #define S_DATA_SIZE     (TOTAL_RAM_SIZE / 2)

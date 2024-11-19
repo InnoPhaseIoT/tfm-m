@@ -39,6 +39,10 @@
 
 /* ======= Defines peripheral configuration structures ======= */
 
+/* Values for hardware version in PIDR0 reg */
+#define SIE200      0x60
+#define SIE300      0x65
+
 /* ARM UART driver structures */
 #ifdef RTE_USART0_S
 extern struct inph_uart_dev_t UART0_CMSDK_DEV_S;
