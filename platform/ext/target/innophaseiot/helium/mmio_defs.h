@@ -35,7 +35,7 @@ extern "C" {
 
 /* Allowed named MMIO of this platform */
 const uintptr_t partition_named_mmio_list[] = {
-    (uintptr_t)TFM_PERIPHERAL_TIMER0,
+//    (uintptr_t)TFM_PERIPHERAL_TIMER0,
     (uintptr_t)TFM_PERIPHERAL_STD_UART,
 #ifdef PSA_API_TEST_IPC
     (uintptr_t)FF_TEST_UART_REGION,

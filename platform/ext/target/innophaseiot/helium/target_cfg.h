@@ -109,6 +109,11 @@ FIH_RET_TYPE(int32_t) ppc_clr_secure_unpriv(enum ppc_bank_e bank, uint16_t pos);
 void ppc_clear_irq(void);
 
 /**
+ * \brief Clears MPC interrupt.
+ */
+void mpc_clear_irq(void);
+
+/**
  * \brief Configures SAU and IDAU.
  */
 FIH_RET_TYPE(int32_t) sau_and_idau_cfg(void);

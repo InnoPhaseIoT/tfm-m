@@ -24,6 +24,7 @@
 #include "tfm_plat_defs.h"
 #include "region.h"
 #include "platform_regs.h"
+#include "utilities.h"
 
 #ifdef PSA_API_TEST_IPC
 #endif
@@ -71,7 +72,7 @@ const struct memory_region_limits memory_regions = {
 extern ARM_DRIVER_MPC Driver_SRAM0_MPC;
 extern ARM_DRIVER_MPC Driver_SRAM1_MPC;
 extern ARM_DRIVER_MPC Driver_SRAM2_MPC;
-#if 0
+#if 1
 extern ARM_DRIVER_MPC Driver_SRAM3_MPC;
 extern ARM_DRIVER_MPC Driver_SRAM4_MPC;
 extern ARM_DRIVER_MPC Driver_SRAM5_MPC;
@@ -87,8 +88,8 @@ extern ARM_DRIVER_MPC Driver_SRAM14_MPC;
 extern ARM_DRIVER_MPC Driver_SRAM15_MPC;
 #endif
 extern ARM_DRIVER_MPC Driver_XSPI1_MPC;
-//extern ARM_DRIVER_MPC Driver_XSPI2_MPC;
-//extern ARM_DRIVER_MPC Driver_ROM_MPC;
+extern ARM_DRIVER_MPC Driver_XSPI2_MPC;
+extern ARM_DRIVER_MPC Driver_ROM_MPC;
 
 /* Import PPC drivers */
 extern ARM_DRIVER_PPC Driver_APB_PPCBASE0;
@@ -108,14 +109,13 @@ extern ARM_DRIVER_PPC Driver_AHB_XIP2;
 #define PERIPHERALS_BASE_NS_START (0x40000000)
 #define PERIPHERALS_BASE_NS_END   (0x4FFFFFFF)
 
-static DRIVER_PPC_RSE *const ppc_bank_drivers[] = {
+static ARM_DRIVER_PPC *const ppc_bank_drivers[] = {
     &Driver_APB_PPCBASE0,
     &Driver_APB_PPCBASE1,
     &Driver_APB_PPCBASE2,
     &Driver_APB_SYSCNTRL,
     &Driver_AHB_SYSCNTRL,
     &Driver_AHB_PERIPHERAL0,
-    &Driver_PPC_RSE_PERIPH1,
     &Driver_AHB_PERIPHERAL1,
     &Driver_AHB_SDIO,
     &Driver_AHB_XIP1,
@@ -228,7 +228,7 @@ enum tfm_plat_err_t nvic_interrupt_target_state_cfg(void)
 /*----------------- NVIC interrupt enabling for S peripherals ----------------*/
 enum tfm_plat_err_t nvic_interrupt_enable(void)
 {
-    struct inph_security_cntrl_t* spctrl = INPH_SPCTRL_BASE_S;
+    inph_security_cntrl_t* spctrl = PPC_SPCTRL;
     int32_t ret = ARM_DRIVER_OK;
 
     /* MPC interrupt enabling */
@@ -252,7 +252,7 @@ enum tfm_plat_err_t nvic_interrupt_enable(void)
     /* PPC interrupt enabling */
     /* Clear pending PPC interrupts */
  
-    spctrl->SECPPCINTCLR |= SPCNTL_BASE0_INT_POS_MASK |
+    spctrl->SECPPCINTCLR.dw |= SPCNTL_BASE0_INT_POS_MASK |
                            SPCNTL_BASE1_INT_POS_MASK |
                            SPCNTL_BASE2_INT_POS_MASK |
                            SPCNTL_SYSAHB_INT_POS_MASK |
@@ -264,7 +264,7 @@ enum tfm_plat_err_t nvic_interrupt_enable(void)
                            SPCNTL_CXIP2_INT_POS_MASK;
 
     /* Enable PPC interrupts for APB PPC */
-    spctrl->SECPPCINTEN |= SPCNTL_BASE0_INT_POS_MASK |
+    spctrl->SECPPCINTEN.dw |= SPCNTL_BASE0_INT_POS_MASK |
                            SPCNTL_BASE1_INT_POS_MASK |
                            SPCNTL_BASE2_INT_POS_MASK |
                            SPCNTL_SYSAHB_INT_POS_MASK |
@@ -341,7 +341,7 @@ const struct sau_cfg_t sau_cfg[] = {
 
 FIH_RET_TYPE(int32_t) sau_and_idau_cfg(void)
 {
-    struct spctrl_def *spctrl = CMSDK_SPCTRL;
+    inph_security_cntrl_t* spctrl = PPC_SPCTRL;
     uint32_t i;
 
     /* Ensure all memory accesses are completed */
@@ -359,7 +359,8 @@ FIH_RET_TYPE(int32_t) sau_and_idau_cfg(void)
     }
 
     /* Allows SAU to define the code region as a NSC */
-    spctrl->nsccfg |= NSCCFG_CODENSC;
+    spctrl->NSCCFG.bf.CODENSC |= NSCCFG_CODENSC;
+    spctrl->NSCCFG.bf.RAMNSC  |= NSCCFG_CODENSC;
 
     /* Ensure the write is completed and flush pipeline */
     __DSB();
@@ -482,10 +483,10 @@ fih_int fih_verify_mpc_cfg(void)
 
 FIH_RET_TYPE(int32_t) ppc_init_cfg(void)
 {
-    struct inph_security_cntrl_t* spctrl = INPH_SPCTRL_BASE_S;
-    struct inph_security_cntrl_t* nsppctrl = INPH_NSPRIV_BASE_NS;
+    inph_security_cntrl_t* spctrl = PPC_SPCTRL;
+    inph_nspriv_security_t* nsppctrl = PPC_NSPPCTRL;
     
-    int32_t err = ARM_DRIVER_OK;
+    int err = ARM_DRIVER_OK;
 
     /* Initialize not used PPC drivers */
     err |= Driver_APB_PPCBASE0.Initialize();
@@ -500,12 +501,13 @@ FIH_RET_TYPE(int32_t) ppc_init_cfg(void)
     err |= Driver_AHB_XIP2.Initialize();
 
     /* in NS, grant un-privileged for UART0 */
-    nsppctrl->APBNSPRVPPCPERIPH0 |= (1U << NSPPCNTL_PERIPH0_UART0_POS);
+    nsppctrl->APBNSPRVPPCPERIPH0.bf.PPC_PERIPH_0_NS_PRV_N |=
+                                 (1U << NSPPCNTL_PERIPH0_UART0_POS);
 
     /* Configure the response to a security violation as a
      * bus error instead of RAZ/WI
      */
-    spctrl->SECRESPCFG |= 1U;
+    spctrl->SECRESPCFG.bf.SECRESPCFG |= 1U;
 
     FIH_RET(fih_int_encode(ARM_DRIVER_OK));
 }
@@ -521,31 +523,31 @@ fih_int fih_verify_ppc_cfg(void)
 void ppc_configure_to_non_secure(enum ppc_bank_e bank, uint16_t pos)
 {
     /* Setting NS flag for peripheral to enable NS access */
-    struct inph_security_cntrl_t* spctrl = INPH_SPCTRL_BASE_S;
-    ((uint32_t*)&(spctrl->APB_PPC_BASE0))[bank] |= (1U << pos);
+    inph_security_cntrl_t* spctrl = PPC_SPCTRL;
+    ((uint32_t*)&(spctrl->APBNSPPCBASE0))[bank] |= (1U << pos);
 }
 
 FIH_RET_TYPE(int32_t) ppc_configure_to_secure(enum ppc_bank_e bank, uint16_t pos)
 {
     /* Clear NS flag for peripheral to prevent NS access */
-    struct inph_security_cntrl_t* spctrl = INPH_SPCTRL_BASE_S;
-    ((uint32_t*)&(spctrl->APB_PPC_BASE0))[bank] &= ~(1U << pos);
+    inph_security_cntrl_t* spctrl = PPC_SPCTRL;
+    ((uint32_t*)&(spctrl->APBNSPPCBASE0))[bank] &= ~(1U << pos);
 
     FIH_RET(fih_int_encode(ARM_DRIVER_OK));
 }
 
 FIH_RET_TYPE(int32_t) ppc_en_secure_unpriv(enum ppc_bank_e bank, uint16_t pos)
 {
-    struct inph_security_cntrl_t* spctrl = INPH_SPCTRL_BASE_S;
-    ((uint32_t*)&(spctrl->APB_PPC_BASE0))[bank] |= (1U << pos);
+    inph_security_cntrl_t* spctrl = PPC_SPCTRL;
+    ((uint32_t*)&(spctrl->APBNSPPCBASE0))[bank] |= (1U << pos);
 
     FIH_RET(fih_int_encode(ARM_DRIVER_OK));
 }
 
 FIH_RET_TYPE(int32_t) ppc_clr_secure_unpriv(enum ppc_bank_e bank, uint16_t pos)
 {
-    struct inph_security_cntrl_t* spctrl = INPH_SPCTRL_BASE_S;
-    ((uint32_t*)&(spctrl->APB_PPC_BASE0))[bank] &= ~(1U << pos);
+    inph_security_cntrl_t* spctrl = PPC_SPCTRL;
+    ((uint32_t*)&(spctrl->APBNSPPCBASE0))[bank] &= ~(1U << pos);
 
     FIH_RET(fih_int_encode(ARM_DRIVER_OK));
 }

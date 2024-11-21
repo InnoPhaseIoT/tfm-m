@@ -62,7 +62,7 @@ target_include_directories(platform_s
         partition
         retarget
         cmsis_core
-        native_drivers/timer_cmsdk
+        native_drivers/inph_registers
         ${PLATFORM_DIR}/ext/target/innophaseiot/drivers/mpc_sie
         ${PLATFORM_DIR}/ext/target/innophaseiot/drivers/uart
         ${PLATFORM_DIR}/ext/target/innophaseiot/drivers/common
@@ -117,7 +117,6 @@ if(BL2)
             retarget/platform_retarget_dev.c
             cmsis_core/system_core_init.c
             cmsis_drivers/Driver_Flash.c
-#            native_drivers/inph_uart_drv.c
             cmsis_drivers/Driver_USART.c
     )
 
@@ -134,7 +133,7 @@ if(BL2)
             .
             ${PLATFORM_DIR}/..
             native_drivers
-#            native_drivers/timer_cmsdk
+            native_drivers/inph_registers
     )
 endif()
 
@@ -152,7 +151,6 @@ target_sources(tfm_spm
 #========================= Files for building NS platform =====================#
 
 install(FILES       ${PLATFORM_DIR}/ext/common/test_interrupt.c
-#                    ${TARGET_PLATFORM_PATH}/native_drivers/inph_uart_drv.c
                     ${PLATFORM_DIR}/ext/target/innophaseiot/drivers/uart/inph_uart_drv.c
 #                    ${TARGET_PLATFORM_PATH}/native_drivers/timer_cmsdk/timer_cmsdk.c
                     ${TARGET_PLATFORM_PATH}/cmsis_drivers/Driver_USART.c
@@ -173,8 +171,6 @@ install(FILES       ${TARGET_PLATFORM_PATH}/partition/region_defs.h
                     ${PLATFORM_DIR}/ext/target/innophaseiot/drivers/uart/Driver_USART_CMSDK.h
                     ${PLATFORM_DIR}/ext/target/innophaseiot/drivers/uart/inph_uart_drv.h                                                            
                     ${PLATFORM_DIR}/ext/target/innophaseiot/drivers/common/helium_macros.h                    
-                    ${TARGET_PLATFORM_PATH}/native_drivers/inph_security_registers.h               
-#                    ${TARGET_PLATFORM_PATH}/native_drivers/timer_cmsdk/timer_cmsdk.h
                     ${PLATFORM_DIR}/ext/target/innophaseiot/drivers/mpc_sie/Driver_MPC_Sie.h
                     ${PLATFORM_DIR}/ext/target/innophaseiot/drivers/mpc_sie/inph_mpc_registers.h
                     ${PLATFORM_DIR}/ext/target/innophaseiot/drivers/mpc_sie/Driver_MPC_Common.h                                         
