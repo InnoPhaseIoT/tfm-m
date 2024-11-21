@@ -21,8 +21,8 @@ extern "C" {
  */
 #define DEFAULT_IRQ_PRIORITY    (1UL << (__NVIC_PRIO_BITS - 2))
 
-#define TFM_TIMER0_IRQ           (TIMER0_IRQn)
-#define TFM_TIMER1_IRQ           (TIMER1_IRQn)
+//#define TFM_TIMER0_IRQ           (TIMER0_IRQn)
+//#define TFM_TIMER1_IRQ           (TIMER1_IRQn)
 #define FF_TEST_UART_IRQ         (UARTTX2_IRQn)
 #define FF_TEST_UART_IRQ_Handler UARTTX2_Handler
 #define TFM_FPU_S_TEST_IRQ       (UART0_IRQn)
@@ -33,7 +33,7 @@ struct platform_data_t;
 extern struct platform_data_t tfm_peripheral_std_uart;
 extern struct platform_data_t tfm_peripheral_uart1;
 extern struct platform_data_t tfm_peripheral_uart2;
-extern struct platform_data_t tfm_peripheral_timer0;
+//extern struct platform_data_t tfm_peripheral_timer0;
 
 #define TFM_PERIPHERAL_STD_UART  (&tfm_peripheral_std_uart)
 #define TFM_PERIPHERAL_UART1     (&tfm_peripheral_uart1)

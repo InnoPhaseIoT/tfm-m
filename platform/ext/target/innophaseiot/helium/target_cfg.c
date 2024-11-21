@@ -360,7 +360,6 @@ FIH_RET_TYPE(int32_t) sau_and_idau_cfg(void)
 
     /* Allows SAU to define the code region as a NSC */
     spctrl->NSCCFG.bf.CODENSC |= NSCCFG_CODENSC;
-    spctrl->NSCCFG.bf.RAMNSC  |= NSCCFG_CODENSC;
 
     /* Ensure the write is completed and flush pipeline */
     __DSB();
