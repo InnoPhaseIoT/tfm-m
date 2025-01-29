@@ -31,9 +31,9 @@
 
 #define _TOTAL_RAM_SIZE (0x100000)
 
-#if HELIUMA0_FLASHONLY_CNTRL1
+//#if HELIUMA0_FLASHONLY_CNTRL1
 #define _FLASH_BASE_S           (0x02000000)
 #define _FLASH_BASE_NS          (0x12000000)
-#endif
+//#endif
 
 #endif /* __REGION_ADDRESSES_H__ */

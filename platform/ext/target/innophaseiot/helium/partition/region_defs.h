@@ -46,10 +46,10 @@
 #endif /* !LINK_TO_SECONDARY_PARTITION */
 #else
 //#define S_IMAGE_PRIMARY_PARTITION_OFFSET (0x0)
-#define S_IMAGE_PRIMARY_PARTITION_OFFSET (0x1000)
+#define S_IMAGE_PRIMARY_PARTITION_OFFSET (0x1000) // after calibration area
 #endif /* BL2 */
 
-#ifndef LINK_TO_SECONDARY_PARTITION
+#ifndef LINK_TO_SECONDARY_PARTITION // non secure image
 #define NS_IMAGE_PRIMARY_PARTITION_OFFSET (FLASH_AREA_0_OFFSET \
                                            + FLASH_S_PARTITION_SIZE)
 #else
@@ -60,7 +60,7 @@
 /* Boot partition structure if MCUBoot is used:
  * 0x0_0000 Bootloader header
  * 0x0_0400 Image area
- * 0x7_0000 Trailer
+ * 0x7_0000 Trailer, trailer size 0x1_0000, puts at 0x8_0000
  */
 /* IMAGE_CODE_SIZE is the space available for the software binary image.
  * It is less than the FLASH_S_PARTITION_SIZE + FLASH_NS_PARTITION_SIZE

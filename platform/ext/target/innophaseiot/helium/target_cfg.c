@@ -103,8 +103,6 @@ extern ARM_DRIVER_PPC Driver_AHB_SDIO;
 extern ARM_DRIVER_PPC Driver_AHB_XIP1;
 extern ARM_DRIVER_PPC Driver_AHB_XIP2;
 
-
-
 /* Define Peripherals NS address range for the platform */
 #define PERIPHERALS_BASE_NS_START (0x40000000)
 #define PERIPHERALS_BASE_NS_END   (0x4FFFFFFF)
