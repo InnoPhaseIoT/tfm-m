@@ -55,7 +55,7 @@ set(CODE_SHARING_INPUT_FILE_SUFFIX      "_shared_symbols.axf" CACHE STRING "Suff
 # together with TF-M Header File Config System options.
 
 set(BL1                                 OFF         CACHE BOOL      "Whether to build BL1")
-set(BL2                                 ON          CACHE BOOL      "Whether to build BL2")
+set(BL2                                 OFF         CACHE BOOL      "Whether to build BL2")
 set(NS_EVALUATION_APP_PATH              ""          CACHE PATH      "Path to TFM NS Evaluation Application")
 
 set(TFM_ISOLATION_LEVEL                 1           CACHE STRING    "Isolation level")

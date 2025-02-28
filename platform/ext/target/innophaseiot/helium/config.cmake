@@ -10,9 +10,9 @@
 list(APPEND TFM_EXTRA_GENERATED_FILE_LIST_PATH ${CMAKE_CURRENT_LIST_DIR}/generated_file_list.yaml)
 
 # MHK added
-set(MCUBOOT_IMAGE_NUMBER                1            CACHE STRING "Whether to combine S and NS into either 1 image, or sign each separately")
+set(MCUBOOT_IMAGE_NUMBER                1           CACHE STRING "Whether to combine S and NS into either 1 image, or sign each separately")
 set(BL1                                 OFF         CACHE BOOL      "Whether to build BL1")
-set(BL2                                 ON          CACHE BOOL      "Whether to build BL2")
+set(BL2                                 OFF         CACHE BOOL      "Whether to build BL2")
 
 if(BL2)
     set(BL2_TRAILER_SIZE 0x10000 CACHE STRING "Trailer size")
