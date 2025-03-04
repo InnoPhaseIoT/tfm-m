@@ -29,11 +29,12 @@
 #define _S_RAM_ALIAS_BASE  (0x300A0000)
 #define _NS_RAM_ALIAS_BASE (0x200A0000)
 
-#define _TOTAL_RAM_SIZE (0x100000)
+//#define _TOTAL_RAM_SIZE (0x100000)
+#define _TOTAL_RAM_SIZE (0x60000)
 
 //#if HELIUMA0_FLASHONLY_CNTRL1
-#define _FLASH_BASE_S           (0x30080000)
-#define _FLASH_BASE_NS          (0x12000000)
+#define _FLASH_BASE_S           (0x30000000)
+#define _FLASH_BASE_NS          (0x20000000)
 //#endif
 
 #endif /* __REGION_ADDRESSES_H__ */

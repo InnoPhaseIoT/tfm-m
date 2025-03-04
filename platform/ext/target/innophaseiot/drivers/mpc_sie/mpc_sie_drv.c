@@ -26,6 +26,9 @@
 #define SIE300      0x65
 
 #define MPC_SIE_BLK_CFG_OFFSET  5U
+//MHK
+#pragma GCC push_options
+#pragma GCC optimize ("O0")
 
 /* Defines with numbering (eg: SIE300) are only relevant to the given SIE
  * version. Defines without the numbering are applicable to all SIE versions.
@@ -748,3 +751,5 @@ void mpc_sie_release_gating(struct mpc_sie_dev_t* dev)
 
     p_mpc->CTRL.dw &= ~MPC_SIE300_CTRL_GATE_REQ;
 }
+
+#pragma GCC pop_options

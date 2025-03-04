@@ -29,6 +29,9 @@
 #ifdef PSA_API_TEST_IPC
 #endif
 
+#pragma GCC push_options
+#pragma GCC optimize ("O0")
+
 #define ARRAY_SIZE(arr) (sizeof(arr)/sizeof(arr[0]))
 
 /* The section names come from the scatter file */
@@ -392,9 +395,7 @@ FIH_RET_TYPE(int32_t) mpc_init_cfg(void)
         ERROR_MSG("Failed to Initialize MPC for QSPI1!");
         return TFM_PLAT_ERR_SYSTEM_ERR;
     }
-    ret = Driver_XSPI1_MPC.ConfigRegion(
-                                      memory_regions.non_secure_partition_base,
-                                      memory_regions.non_secure_partition_limit,
+    ret = Driver_XSPI1_MPC.ConfigRegion( XSPI1_RANGE_BASE_NS, XSPI1_RANGE_LIMIT_NS,
                                       ARM_MPC_ATTR_NONSECURE);
     if (ret != ARM_DRIVER_OK) {
         ERROR_MSG("Failed to Configure MPC for QSPI1!");
@@ -416,7 +417,7 @@ FIH_RET_TYPE(int32_t) mpc_init_cfg(void)
         FIH_RET(fih_int_encode(ret));
     }
 
-    ret = Driver_SRAM0_MPC.ConfigRegion(NS_DATA_START, NS_DATA_LIMIT,
+    ret = Driver_SRAM0_MPC.ConfigRegion(SRAM0_RANGE_BASE_NS, SRAM1_RANGE_LIMIT_NS,
                                         ARM_MPC_ATTR_NONSECURE);
     if (ret != ARM_DRIVER_OK) {
         FIH_RET(fih_int_encode(ret));
@@ -426,7 +427,7 @@ FIH_RET_TYPE(int32_t) mpc_init_cfg(void)
     if (ret != ARM_DRIVER_OK) {
         FIH_RET(fih_int_encode(ret));
     }
-    
+
     ret = Driver_SRAM1_MPC.Initialize();
     if (ret != ARM_DRIVER_OK) {
         FIH_RET(fih_int_encode(ret));
@@ -442,12 +443,10 @@ FIH_RET_TYPE(int32_t) mpc_init_cfg(void)
     if (ret != ARM_DRIVER_OK) {
         FIH_RET(fih_int_encode(ret));
     }
-    
-    ret = Driver_SRAM1_MPC.Initialize();
+    ret = Driver_SRAM2_MPC.Initialize();
     if (ret != ARM_DRIVER_OK) {
         FIH_RET(fih_int_encode(ret));
     }
-
     ret = Driver_SRAM2_MPC.ConfigRegion(SRAM2_RANGE_BASE_S, SRAM2_RANGE_LIMIT_S,
                                         ARM_MPC_ATTR_SECURE);
     if (ret != ARM_DRIVER_OK) {
@@ -581,3 +580,5 @@ void mpc_clear_irq(void)
     Driver_XSPI2_MPC.ClearInterrupt();
     Driver_ROM_MPC.ClearInterrupt();
 }
+
+#pragma GCC pop_options

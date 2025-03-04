@@ -31,6 +31,9 @@
 #define PROT_BOUNDARY_VAL \
     ((1U << HANDLE_ATTR_PRIV_POS) & HANDLE_ATTR_PRIV_MASK)
 
+#pragma GCC push_options
+#pragma GCC optimize ("O0")
+
 #ifdef CONFIG_TFM_ENABLE_MEMORY_PROTECT
 static uint32_t n_configured_regions = 0;
 struct mpu_armv8m_dev_t dev_mpu_s = {MPU_BASE};
@@ -664,3 +667,5 @@ bool tfm_hal_boundary_need_switch(uintptr_t boundary_from,
     }
     return true;
 }
+
+#pragma GCC pop_options

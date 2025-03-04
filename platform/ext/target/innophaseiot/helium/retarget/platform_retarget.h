@@ -27,10 +27,10 @@
 #define __PLATFORM_RETARGET_DEV_H
 
 /* Memory size definitions */
-#define ROM_SIZE        (0x8000)     /* 32 kB */
+#define ROM_SIZE        (0x10000)    /* 64 kB */
 #define SRAM_SIZE       (0X10000)    /* 64 KB */
-#define XSPI_SIZE       (0x800000)   /* 8 MB  */
-#define AIP_SIZE        (0x800000)   /* 8 MB  */
+#define XSPI_SIZE       (0x2000000)  /* 32 MB */
+#define AIP_SIZE        (0x2000000)  /* 32 MB */
 
 
 /* ======= Defines peripherals memory map addresses ======= */
