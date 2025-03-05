@@ -161,7 +161,7 @@ static enum mpc_sie_intern_error_t get_lut_masks(
     }
     *range = base_range;
 
-    block_size = (1 << (p_mpc->BLKMAX.bf.BlockMax + MPC_SIE_BLK_CFG_OFFSET));
+    block_size = (1 << (p_mpc->BLKCFG.bf.BLKCFG + MPC_SIE_BLK_CFG_OFFSET));
 
     /* Base and limit+1 addresses must be aligned on the MPC block size */
     if(base % block_size || (limit+1) % block_size) {
