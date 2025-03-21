@@ -29,6 +29,9 @@
 #include "platform_retarget.h"
 #include "inph_ppc_drv.h"
 
+#pragma GCC push_options //MHK
+#pragma GCC optimize ("O0")
+
 /* Driver Version */
 static const ARM_DRIVER_VERSION DriverVersion = {
     ARM_DRIVER_VERSION_MAJOR_MINOR(1,0),
@@ -812,3 +815,4 @@ ARM_DRIVER_PPC Driver_AHB_XIP2 = {
     .InterruptState    = AHB_XIP2_InterruptState
 };
 
+#pragma GCC pop_options //MHK

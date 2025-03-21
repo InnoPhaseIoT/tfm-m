@@ -232,21 +232,98 @@ enum tfm_plat_err_t nvic_interrupt_enable(void)
     inph_security_cntrl_t* spctrl = PPC_SPCTRL;
     int32_t ret = ARM_DRIVER_OK;
 
+    //ret = Driver_SRAM0_MPC.EnableInterrupt();
+    //if (ret != ARM_DRIVER_OK) {
+    //    return TFM_PLAT_ERR_SYSTEM_ERR;
+    //} // MHK
+
     /* MPC interrupt enabling */
     ret = Driver_SRAM1_MPC.EnableInterrupt();
     if (ret != ARM_DRIVER_OK) {
         return TFM_PLAT_ERR_SYSTEM_ERR;
     }
-    
-    ret = Driver_SRAM0_MPC.EnableInterrupt();
+
+    ret = Driver_SRAM2_MPC.EnableInterrupt();
     if (ret != ARM_DRIVER_OK) {
         return TFM_PLAT_ERR_SYSTEM_ERR;
     }
-    
+
+    ret = Driver_SRAM3_MPC.EnableInterrupt();
+    if (ret != ARM_DRIVER_OK) {
+        return TFM_PLAT_ERR_SYSTEM_ERR;
+    }
+
+    ret = Driver_SRAM4_MPC.EnableInterrupt();
+    if (ret != ARM_DRIVER_OK) {
+        return TFM_PLAT_ERR_SYSTEM_ERR;
+    }
+    ret = Driver_SRAM5_MPC.EnableInterrupt();
+    if (ret != ARM_DRIVER_OK) {
+        return TFM_PLAT_ERR_SYSTEM_ERR;
+    }
+
+    ret = Driver_SRAM6_MPC.EnableInterrupt();
+    if (ret != ARM_DRIVER_OK) {
+        return TFM_PLAT_ERR_SYSTEM_ERR;
+    }
+
+    ret = Driver_SRAM7_MPC.EnableInterrupt();
+    if (ret != ARM_DRIVER_OK) {
+        return TFM_PLAT_ERR_SYSTEM_ERR;
+    }
+
+    ret = Driver_SRAM8_MPC.EnableInterrupt();
+    if (ret != ARM_DRIVER_OK) {
+        return TFM_PLAT_ERR_SYSTEM_ERR;
+    }
+
+    ret = Driver_SRAM9_MPC.EnableInterrupt();
+    if (ret != ARM_DRIVER_OK) {
+        return TFM_PLAT_ERR_SYSTEM_ERR;
+    }
+
+    ret = Driver_SRAM10_MPC.EnableInterrupt();
+    if (ret != ARM_DRIVER_OK) {
+        return TFM_PLAT_ERR_SYSTEM_ERR;
+    }
+
+    ret = Driver_SRAM11_MPC.EnableInterrupt();
+    if (ret != ARM_DRIVER_OK) {
+        return TFM_PLAT_ERR_SYSTEM_ERR;
+    }
+
+    ret = Driver_SRAM12_MPC.EnableInterrupt();
+    if (ret != ARM_DRIVER_OK) {
+        return TFM_PLAT_ERR_SYSTEM_ERR;
+    }
+    ret = Driver_SRAM13_MPC.EnableInterrupt();
+    if (ret != ARM_DRIVER_OK) {
+        return TFM_PLAT_ERR_SYSTEM_ERR;
+    }
+
+    ret = Driver_SRAM14_MPC.EnableInterrupt();
+    if (ret != ARM_DRIVER_OK) {
+        return TFM_PLAT_ERR_SYSTEM_ERR;
+    }
+
+    ret = Driver_SRAM15_MPC.EnableInterrupt();
+    if (ret != ARM_DRIVER_OK) {
+        return TFM_PLAT_ERR_SYSTEM_ERR;
+    }
+
     ret = Driver_XSPI1_MPC.EnableInterrupt();
     if (ret != ARM_DRIVER_OK) {
         return TFM_PLAT_ERR_SYSTEM_ERR;
-    }    
+    }
+
+    ret = Driver_XSPI2_MPC.EnableInterrupt();
+    if (ret != ARM_DRIVER_OK) {
+        return TFM_PLAT_ERR_SYSTEM_ERR;
+    }
+    ret = Driver_ROM_MPC.EnableInterrupt();
+    if (ret != ARM_DRIVER_OK) {
+        return TFM_PLAT_ERR_SYSTEM_ERR;
+    }
     
     NVIC_EnableIRQ(MPC_IRQn);
 
@@ -455,6 +532,7 @@ FIH_RET_TYPE(int32_t) mpc_init_cfg(void)
     }
 #endif /* BL2 */    
 
+#if 0     // MHK
     //SRAM0
     ret = Driver_SRAM0_MPC.Initialize();
     if (ret != ARM_DRIVER_OK) {
@@ -471,7 +549,7 @@ FIH_RET_TYPE(int32_t) mpc_init_cfg(void)
     if (ret != ARM_DRIVER_OK) {
         FIH_RET(fih_int_encode(ret));
     }
-
+#endif
     //SRAM1
     ret = Driver_SRAM1_MPC.Initialize();
     if (ret != ARM_DRIVER_OK) {

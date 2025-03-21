@@ -24,6 +24,9 @@
 
 #include "inph_ppc_drv.h"
 
+#pragma GCC push_options
+#pragma GCC optimize ("O0")
+
 #define AHB_PPC_XIP2_INT_POS_MASK    (1UL << 9)
 #define AHB_PPC_XIP1_INT_POS_MASK    (1UL << 8)
 #define AHB_PPC_SDIO_INT_POS_MASK    (1UL << 7)
@@ -234,3 +237,5 @@ uint32_t inph_ppc_irq_state(struct inph_ppc_dev_t* dev)
 
     return ((p_spctrl->SECPPCINTSTATUS.dw & dev->data->int_bit_mask) != 0);
 }
+
+#pragma GCC pop_options //MHK

@@ -26,6 +26,8 @@
 #define __INPH_HELIUM_REGS_H__
 
 #include <stdint.h>
+#include "inph_nspriv_registers.h"
+#include "inph_security_registers.h"
 //#include "tfm_utils.h"
 
 #define PPC_SPCTRL (inph_security_cntrl_t*)(INPH_SPCTRL_BASE_S)
@@ -122,6 +124,7 @@
 #define SPCNTL_CXIP1_INT_POS_MASK     (1UL << 8)
 #define SPCNTL_CXIP2_INT_POS_MASK     (1UL << 9)
 
+#if 0 //MHK remove it do not need the blow code
 /*  SPCSECCTRL DESCRIPTION :TBD if needed: Secure Privilege Controller Secure Configuration Control register */
 typedef union {
     struct {
@@ -1425,6 +1428,6 @@ typedef volatile struct inph_nspriv_security_base{
     
 } inph_nspriv_security_t;
 
-
+#endif
 
 #endif /* __INPH_HELIUM_REGS_H__ */

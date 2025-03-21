@@ -21,6 +21,10 @@ else()
     set(BL2_TRAILER_SIZE 0x10400 CACHE STRING "Trailer size")
 endif()
 
+# LOG LEVEL
+set(TFM_SPM_LOG_LEVEL                   TFM_SPM_LOG_LEVEL_DEBUG         CACHE STRING    "Set default SPM log level as INFO level")
+set(TFM_PARTITION_LOG_LEVEL             TFM_PARTITION_LOG_LEVEL_INFO    CACHE STRING    "Set default Secure Partition log level as INFO level")
+
 # Platform-specific configurations
 
 set(CONFIG_TFM_USE_TRUSTZONE          ON)

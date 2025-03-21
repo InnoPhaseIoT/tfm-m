@@ -32,7 +32,7 @@
 #define XSPI_SIZE       (0x2000000)  /* 32 MB */
 #define AIP_SIZE        (0x2000000)  /* 32 MB */
 
-
+#if 0
 /* ======= Defines peripherals memory map addresses ======= */
 /* Non-secure memory map addresses */
 #define CMSDK_TIMER0_BASE_NS   0x40000000
@@ -63,6 +63,7 @@
 #define SSP4_BASE_NS           0x4020B000  /* Shield 1 SPI PL022 Base Address */
 #define MPS2_IO_SCC_BASE_NS    0x40300000
 #define MPS2_IO_FPGAIO_BASE_NS 0x40302000
+#endif
 
 /* Flash memory emulated over external SSRAM memory */
 #define FLASH0_BASE_S                  0x00000000

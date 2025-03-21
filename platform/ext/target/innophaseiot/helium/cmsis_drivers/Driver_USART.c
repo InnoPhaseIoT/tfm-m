@@ -20,6 +20,9 @@
 #include "cmsis_driver_config.h"
 #include "RTE_Device.h"
 
+#pragma GCC push_options
+#pragma GCC optimize ("O0")
+
 #if (defined (RTE_USART0_S) && (RTE_USART0_S == 1)) || \
     (defined (RTE_USART1_S) && (RTE_USART1_S == 1)) || \
     (defined (RTE_USART2_S) && (RTE_USART2_S == 1))
@@ -43,3 +46,5 @@ ARM_DRIVER_USART_CMSDK(UART2_CMSDK_DEV, Driver_USART2);
 #endif /* RTE_USART2 */
 
 #endif
+
+#pragma GCC pop_options

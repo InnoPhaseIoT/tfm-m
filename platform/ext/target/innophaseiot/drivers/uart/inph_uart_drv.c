@@ -25,6 +25,9 @@
 #include "inph_uart_drv.h"
 #include "helium_macros.h"
 
+#pragma GCC push_options
+#pragma GCC optimize ("O0")
+
 void inph_uart_uninit(struct inph_uart_dev_t *dev)
 {
     /* reset the FIFOs */
@@ -149,3 +152,4 @@ uint32_t inph_uart_rx_ready(struct inph_uart_dev_t *dev)
     return (Inph_UART_GetNumInRxFifo((USART_Type *)dev->cfg->base));
 }
 
+#pragma GCC pop_options
