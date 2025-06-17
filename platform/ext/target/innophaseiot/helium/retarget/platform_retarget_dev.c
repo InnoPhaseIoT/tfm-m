@@ -48,6 +48,12 @@ struct inph_uart_dev_t UART0_CMSDK_DEV_S = {
     &(UART0_CMSDK_DEV_DATA_S)
 };
 
+// Shalini: you need to complete this
+struct inph_flash_dev_t FLASH0_CMSDK_DEV_S = {
+    &(FLASH0_CMSDK_DEV_CFG_S),
+    &(FLASH0_CMSDK_DEV_DATA_S)
+};
+
 /* TZM definitions */
 struct inph_tzm_dev_t TZM_DEV_S = {
     .spctrl_base = INPH_SPCTRL_BASE_S,

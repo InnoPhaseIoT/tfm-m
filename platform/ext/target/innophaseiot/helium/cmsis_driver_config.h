@@ -36,6 +36,12 @@
 #define UART2_CMSDK_DEV     UART2_CMSDK_DEV_S
 #endif
 
+//Shalini: FYI
+#ifdef RTE_FLASH0
+#define FLASH_DEV           FLASH0_DEV_S
+#define FLASH_CMSDK_DEV     FLASH0_CMSDK_DEV_S
+#endif
+
 #ifdef RTE_SRAM0_MPC
 #define MPC_SRAM0_DEV     MPC_SRAM0_DEV_S
 #endif

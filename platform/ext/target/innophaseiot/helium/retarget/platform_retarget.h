@@ -66,12 +66,14 @@
 #endif
 
 /* Flash memory emulated over external SSRAM memory */
-#define FLASH0_BASE_S                  0x00000000
-#define FLASH0_BASE_NS                 0x00000000
-#define FLASH0_SIZE                    0x00800000  /* 8 MB */
-#define FLASH0_SECTOR_SIZE             0x00001000  /* 4 kB */
-#define FLASH0_PAGE_SIZE               0x00001000  /* 4 kB */
-#define FLASH0_PROGRAM_UNIT            0x1         /* Minimum write size */
+#define INPH_FLASH0_BASE_S          0x00000000  //Shalini: you need to complete
+#define INPH_FLASH0_BASE_NS         0x00000000
+#define INPH_FLASH0_SIZE            0x00800000  /* 8 MB */
+#define INPH_FLASH0_SECTOR_SIZE     0x00001000  /* 4 kB */
+#define INPH_FLASH0_PAGE_SIZE       0x00001000  /* 4 kB */
+#define INPH_FLASH0_PROGRAM_UNIT    0x1         /* Minimum write size */
+
+#define INPH_FLASH_BASE             INPH_FLASH0_BASE_S
 
 
 /* Secure memory Peripheral map addresses */

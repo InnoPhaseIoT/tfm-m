@@ -26,11 +26,14 @@
 #define __REGION_ADDRESSES_H__
 
 
-#define _S_RAM_ALIAS_BASE  (0x30000000)
-#define _NS_RAM_ALIAS_BASE (0x20000000)
+//#define _S_RAM_ALIAS_BASE  (0x30000000) //skip sram0
+#define _S_RAM_ALIAS_BASE  (0x30010000)
+//#define _NS_RAM_ALIAS_BASE (0x20000000)
+#define _NS_RAM_ALIAS_BASE (0x20010000)
 
 //#define _TOTAL_RAM_SIZE (0x100000)
-#define _TOTAL_RAM_SIZE (0xA0000)
+//#define _TOTAL_RAM_SIZE (0xA0000) // for testing SRAM0 issue, skiped the sram0
+#define _TOTAL_RAM_SIZE (0x90000)
 
 //#if HELIUMA0_FLASHONLY_CNTRL1
 #define _FLASH_BASE_S           (0x300A0000)

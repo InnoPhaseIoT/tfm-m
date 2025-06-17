@@ -105,6 +105,7 @@ target_compile_options(platform_s
 
 target_compile_definitions(platform_s
     PUBLIC
+        TFM_SPM_LOG_LEVEL=${TFM_SPM_LOG_LEVEL}
         $<$<BOOL:${TEST_NS_FPU}>:TEST_NS_FPU>
         $<$<BOOL:${TEST_S_FPU}>:TEST_S_FPU>
 )
