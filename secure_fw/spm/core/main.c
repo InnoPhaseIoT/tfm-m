@@ -56,11 +56,14 @@ static fih_int tfm_core_init(void)
      */
     SPMLOG_INFMSG("\033[1;34mBooting TF-M "VERSION_FULLSTR"\033[0m\r\n");
 
+#if 0 // does OTP access. disable as of now
     plat_err = tfm_plat_otp_init();
     if (plat_err != TFM_PLAT_ERR_SUCCESS) {
         FIH_RET(fih_int_encode(SPM_ERROR_GENERIC));
     }
+#endif
 
+#if 0 // does OTP access. disable as of now
     /* Perform provisioning. */
     if (tfm_plat_provisioning_is_required()) {
         plat_err = tfm_plat_provisioning_perform();
@@ -70,6 +73,7 @@ static fih_int tfm_core_init(void)
     }
 
     tfm_plat_provisioning_check_for_dummy_keys();
+#endif
 
     /* Configures architecture */
     tfm_arch_config_extensions();
