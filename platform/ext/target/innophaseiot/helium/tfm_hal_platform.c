@@ -69,17 +69,35 @@ FIH_RET_TYPE(enum tfm_hal_status_t) tfm_hal_platform_init(void)
     FIH_RET(fih_int_encode(TFM_HAL_SUCCESS));
 }
 
+// NS app code space start
+#define memory_regions_non_secure_code_start 0x20050000
+
+struct
+{
+    uint32_t code_start;
+    uint32_t msp;
+    uint32_t entry;
+} nspe_details;
+
+void
+backup_nspe_data()
+{
+    nspe_details.code_start = memory_regions_non_secure_code_start;
+    nspe_details.msp = *((uint32_t *)memory_regions_non_secure_code_start);
+    nspe_details.entry = *((uint32_t *)(memory_regions_non_secure_code_start + 4));
+}
+
 uint32_t tfm_hal_get_ns_VTOR(void)
 {
-    return memory_regions.non_secure_code_start;
+    return nspe_details.code_start;
 }
 
 uint32_t tfm_hal_get_ns_MSP(void)
 {
-    return *((uint32_t *)memory_regions.non_secure_code_start);
+    return nspe_details.msp;
 }
 
 uint32_t tfm_hal_get_ns_entry_point(void)
 {
-    return *((uint32_t *)(memory_regions.non_secure_code_start + 4));
+    return nspe_details.entry;
 }

@@ -109,6 +109,8 @@ int main(void)
 
     fih_delay_init();
 
+    void backup_nspe_data(); backup_nspe_data();
+
     FIH_CALL(tfm_core_init, fih_rc);
     if (fih_not_eq(fih_rc, fih_int_encode(SPM_SUCCESS))) {
         tfm_core_panic();
