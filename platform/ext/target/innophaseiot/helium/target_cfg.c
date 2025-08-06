@@ -391,8 +391,8 @@ const struct sau_cfg_t sau_cfg[] = {
     },
 #endif
 	{
-        (uint32_t)&REGION_NAME(Image$$, ER_VENEER, $$Base),
-        (uint32_t)&REGION_NAME(Image$$, VENEER_ALIGN, $$Limit) - 1,
+        0x300E0000,
+        0x300EFFFF,
         true,
     },
     {
