@@ -391,8 +391,8 @@ const struct sau_cfg_t sau_cfg[] = {
     },
 #endif
 	{
-        0x300E0000,
-        0x300EFFFF,
+        0x200E0000,
+        0x200EFFFF,
         true,
     },
     {
