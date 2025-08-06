@@ -75,6 +75,17 @@ const static struct mpu_armv8m_region_cfg_t region_cfg[] = {
         MPU_ARMV8M_AP_RW_PRIV_ONLY,
         MPU_ARMV8M_SH_NONE,
     },
+#if 0 // shyju
+    {
+        0, /* will be updated before using */
+        0x300e0000,
+        0x300effff,
+        MPU_ARMV8M_MAIR_ATTR_CODE_IDX,
+        MPU_ARMV8M_XN_EXEC_OK,
+        MPU_ARMV8M_AP_RW_PRIV_UNPRIV,
+        MPU_ARMV8M_SH_NONE,
+    },
+#endif
 #ifdef CONFIG_TFM_PARTITION_META
     /* TFM partition metadata pointer region */
     {
