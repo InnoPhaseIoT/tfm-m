@@ -17,6 +17,8 @@ void tfm_core_panic(void)
 {
     (void)fih_delay();
 
+    while(1);
+#if 0
 #ifdef CONFIG_TFM_HALT_ON_CORE_PANIC
 
     /*
@@ -49,4 +51,5 @@ void tfm_core_panic(void)
 #endif
 
 #endif /* CONFIG_TFM_HALT_ON_CORE_PANIC */
+#endif
 }
