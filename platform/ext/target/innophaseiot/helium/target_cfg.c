@@ -864,6 +864,9 @@ FIH_RET_TYPE(int32_t) ppc_init_cfg(void)
      */
     spctrl->SECRESPCFG.bf.SECRESPCFG |= 1U;
 
+    // raise bus fault if any violations: SECRESPCFG
+    (*(volatile uint32_t*)0x50030008) = 1;
+
     FIH_RET(fih_int_encode(ARM_DRIVER_OK));
 }
 
