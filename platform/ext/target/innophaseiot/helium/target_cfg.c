@@ -836,11 +836,23 @@ fih_int fih_verify_mpc_cfg(void)
 /*---------------------- PPC configuration functions -------------------------*/
 #define NR_PPC_INIT_STEP                 4
 
+uint32_t
+ppc_devices_set_to_ns(ARM_DRIVER_PPC *ppc, uint32_t ports)
+{
+    uint32_t ret = 0;
+    while (ports) {
+        uint8_t i = __builtin_ctz(ports);  // Counts trailing zeros; returns position of least significant set bit
+        ret |= ppc->ConfigPeriph(i, ARM_PPC_NONSECURE_ONLY, INPH_PPC_NONPRIV_ONLY);
+        ports &= ports - 1;  // Clears the least significant set bit
+    }
+    return ret;
+}
+
 FIH_RET_TYPE(int32_t) ppc_init_cfg(void)
 {
     inph_security_cntrl_t* spctrl = PPC_SPCTRL;
     inph_nspriv_security_t* nsppctrl = PPC_NSPPCTRL;
-    
+    uint32_t periph;
     int err = ARM_DRIVER_OK;
 
     /* Initialize not used PPC drivers */
@@ -855,9 +867,11 @@ FIH_RET_TYPE(int32_t) ppc_init_cfg(void)
     err |= Driver_AHB_XIP1.Initialize();
     err |= Driver_AHB_XIP2.Initialize();
 
-    /* in NS, grant un-privileged for UART0 */
-    nsppctrl->APBNSPRVPPCPERIPH0.bf.PPC_PERIPH_0_NS_PRV_N |=
-                                 (1U << NSPPCNTL_PERIPH0_UART0_POS);
+    // System Management Unit
+    periph = 0;
+    periph |= (1<<SPCNTL_SYS_SMU_POS);  // assign SYSTEM_MANAGEMENT_UNIT to ns
+    err |= ppc_devices_set_to_ns(&Driver_APB_SYSCNTRL, periph);
+    assert(err == 0);
 
     /* Configure the response to a security violation as a
      * bus error instead of RAZ/WI
