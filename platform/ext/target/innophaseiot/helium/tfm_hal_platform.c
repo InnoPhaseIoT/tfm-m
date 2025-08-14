@@ -34,7 +34,7 @@ FIH_RET_TYPE(enum tfm_hal_status_t) tfm_hal_platform_init(void)
     }
 
     __enable_irq();
-    stdio_init();
+    //stdio_init();
 
     plat_err = nvic_interrupt_target_state_cfg();
     if (plat_err != TFM_PLAT_ERR_SUCCESS) {
