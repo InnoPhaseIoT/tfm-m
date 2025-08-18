@@ -13,6 +13,7 @@ rsource "firmware_update/Kconfig"
 rsource "crypto/Kconfig"
 rsource "platform/Kconfig"
 rsource "internal_trusted_storage/Kconfig"
+rsource "inph_services/Kconfig"
 
 choice PARTITION_LOG_LEVEL
     prompt "Secure Partition Log Level"

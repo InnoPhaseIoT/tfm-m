@@ -1,0 +1,3 @@
+menuconfig TFM_PARTITION_INPH_SERVICES
+    bool "Enable the INPH_SERVICES Partition"
+    default n

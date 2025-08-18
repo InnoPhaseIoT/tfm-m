@@ -124,5 +124,19 @@
          ]
       }
     },
+    {
+      "description": "InnoPhase IoT Services Partition",
+      "manifest": "../secure_fw/partitions/inph_services/tfm_inph_services.yaml",
+      "output_path": "secure_fw/partitions/inph_services",
+      "conditional": "TFM_PARTITION_INPH_SERVICES",
+      "version_major": 0,
+      "version_minor": 1,
+      "pid": 290,
+      "linker_pattern": {
+        "library_list": [
+          "*tfm_*partition_inph*"
+         ]
+      }
+    },
   ]
 }

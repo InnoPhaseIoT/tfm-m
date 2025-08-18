@@ -144,6 +144,9 @@ set(PSA_INITIAL_ATTEST_MAX_TOKEN_SIZE   0x250       CACHE STRING    "The maximum
 
 set(TFM_PARTITION_PLATFORM              OFF         CACHE BOOL      "Enable Platform partition")
 
+set(TFM_PARTITION_INPH_SERVICES         ON          CACHE BOOL      "Enable Inph Services partition")
+
+
 ############################ Mbedcrypto configurations #########################
 
 set(MBEDCRYPTO_BUILD_TYPE               "${CMAKE_BUILD_TYPE}" CACHE STRING "Build type of Mbed Crypto library")

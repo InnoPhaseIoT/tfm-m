@@ -24,9 +24,11 @@ target_include_directories(tfm_config
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/partitions/initial_attestation>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/partitions/internal_trusted_storage>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/partitions/platform>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/partitions/inph_services>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/partitions/protected_storage>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/spm/include>
         $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/generated/interface/include>
+        $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/generated/secure_fw/partitions/inph_services>
 )
 
 target_compile_definitions(tfm_config
