@@ -32,4 +32,4 @@ set(TFM_MULTI_CORE_TOPOLOGY           OFF)
 
 set(PLATFORM_HAS_ISOLATION_L3_SUPPORT ON)
 
-set(TFM_PARTITION_INPH_SERVICES         ON          CACHE BOOL      "Enable Inph Services partition")
+set(TFM_PARTITION_INPH_SERVICES         OFF         CACHE BOOL      "Enable Inph Services partition")

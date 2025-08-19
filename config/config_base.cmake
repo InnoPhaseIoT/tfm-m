@@ -144,7 +144,7 @@ set(PSA_INITIAL_ATTEST_MAX_TOKEN_SIZE   0x250       CACHE STRING    "The maximum
 
 set(TFM_PARTITION_PLATFORM              OFF         CACHE BOOL      "Enable Platform partition")
 
-set(TFM_PARTITION_INPH_SERVICES         ON          CACHE BOOL      "Enable Inph Services partition")
+set(TFM_PARTITION_INPH_SERVICES         OFF         CACHE BOOL      "Enable Inph Services partition")
 
 
 ############################ Mbedcrypto configurations #########################
