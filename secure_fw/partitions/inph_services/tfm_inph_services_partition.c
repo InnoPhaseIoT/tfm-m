@@ -4,32 +4,24 @@
 #include "psa/error.h"
 #include "psa/client.h"
 
-#define REG_WRITE 1
-#define REG_READ  2
-
-struct inph_reg_access_req {
-    uint32_t access;
-    uint32_t addr;
-    uint32_t val;
-    uint32_t id;
-};
+#include "tfm_reg_access.h"
 
 void tfm_inph_services_partition_sfn_handler(const psa_msg_t *msg)
 {
     switch (msg->type) {
         case PSA_IPC_CALL:
             {
-                struct inph_reg_access_req req;
+                struct tfm_inph_reg_access_req req;
 
                 psa_read(msg->handle, 0, &req, sizeof(req));
-                if (req.access == REG_WRITE) {
+                if (req.access == TFM_INPH_REG_WRITE) {
 
                     // Validate address ranges carefully here!
                     *((volatile uint32_t *)req.addr) = req.val;
 
                     psa_reply(msg->handle, PSA_SUCCESS);
                 }
-                else if (req.access == REG_READ) {
+                else if (req.access == TFM_INPH_REG_READ) {
                     uint32_t val = 0;
 
                     // Validate read addr carefully here!

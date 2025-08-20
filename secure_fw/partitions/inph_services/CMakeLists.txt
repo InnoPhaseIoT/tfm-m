@@ -24,6 +24,16 @@ target_sources(tfm_app_rot_partition_inph_services
         ${CMAKE_BINARY_DIR}/generated/secure_fw/partitions/inph_services/auto_generated/intermedia_tfm_inph_services.c
 )
 
+# add include path of tfm_interface lib
+get_filename_component(INCLUDE_DIR_ABS
+    "${CMAKE_CURRENT_SOURCE_DIR}/../../../../tfm_interface/inc" ABSOLUTE
+)
+
+target_include_directories(tfm_app_rot_partition_inph_services
+    PRIVATE
+        ${INCLUDE_DIR_ABS}
+)
+
 # The load info file includes the static data of the partition.
 target_sources(tfm_partitions
     INTERFACE
