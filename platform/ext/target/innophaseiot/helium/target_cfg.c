@@ -874,6 +874,12 @@ FIH_RET_TYPE(int32_t) ppc_init_cfg(void)
     err |= ppc_devices_set_to_ns(&Driver_APB_SYSCNTRL, periph);
     assert(err == 0);
 
+    // PERIPH_0 PPC initialize
+    periph = 0;
+    periph |= (1<<SPCNTL_PERIPH0_UART0_POS);  // assign UART_0 to ns
+    err |= ppc_devices_set_to_ns(&Driver_AHB_PERIPHERAL0, periph);
+    assert(err == 0);
+
     /* Configure the response to a security violation as a
      * bus error instead of RAZ/WI
      */
