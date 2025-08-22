@@ -38,7 +38,7 @@ struct inph_ppc_dev_cfg_t {
     uint32_t const spctrl_base;  /*!< SPCTRL base address */
     uint32_t const nspctrl_base; /*!< NSPCTRL base address */
     uint32_t const snspriv_base; /*!< SNSPRIV base address */
-    uint32_t const nnspriv_base; /*!< NNSPRIV base address */    
+    uint32_t const nnspriv_base; /*!< NNSPRIV base address */
 };
 
 /* ARM TrustZone PPC device data structure */

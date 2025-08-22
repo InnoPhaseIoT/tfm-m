@@ -131,8 +131,8 @@ typedef union {
         uint32_t Reserved : 32;               /*31:0 SW=rw HW=ro 0x0 */
     } bf;
     uint32_t  dw;
-    
-    
+
+
 }security_ctrl_regs_SPCSECCTRL;
 
 /*  BUSWAIT DESCRIPTION :TBD if needed: Bus Access wait control after reset */
@@ -141,8 +141,8 @@ typedef union {
         uint32_t Reserved : 32;               /*31:0 SW=rw HW=ro 0x0 */
     } bf;
     uint32_t  dw;
-    
-    
+
+
 }security_ctrl_regs_BUSWAIT;
 
 /*  SECRESPCFG DESCRIPTION :Security Violation Response Configuration register */
@@ -152,17 +152,17 @@ typedef union {
             uint32_t Reserved : 31;               /*31:1 SW=rw HW=ro 0x0 */
             uint32_t SECRESPCFG : 1;               /*0 SW=rw HW=ro 0x0 */
         } bf;
-        
+
     #else     /* IDS_LITTLE_ENDIAN */
         struct {
             uint32_t SECRESPCFG : 1;               /*0 SW=rw HW=ro 0x0 */
             uint32_t Reserved : 31;               /*1:31 SW=rw HW=ro 0x0 */
         } bf;
-        
+
     #endif
     uint32_t  dw;
-    
-    
+
+
 }security_ctrl_regs_SECRESPCFG;
 
 /*  NSCCFG DESCRIPTION :TBD. Non Secure Callable Configuration for IDAU */
@@ -173,18 +173,18 @@ typedef union {
             uint32_t RAMNSC : 1;               /*1 SW=rw HW=ro 0x0 */
             uint32_t CODENSC : 1;               /*0 SW=rw HW=ro 0x0 */
         } bf;
-        
+
     #else     /* IDS_LITTLE_ENDIAN */
         struct {
             uint32_t CODENSC : 1;               /*0 SW=rw HW=ro 0x0 */
             uint32_t RAMNSC : 1;               /*1 SW=rw HW=ro 0x0 */
             uint32_t Reserved : 30;               /*2:31 SW=ro HW=ro 0x0 */
         } bf;
-        
+
     #endif
     uint32_t  dw;
-    
-    
+
+
 }security_ctrl_regs_NSCCFG;
 
 /*  SECMPCINTSTATUS DESCRIPTION :Memory Protection Controller Interrupt Status */
@@ -212,7 +212,7 @@ typedef union {
             uint32_t S_MPCSRAM1_STATUS : 1;               /*1 SW=ro HW=wo 0x0 */
             uint32_t S_MPCSRAM0_STATUS : 1;               /*0 SW=ro HW=wo 0x0 */
         } bf;
-        
+
     #else     /* IDS_LITTLE_ENDIAN */
         struct {
             uint32_t S_MPCSRAM0_STATUS : 1;               /*0 SW=ro HW=wo 0x0 */
@@ -236,11 +236,11 @@ typedef union {
             uint32_t S_MPCXSPI2_STATUS : 1;               /*18 SW=ro HW=wo 0x0 */
             uint32_t Reserved : 13;               /*19:31 SW=ro HW=ro 0x0 */
         } bf;
-        
+
     #endif
     uint32_t  dw;
-    
-    
+
+
 }security_ctrl_regs_SECMPCINTSTATUS;
 
 /*  SECMPCINTEN DESCRIPTION :Peripheral Protection Controller Interrupt Enable */
@@ -268,7 +268,7 @@ typedef union {
             uint32_t S_MPCSRAM1_INT_EN : 1;               /*1 SW=rw HW=ro 0x0 */
             uint32_t S_MPCSRAM0_INT_EN : 1;               /*0 SW=rw HW=ro 0x0 */
         } bf;
-        
+
     #else     /* IDS_LITTLE_ENDIAN */
         struct {
             uint32_t S_MPCSRAM0_INT_EN : 1;               /*0 SW=rw HW=ro 0x0 */
@@ -292,11 +292,11 @@ typedef union {
             uint32_t S_MPCXSPI2_INT_EN : 1;               /*18 SW=rw HW=ro 0x0 */
             uint32_t Reserved : 13;               /*19:31 SW=rw HW=ro 0x0 */
         } bf;
-        
+
     #endif
     uint32_t  dw;
-    
-    
+
+
 }security_ctrl_regs_SECMPCINTEN;
 
 /*  SECPPCINTSTATUS DESCRIPTION :Peripheral Protection Controller Interrupt Status */
@@ -315,7 +315,7 @@ typedef union {
             uint32_t PPC_BASE_1_STS : 1;               /*1 SW=ro HW=wo 0x0 */
             uint32_t PPC_BASE_0_STS : 1;               /*0 SW=ro HW=wo 0x0 */
         } bf;
-        
+
     #else     /* IDS_LITTLE_ENDIAN */
         struct {
             uint32_t PPC_BASE_0_STS : 1;               /*0 SW=ro HW=wo 0x0 */
@@ -330,11 +330,11 @@ typedef union {
             uint32_t PPC_CXIP2_STS : 1;               /*9 SW=ro HW=wo 0x0 */
             uint32_t Reserved : 22;               /*10:31 SW=ro HW=ro 0x0 */
         } bf;
-        
+
     #endif
     uint32_t  dw;
-    
-    
+
+
 }security_ctrl_regs_SECPPCINTSTATUS;
 
 /*  SECPPCINTCLR DESCRIPTION :
@@ -354,7 +354,7 @@ typedef union {
             uint32_t PPC_BASE_1_CLR : 1;               /*1 SW=w1s HW=rw 0x0 */
             uint32_t PPC_BASE_0_CLR : 1;               /*0 SW=w1s HW=rw 0x0 */
         } bf;
-        
+
     #else     /* IDS_LITTLE_ENDIAN */
         struct {
             uint32_t PPC_BASE_0_CLR : 1;               /*0 SW=w1s HW=rw 0x0 */
@@ -369,11 +369,11 @@ typedef union {
             uint32_t PPC_CXIP2_CLR : 1;               /*9 SW=w1s HW=rw 0x0 */
             uint32_t Reserved : 22;               /*10:31 SW=ro HW=ro 0x0 */
         } bf;
-        
+
     #endif
     uint32_t  dw;
-    
-    
+
+
 }security_ctrl_regs_SECPPCINTCLR;
 
 /*  SECPPCINTEN DESCRIPTION :Peripheral Protection Controller Interrupt Enable */
@@ -392,7 +392,7 @@ typedef union {
             uint32_t PPC_BASE_1_EN : 1;               /*1 SW=rw HW=ro 0x0 */
             uint32_t PPC_BASE_0_EN : 1;               /*0 SW=rw HW=ro 0x0 */
         } bf;
-        
+
     #else     /* IDS_LITTLE_ENDIAN */
         struct {
             uint32_t PPC_BASE_0_EN : 1;               /*0 SW=rw HW=ro 0x0 */
@@ -407,11 +407,11 @@ typedef union {
             uint32_t PPC_CXIP2_EN : 1;               /*9 SW=rw HW=ro 0x0 */
             uint32_t Reserved : 22;               /*10:31 SW=ro HW=ro 0x0 */
         } bf;
-        
+
     #endif
     uint32_t  dw;
-    
-    
+
+
 }security_ctrl_regs_SECPPCINTEN;
 
 /*  SECMSCINTSTATUS DESCRIPTION :Master Security Controller Interrupt Status */
@@ -443,7 +443,7 @@ typedef union {
             uint32_t TZM_NPU_TX_STS : 1;               /*1 SW=ro HW=wo 0x0 */
             uint32_t TZM_NPU_RX_STS : 1;               /*0 SW=ro HW=wo 0x0 */
         } bf;
-        
+
     #else     /* IDS_LITTLE_ENDIAN */
         struct {
             uint32_t TZM_NPU_RX_STS : 1;               /*0 SW=ro HW=wo 0x0 */
@@ -471,11 +471,11 @@ typedef union {
             uint32_t TZM_HKADC_DMA_STS : 1;               /*22 SW=ro HW=wo 0x0 */
             uint32_t Reserved : 9;               /*23:31 SW=ro HW=ro 0x0 */
         } bf;
-        
+
     #endif
     uint32_t  dw;
-    
-    
+
+
 }security_ctrl_regs_SECMSCINTSTATUS;
 
 /*  SECMSCINTCLR DESCRIPTION :
@@ -508,7 +508,7 @@ typedef union {
             uint32_t TZM_NPU_TX_CLR : 1;               /*1 SW=w1s HW=rw 0x0 */
             uint32_t TZM_NPU_RX_CLR : 1;               /*0 SW=w1s HW=rw 0x0 */
         } bf;
-        
+
     #else     /* IDS_LITTLE_ENDIAN */
         struct {
             uint32_t TZM_NPU_RX_CLR : 1;               /*0 SW=w1s HW=rw 0x0 */
@@ -536,11 +536,11 @@ typedef union {
             uint32_t TZM_HKADC_DMA_CLR : 1;               /*22 SW=w1s HW=rw 0x0 */
             uint32_t Reserved : 9;               /*23:31 SW=ro HW=ro 0x0 */
         } bf;
-        
+
     #endif
     uint32_t  dw;
-    
-    
+
+
 }security_ctrl_regs_SECMSCINTCLR;
 
 /*  SECMSCINTEN DESCRIPTION :Master Security Controller Interrupt Enable */
@@ -572,7 +572,7 @@ typedef union {
             uint32_t TZM_NPU_TX_EN : 1;               /*1 SW=rw HW=ro 0x0 */
             uint32_t TZM_NPU_RX_EN : 1;               /*0 SW=rw HW=ro 0x0 */
         } bf;
-        
+
     #else     /* IDS_LITTLE_ENDIAN */
         struct {
             uint32_t TZM_NPU_RX_EN : 1;               /*0 SW=rw HW=ro 0x0 */
@@ -600,11 +600,11 @@ typedef union {
             uint32_t TZM_HKADC_DMA_EN : 1;               /*22 SW=rw HW=ro 0x0 */
             uint32_t Reserved : 9;               /*23:31 SW=ro HW=ro 0x0 */
         } bf;
-        
+
     #endif
     uint32_t  dw;
-    
-    
+
+
 }security_ctrl_regs_SECMSCINTEN;
 
 /*  SECGPIOINTEN DESCRIPTION :TrustZone GPIO Secure Interrupt Enable */
@@ -614,17 +614,17 @@ typedef union {
             uint32_t Reserved : 31;               /*31:1 SW=ro HW=ro 0x0 */
             uint32_t GPIO_SEC_IRQ_EN : 1;               /*0 SW=rw HW=ro 0x0 */
         } bf;
-        
+
     #else     /* IDS_LITTLE_ENDIAN */
         struct {
             uint32_t GPIO_SEC_IRQ_EN : 1;               /*0 SW=rw HW=ro 0x0 */
             uint32_t Reserved : 31;               /*1:31 SW=ro HW=ro 0x0 */
         } bf;
-        
+
     #endif
     uint32_t  dw;
-    
-    
+
+
 }security_ctrl_regs_SECGPIOINTEN;
 
 /*  APBNSPPCBASE0 DESCRIPTION :Base 0 Non-Secure Access APB slave Peripheral Protection Control. Each field defines the Non-secure settings for an associated peripheral:
@@ -638,17 +638,17 @@ typedef union {
             uint32_t Reserved : 16;               /*31:16 SW=ro HW=ro 0x0 */
             uint32_t PPC_BASE_0_NS_N : 16;               /*15:0 SW=rw HW=ro 0x0 */
         } bf;
-        
+
     #else     /* IDS_LITTLE_ENDIAN */
         struct {
             uint32_t PPC_BASE_0_NS_N : 16;               /*0:15 SW=rw HW=ro 0x0 */
             uint32_t Reserved : 16;               /*16:31 SW=ro HW=ro 0x0 */
         } bf;
-        
+
     #endif
     uint32_t  dw;
-    
-    
+
+
 }security_ctrl_regs_APBNSPPCBASE0;
 
 /*  APBNSPPCBASE1 DESCRIPTION :Base 1 (MPCs) Non-Secure Access APB slave Peripheral Protection Control. Each field defines the Non-secure settings for an associated peripheral:
@@ -662,17 +662,17 @@ typedef union {
             uint32_t Reserved : 16;               /*31:16 SW=ro HW=ro 0x0 */
             uint32_t PPC_BASE_1_NS_N : 16;               /*15:0 SW=rw HW=ro 0x0 */
         } bf;
-        
+
     #else     /* IDS_LITTLE_ENDIAN */
         struct {
             uint32_t PPC_BASE_1_NS_N : 16;               /*0:15 SW=rw HW=ro 0x0 */
             uint32_t Reserved : 16;               /*16:31 SW=ro HW=ro 0x0 */
         } bf;
-        
+
     #endif
     uint32_t  dw;
-    
-    
+
+
 }security_ctrl_regs_APBNSPPCBASE1;
 
 /*  APBNSPPCBASE2 DESCRIPTION :Base 1 (Misc) Non-Secure Access APB slave Peripheral Protection Control. Each field defines the Non-secure settings for an associated peripheral:
@@ -686,17 +686,17 @@ typedef union {
             uint32_t Reserved : 16;               /*31:16 SW=ro HW=ro 0x0 */
             uint32_t PPC_BASE_2_NS_N : 16;               /*15:0 SW=rw HW=ro 0x0 */
         } bf;
-        
+
     #else     /* IDS_LITTLE_ENDIAN */
         struct {
             uint32_t PPC_BASE_2_NS_N : 16;               /*0:15 SW=rw HW=ro 0x0 */
             uint32_t Reserved : 16;               /*16:31 SW=ro HW=ro 0x0 */
         } bf;
-        
+
     #endif
     uint32_t  dw;
-    
-    
+
+
 }security_ctrl_regs_APBNSPPCBASE2;
 
 /*  APBNSPPCSYS DESCRIPTION :System Control Sub Non-Secure Access APB slave Peripheral Protection Control. Each field defines the Non-secure settings for an associated peripheral:
@@ -710,17 +710,17 @@ typedef union {
             uint32_t Reserved : 16;               /*31:16 SW=ro HW=ro 0x0 */
             uint32_t PPC_SYS_NS_N : 16;               /*15:0 SW=rw HW=ro 0x0 */
         } bf;
-        
+
     #else     /* IDS_LITTLE_ENDIAN */
         struct {
             uint32_t PPC_SYS_NS_N : 16;               /*0:15 SW=rw HW=ro 0x0 */
             uint32_t Reserved : 16;               /*16:31 SW=ro HW=ro 0x0 */
         } bf;
-        
+
     #endif
     uint32_t  dw;
-    
-    
+
+
 }security_ctrl_regs_APBNSPPCSYS;
 
 /*  AHBNSPPCSYS DESCRIPTION :System Control Sub Non-Secure Access APB slave Peripheral Protection Control. Each field defines the Non-secure settings for an associated peripheral:
@@ -734,17 +734,17 @@ typedef union {
             uint32_t Reserved : 16;               /*31:16 SW=ro HW=ro 0x0 */
             uint32_t PPC_SYS_NS_N : 16;               /*15:0 SW=rw HW=ro 0x0 */
         } bf;
-        
+
     #else     /* IDS_LITTLE_ENDIAN */
         struct {
             uint32_t PPC_SYS_NS_N : 16;               /*0:15 SW=rw HW=ro 0x0 */
             uint32_t Reserved : 16;               /*16:31 SW=ro HW=ro 0x0 */
         } bf;
-        
+
     #endif
     uint32_t  dw;
-    
-    
+
+
 }security_ctrl_regs_AHBNSPPCSYS;
 
 /*  APBNSPPCPERIPH0 DESCRIPTION :System Control Sub Non-Secure Access APB slave Peripheral Protection Control. Each field defines the Non-secure settings for an associated peripheral:
@@ -758,17 +758,17 @@ typedef union {
             uint32_t Reserved : 16;               /*31:16 SW=ro HW=ro 0x0 */
             uint32_t PPC_PERIPH_0_NS_N : 16;               /*15:0 SW=rw HW=ro 0x0 */
         } bf;
-        
+
     #else     /* IDS_LITTLE_ENDIAN */
         struct {
             uint32_t PPC_PERIPH_0_NS_N : 16;               /*0:15 SW=rw HW=ro 0x0 */
             uint32_t Reserved : 16;               /*16:31 SW=ro HW=ro 0x0 */
         } bf;
-        
+
     #endif
     uint32_t  dw;
-    
-    
+
+
 }security_ctrl_regs_APBNSPPCPERIPH0;
 
 /*  APBNSPPCPERIPH1 DESCRIPTION :System Control Sub Non-Secure Access APB slave Peripheral Protection Control. Each field defines the Non-secure settings for an associated peripheral:
@@ -782,17 +782,17 @@ typedef union {
             uint32_t Reserved : 16;               /*31:16 SW=ro HW=ro 0x0 */
             uint32_t PPC_PERIPH_1_NS_N : 16;               /*15:0 SW=rw HW=ro 0x0 */
         } bf;
-        
+
     #else     /* IDS_LITTLE_ENDIAN */
         struct {
             uint32_t PPC_PERIPH_1_NS_N : 16;               /*0:15 SW=rw HW=ro 0x0 */
             uint32_t Reserved : 16;               /*16:31 SW=ro HW=ro 0x0 */
         } bf;
-        
+
     #endif
     uint32_t  dw;
-    
-    
+
+
 }security_ctrl_regs_APBNSPPCPERIPH1;
 
 /*  AHBNSPPCSDIO DESCRIPTION :System Control Sub Non-Secure Access APB slave Peripheral Protection Control. Each field defines the Non-secure settings for an associated peripheral:
@@ -806,17 +806,17 @@ typedef union {
             uint32_t Reserved : 16;               /*31:16 SW=ro HW=ro 0x0 */
             uint32_t PPC_SDIO_NS_N : 16;               /*15:0 SW=rw HW=ro 0x0 */
         } bf;
-        
+
     #else     /* IDS_LITTLE_ENDIAN */
         struct {
             uint32_t PPC_SDIO_NS_N : 16;               /*0:15 SW=rw HW=ro 0x0 */
             uint32_t Reserved : 16;               /*16:31 SW=ro HW=ro 0x0 */
         } bf;
-        
+
     #endif
     uint32_t  dw;
-    
-    
+
+
 }security_ctrl_regs_AHBNSPPCSDIO;
 
 /*  AHBNSPPCCXIP DESCRIPTION :System Control Sub Non-Secure Access APB slave Peripheral Protection Control. Each field defines the Non-secure settings for an associated peripheral:
@@ -830,17 +830,17 @@ typedef union {
             uint32_t PPC_CRYPTO_XIP2_NS_N : 16;               /*31:16 SW=rw HW=ro 0x0 */
             uint32_t PPC_CRYPTO_XIP1_NS_N : 16;               /*15:0 SW=rw HW=ro 0x0 */
         } bf;
-        
+
     #else     /* IDS_LITTLE_ENDIAN */
         struct {
             uint32_t PPC_CRYPTO_XIP1_NS_N : 16;               /*0:15 SW=rw HW=ro 0x0 */
             uint32_t PPC_CRYPTO_XIP2_NS_N : 16;               /*16:31 SW=rw HW=ro 0x0 */
         } bf;
-        
+
     #endif
     uint32_t  dw;
-    
-    
+
+
 }security_ctrl_regs_AHBNSPPCCXIP;
 
 /*  APBSPRVPPCBASE0 DESCRIPTION :Base 0 Secure unprivileged Access APB slave Peripheral Protection Control. Each field defines the Secure unprivileged settings for an associated peripheral:
@@ -854,17 +854,17 @@ typedef union {
             uint32_t Reserved : 16;               /*31:16 SW=ro HW=ro 0x0 */
             uint32_t PPC_BASE_0_PRV_N : 16;               /*15:0 SW=rw HW=ro 0x0 */
         } bf;
-        
+
     #else     /* IDS_LITTLE_ENDIAN */
         struct {
             uint32_t PPC_BASE_0_PRV_N : 16;               /*0:15 SW=rw HW=ro 0x0 */
             uint32_t Reserved : 16;               /*16:31 SW=ro HW=ro 0x0 */
         } bf;
-        
+
     #endif
     uint32_t  dw;
-    
-    
+
+
 }security_ctrl_regs_APBSPRVPPCBASE0;
 
 /*  APBSPRVPPCBASE1 DESCRIPTION :Base 1 (MPCs) Secure unprivileged Access APB slave Peripheral Protection Control. Each field defines the Secure unprivileged settings for an associated peripheral:
@@ -878,17 +878,17 @@ typedef union {
             uint32_t Reserved : 16;               /*31:16 SW=ro HW=ro 0x0 */
             uint32_t PPC_BASE_1_PRV_N : 16;               /*15:0 SW=rw HW=ro 0x0 */
         } bf;
-        
+
     #else     /* IDS_LITTLE_ENDIAN */
         struct {
             uint32_t PPC_BASE_1_PRV_N : 16;               /*0:15 SW=rw HW=ro 0x0 */
             uint32_t Reserved : 16;               /*16:31 SW=ro HW=ro 0x0 */
         } bf;
-        
+
     #endif
     uint32_t  dw;
-    
-    
+
+
 }security_ctrl_regs_APBSPRVPPCBASE1;
 
 /*  APBSPRVPPCBASE2 DESCRIPTION :Base 1 (Misc) Secure unprivileged Access APB slave Peripheral Protection Control. Each field defines the Secure unprivileged settings for an associated peripheral:
@@ -902,17 +902,17 @@ typedef union {
             uint32_t Reserved : 16;               /*31:16 SW=ro HW=ro 0x0 */
             uint32_t PPC_BASE_2_PRV_N : 16;               /*15:0 SW=rw HW=ro 0x0 */
         } bf;
-        
+
     #else     /* IDS_LITTLE_ENDIAN */
         struct {
             uint32_t PPC_BASE_2_PRV_N : 16;               /*0:15 SW=rw HW=ro 0x0 */
             uint32_t Reserved : 16;               /*16:31 SW=ro HW=ro 0x0 */
         } bf;
-        
+
     #endif
     uint32_t  dw;
-    
-    
+
+
 }security_ctrl_regs_APBSPRVPPCBASE2;
 
 /*  APBSPRVPPCSYS DESCRIPTION :System Control Sub Secure unprivileged Access APB slave Peripheral Protection Control. Each field defines the Secure unprivileged settings for an associated peripheral:
@@ -926,17 +926,17 @@ typedef union {
             uint32_t Reserved : 16;               /*31:16 SW=ro HW=ro 0x0 */
             uint32_t PPC_APB_SYS_PRV_N : 16;               /*15:0 SW=rw HW=ro 0x0 */
         } bf;
-        
+
     #else     /* IDS_LITTLE_ENDIAN */
         struct {
             uint32_t PPC_APB_SYS_PRV_N : 16;               /*0:15 SW=rw HW=ro 0x0 */
             uint32_t Reserved : 16;               /*16:31 SW=ro HW=ro 0x0 */
         } bf;
-        
+
     #endif
     uint32_t  dw;
-    
-    
+
+
 }security_ctrl_regs_APBSPRVPPCSYS;
 
 /*  AHBSPRVPPCSYS DESCRIPTION :System Control Sub Secure unprivileged Access APB slave Peripheral Protection Control. Each field defines the Secure unprivileged settings for an associated peripheral:
@@ -950,17 +950,17 @@ typedef union {
             uint32_t Reserved : 16;               /*31:16 SW=ro HW=ro 0x0 */
             uint32_t PPC_AHB_SYS_PRV_N : 16;               /*15:0 SW=rw HW=ro 0x0 */
         } bf;
-        
+
     #else     /* IDS_LITTLE_ENDIAN */
         struct {
             uint32_t PPC_AHB_SYS_PRV_N : 16;               /*0:15 SW=rw HW=ro 0x0 */
             uint32_t Reserved : 16;               /*16:31 SW=ro HW=ro 0x0 */
         } bf;
-        
+
     #endif
     uint32_t  dw;
-    
-    
+
+
 }security_ctrl_regs_AHBSPRVPPCSYS;
 
 /*  APBSPRVPPCPERIPH0 DESCRIPTION :System Control Sub Secure unprivileged Access APB slave Peripheral Protection Control. Each field defines the Secure unprivileged settings for an associated peripheral:
@@ -974,17 +974,17 @@ typedef union {
             uint32_t Reserved : 16;               /*31:16 SW=ro HW=ro 0x0 */
             uint32_t PPC_PERIPH_0_PRV_N : 16;               /*15:0 SW=rw HW=ro 0x0 */
         } bf;
-        
+
     #else     /* IDS_LITTLE_ENDIAN */
         struct {
             uint32_t PPC_PERIPH_0_PRV_N : 16;               /*0:15 SW=rw HW=ro 0x0 */
             uint32_t Reserved : 16;               /*16:31 SW=ro HW=ro 0x0 */
         } bf;
-        
+
     #endif
     uint32_t  dw;
-    
-    
+
+
 }security_ctrl_regs_APBSPRVPPCPERIPH0;
 
 /*  APBSPRVPPCPERIPH1 DESCRIPTION :System Control Sub Secure unprivileged Access APB slave Peripheral Protection Control. Each field defines the Secure unprivileged settings for an associated peripheral:
@@ -998,17 +998,17 @@ typedef union {
             uint32_t Reserved : 16;               /*31:16 SW=ro HW=ro 0x0 */
             uint32_t PPC_PERIPH_1_PRV_N : 16;               /*15:0 SW=rw HW=ro 0x0 */
         } bf;
-        
+
     #else     /* IDS_LITTLE_ENDIAN */
         struct {
             uint32_t PPC_PERIPH_1_PRV_N : 16;               /*0:15 SW=rw HW=ro 0x0 */
             uint32_t Reserved : 16;               /*16:31 SW=ro HW=ro 0x0 */
         } bf;
-        
+
     #endif
     uint32_t  dw;
-    
-    
+
+
 }security_ctrl_regs_APBSPRVPPCPERIPH1;
 
 /*  AHBSPRVPPCSDIO DESCRIPTION :System Control Sub Secure unprivileged Access APB slave Peripheral Protection Control. Each field defines the Secure unprivileged settings for an associated peripheral:
@@ -1022,17 +1022,17 @@ typedef union {
             uint32_t Reserved : 16;               /*31:16 SW=ro HW=ro 0x0 */
             uint32_t PPC_SDIO_PRV_N : 16;               /*15:0 SW=rw HW=ro 0x0 */
         } bf;
-        
+
     #else     /* IDS_LITTLE_ENDIAN */
         struct {
             uint32_t PPC_SDIO_PRV_N : 16;               /*0:15 SW=rw HW=ro 0x0 */
             uint32_t Reserved : 16;               /*16:31 SW=ro HW=ro 0x0 */
         } bf;
-        
+
     #endif
     uint32_t  dw;
-    
-    
+
+
 }security_ctrl_regs_AHBSPRVPPCSDIO;
 
 /*  AHBSPRVPPCCXIP DESCRIPTION :System Control Sub Secure unprivileged Access APB slave Peripheral Protection Control. Each field defines the Secure unprivileged settings for an associated peripheral:
@@ -1046,17 +1046,17 @@ typedef union {
             uint32_t PPC_CRYPTO_XIP2_PRV_N : 16;               /*31:16 SW=rw HW=ro 0x0 */
             uint32_t PPC_CRYPTO_XIP1_PRV_N : 16;               /*15:0 SW=rw HW=ro 0x0 */
         } bf;
-        
+
     #else     /* IDS_LITTLE_ENDIAN */
         struct {
             uint32_t PPC_CRYPTO_XIP1_PRV_N : 16;               /*0:15 SW=rw HW=ro 0x0 */
             uint32_t PPC_CRYPTO_XIP2_PRV_N : 16;               /*16:31 SW=rw HW=ro 0x0 */
         } bf;
-        
+
     #endif
     uint32_t  dw;
-    
-    
+
+
 }security_ctrl_regs_AHBSPRVPPCCXIP;
 
 /*  NSMSC DESCRIPTION :System Control Sub Non-Secure Access APB slave Peripheral Protection Control. Each field defines the Non-secure settings for an associated peripheral:
@@ -1092,7 +1092,7 @@ typedef union {
             uint32_t TZM_NPU_TX_NS : 1;               /*1 SW=rw HW=ro 0x0 */
             uint32_t TZM_NPU_RX_NS : 1;               /*0 SW=rw HW=ro 0x0 */
         } bf;
-        
+
     #else     /* IDS_LITTLE_ENDIAN */
         struct {
             uint32_t TZM_NPU_RX_NS : 1;               /*0 SW=rw HW=ro 0x0 */
@@ -1120,11 +1120,11 @@ typedef union {
             uint32_t TZM_HKADC_DMA_NS : 1;               /*22 SW=ro HW=ro 0x0 */
             uint32_t Reserved : 9;               /*23:31 SW=ro HW=ro 0x0 */
         } bf;
-        
+
     #endif
     uint32_t  dw;
-    
-    
+
+
 }security_ctrl_regs_NSMSC;
 
 /*  NSGPIO DESCRIPTION :System Control Sub Non-Secure Access APB slave Peripheral Protection Control. Each field defines the Non-secure settings for an associated peripheral:
@@ -1137,8 +1137,8 @@ typedef union {
         uint32_t GPIO_NS_PIN_N : 32;               /*31:0 SW=rw HW=ro 0x0 */
     } bf;
     uint32_t  dw;
-    
-    
+
+
 }security_ctrl_regs_NSGPIO;
 
 typedef volatile struct inph_security_cntrl_base{
@@ -1180,20 +1180,20 @@ typedef volatile struct inph_security_cntrl_base{
 
     security_ctrl_regs_APBSPRVPPCSYS  APBSPRVPPCSYS;
     security_ctrl_regs_AHBSPRVPPCSYS  AHBSPRVPPCSYS;
-    
+
     security_ctrl_regs_APBSPRVPPCPERIPH0  APBSPRVPPCPERIPH0;
     security_ctrl_regs_APBSPRVPPCPERIPH1  APBSPRVPPCPERIPH1;
-    
+
     security_ctrl_regs_AHBSPRVPPCSDIO  AHBSPRVPPCSDIO;
     security_ctrl_regs_AHBSPRVPPCCXIP  AHBSPRVPPCCXIP;
-    
+
     security_ctrl_regs_NSMSC  NSMSC;
-    
+
     security_ctrl_regs_NSGPIO  NSGPIO;
-    
+
     uint8_t filler34[0x1F7C];
-    
-    
+
+
 } inph_security_cntrl_t;
 
 /*  APBNSPRVPPCBASE0 DESCRIPTION :Base 0 Non-Secure unprivileged Access APB slave Peripheral Protection Control. Each field defines the Secure unprivileged settings for an associated peripheral:
@@ -1207,17 +1207,17 @@ typedef union {
             uint32_t Reserved : 16;               /*31:16 SW=ro HW=ro 0x0 */
             uint32_t PPC_BASE_0_NS_PRV_N : 16;               /*15:0 SW=rw HW=ro 0x0 */
         } bf;
-        
+
     #else     /* IDS_LITTLE_ENDIAN */
         struct {
             uint32_t PPC_BASE_0_NS_PRV_N : 16;               /*0:15 SW=rw HW=ro 0x0 */
             uint32_t Reserved : 16;               /*16:31 SW=ro HW=ro 0x0 */
         } bf;
-        
+
     #endif
     uint32_t  dw;
-    
-    
+
+
 }ns_privilege_regs_APBNSPRVPPCBASE0;
 
 /*  APBNSPRVPPCBASE1 DESCRIPTION :Base 1 (MPCs) Non-Secure unprivileged Access APB slave Peripheral Protection Control. Each field defines the Non-Secure unprivileged settings for an associated peripheral:
@@ -1231,17 +1231,17 @@ typedef union {
             uint32_t Reserved : 16;               /*31:16 SW=ro HW=ro 0x0 */
             uint32_t PPC_BASE_1_NS_PRV_N : 16;               /*15:0 SW=rw HW=ro 0x0 */
         } bf;
-        
+
     #else     /* IDS_LITTLE_ENDIAN */
         struct {
             uint32_t PPC_BASE_1_NS_PRV_N : 16;               /*0:15 SW=rw HW=ro 0x0 */
             uint32_t Reserved : 16;               /*16:31 SW=ro HW=ro 0x0 */
         } bf;
-        
+
     #endif
     uint32_t  dw;
-    
-    
+
+
 }ns_privilege_regs_APBNSPRVPPCBASE1;
 
 /*  APBNSPRVPPCBASE2 DESCRIPTION :Base 1 (Misc) Non-Secure unprivileged Access APB slave Peripheral Protection Control. Each field defines the Non-Secure unprivileged settings for an associated peripheral:
@@ -1255,17 +1255,17 @@ typedef union {
             uint32_t Reserved : 16;               /*31:16 SW=ro HW=ro 0x0 */
             uint32_t PPC_BASE_2_NS_PRV_N : 16;               /*15:0 SW=rw HW=ro 0x0 */
         } bf;
-        
+
     #else     /* IDS_LITTLE_ENDIAN */
         struct {
             uint32_t PPC_BASE_2_NS_PRV_N : 16;               /*0:15 SW=rw HW=ro 0x0 */
             uint32_t Reserved : 16;               /*16:31 SW=ro HW=ro 0x0 */
         } bf;
-        
+
     #endif
     uint32_t  dw;
-    
-    
+
+
 }ns_privilege_regs_APBNSPRVPPCBASE2;
 
 /*  APBNSPRVPPCSYS DESCRIPTION :System Control Sub Non-Secure unprivileged Access APB slave Peripheral Protection Control. Each field defines the Non-Secure unprivileged settings for an associated peripheral:
@@ -1279,17 +1279,17 @@ typedef union {
             uint32_t Reserved : 16;               /*31:16 SW=ro HW=ro 0x0 */
             uint32_t PPC_APB_SYS_NS_PRV_N : 16;               /*15:0 SW=rw HW=ro 0x0 */
         } bf;
-        
+
     #else     /* IDS_LITTLE_ENDIAN */
         struct {
             uint32_t PPC_APB_SYS_NS_PRV_N : 16;               /*0:15 SW=rw HW=ro 0x0 */
             uint32_t Reserved : 16;               /*16:31 SW=ro HW=ro 0x0 */
         } bf;
-        
+
     #endif
     uint32_t  dw;
-    
-    
+
+
 }ns_privilege_regs_APBNSPRVPPCSYS;
 
 /*  AHBNSPRVPPCSYS DESCRIPTION :System Control Sub Non-Secure unprivileged Access APB slave Peripheral Protection Control. Each field defines the Non-Secure unprivileged settings for an associated peripheral:
@@ -1303,17 +1303,17 @@ typedef union {
             uint32_t Reserved : 16;               /*31:16 SW=ro HW=ro 0x0 */
             uint32_t PPC_AHB_SYS_NS_PRV_N : 16;               /*15:0 SW=rw HW=ro 0x0 */
         } bf;
-        
+
     #else     /* IDS_LITTLE_ENDIAN */
         struct {
             uint32_t PPC_AHB_SYS_NS_PRV_N : 16;               /*0:15 SW=rw HW=ro 0x0 */
             uint32_t Reserved : 16;               /*16:31 SW=ro HW=ro 0x0 */
         } bf;
-        
+
     #endif
     uint32_t  dw;
-    
-    
+
+
 }ns_privilege_regs_AHBNSPRVPPCSYS;
 
 /*  APBNSPRVPPCPERIPH0 DESCRIPTION :System Control Sub Non-Secure unprivileged Access APB slave Peripheral Protection Control. Each field defines the Non-Secure unprivileged settings for an associated peripheral:
@@ -1327,17 +1327,17 @@ typedef union {
             uint32_t Reserved : 16;               /*31:16 SW=ro HW=ro 0x0 */
             uint32_t PPC_PERIPH_0_NS_PRV_N : 16;               /*15:0 SW=rw HW=ro 0x0 */
         } bf;
-        
+
     #else     /* IDS_LITTLE_ENDIAN */
         struct {
             uint32_t PPC_PERIPH_0_NS_PRV_N : 16;               /*0:15 SW=rw HW=ro 0x0 */
             uint32_t Reserved : 16;               /*16:31 SW=ro HW=ro 0x0 */
         } bf;
-        
+
     #endif
     uint32_t  dw;
-    
-    
+
+
 }ns_privilege_regs_APBNSPRVPPCPERIPH0;
 
 /*  APBNSPRVPPCPERIPH1 DESCRIPTION :System Control Sub Non-Secure unprivileged Access APB slave Peripheral Protection Control. Each field defines the Non-Secure unprivileged settings for an associated peripheral:
@@ -1351,17 +1351,17 @@ typedef union {
             uint32_t Reserved : 16;               /*31:16 SW=ro HW=ro 0x0 */
             uint32_t PPC_PERIPH_1_NS_PRV_N : 16;               /*15:0 SW=rw HW=ro 0x0 */
         } bf;
-        
+
     #else     /* IDS_LITTLE_ENDIAN */
         struct {
             uint32_t PPC_PERIPH_1_NS_PRV_N : 16;               /*0:15 SW=rw HW=ro 0x0 */
             uint32_t Reserved : 16;               /*16:31 SW=ro HW=ro 0x0 */
         } bf;
-        
+
     #endif
     uint32_t  dw;
-    
-    
+
+
 }ns_privilege_regs_APBNSPRVPPCPERIPH1;
 
 /*  AHBNSPRVPPCSDIO DESCRIPTION :System Control Sub Non-Secure unprivileged Access APB slave Peripheral Protection Control. Each field defines the Non-Secure unprivileged settings for an associated peripheral:
@@ -1375,17 +1375,17 @@ typedef union {
             uint32_t Reserved : 16;               /*31:16 SW=ro HW=ro 0x0 */
             uint32_t PPC_SDIO_NS_PRV_N : 16;               /*15:0 SW=rw HW=ro 0x0 */
         } bf;
-        
+
     #else     /* IDS_LITTLE_ENDIAN */
         struct {
             uint32_t PPC_SDIO_NS_PRV_N : 16;               /*0:15 SW=rw HW=ro 0x0 */
             uint32_t Reserved : 16;               /*16:31 SW=ro HW=ro 0x0 */
         } bf;
-        
+
     #endif
     uint32_t  dw;
-    
-    
+
+
 }ns_privilege_regs_AHBNSPRVPPCSDIO;
 
 /*  AHBNSPRVPPCCXIP DESCRIPTION :System Control Sub Non-Secure unprivileged Access APB slave Peripheral Protection Control. Each field defines the Non-Secure unprivileged settings for an associated peripheral:
@@ -1399,17 +1399,17 @@ typedef union {
             uint32_t PPC_CRYPTO_XIP2_NS_PRV_N : 16;               /*31:16 SW=rw HW=ro 0x0 */
             uint32_t PPC_CRYPTO_XIP1_NS_PRV_N : 16;               /*15:0 SW=rw HW=ro 0x0 */
         } bf;
-        
+
     #else     /* IDS_LITTLE_ENDIAN */
         struct {
             uint32_t PPC_CRYPTO_XIP1_NS_PRV_N : 16;               /*0:15 SW=rw HW=ro 0x0 */
             uint32_t PPC_CRYPTO_XIP2_NS_PRV_N : 16;               /*16:31 SW=rw HW=ro 0x0 */
         } bf;
-        
+
     #endif
     uint32_t  dw;
-    
-    
+
+
 }ns_privilege_regs_AHBNSPRVPPCCXIP;
 
 typedef volatile struct inph_nspriv_security_base{
@@ -1422,10 +1422,10 @@ typedef volatile struct inph_nspriv_security_base{
     ns_privilege_regs_APBNSPRVPPCPERIPH1  APBNSPRVPPCPERIPH1;
     ns_privilege_regs_AHBNSPRVPPCSDIO  AHBNSPRVPPCSDIO;
     ns_privilege_regs_AHBNSPRVPPCCXIP  AHBNSPRVPPCCXIP;
-    
+
     uint8_t filler10[0x1FDC];
-    
-    
+
+
 } inph_nspriv_security_t;
 
 #endif

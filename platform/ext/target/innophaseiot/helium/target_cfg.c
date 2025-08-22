@@ -324,12 +324,12 @@ enum tfm_plat_err_t nvic_interrupt_enable(void)
     if (ret != ARM_DRIVER_OK) {
         return TFM_PLAT_ERR_SYSTEM_ERR;
     }
-    
+
     NVIC_EnableIRQ(MPC_IRQn);
 
     /* PPC interrupt enabling */
     /* Clear pending PPC interrupts */
- 
+
     spctrl->SECPPCINTCLR.dw |= SPCNTL_BASE0_INT_POS_MASK |
                            SPCNTL_BASE1_INT_POS_MASK |
                            SPCNTL_BASE2_INT_POS_MASK |
@@ -352,7 +352,7 @@ enum tfm_plat_err_t nvic_interrupt_enable(void)
                            SPCNTL_SDIO_INT_POS_MASK |
                            SPCNTL_CXIP1_INT_POS_MASK |
                            SPCNTL_CXIP2_INT_POS_MASK;
-                           
+
 
     NVIC_EnableIRQ(PPC_IRQn);
 
@@ -397,7 +397,7 @@ const struct sau_cfg_t sau_cfg[] = {
     },
     {
         PERIPHERALS_BASE_NS_START,
-#ifdef SECURE_UART1        
+#ifdef SECURE_UART1
         (INPH_UART1_BASE_NS - 1),
         false,
     },
@@ -465,7 +465,7 @@ fih_int fih_verify_sau_and_idau_cfg(void)
 FIH_RET_TYPE(int32_t) mpc_init_cfg(void)
 {
     int32_t ret = ARM_DRIVER_OK;
-    
+
 #if 1
     /* Configuring primary non-secure partition.
      * It is ensured in flash_layout.h that this memory region is located in
@@ -522,7 +522,7 @@ FIH_RET_TYPE(int32_t) mpc_init_cfg(void)
     if (ret != ARM_DRIVER_OK) {
         FIH_RET(fih_int_encode(ret));
     }
-    
+
 
 
 #ifdef BL2
@@ -533,7 +533,7 @@ FIH_RET_TYPE(int32_t) mpc_init_cfg(void)
     if (ret != ARM_DRIVER_OK) {
         FIH_RET(fih_int_encode(ret));
     }
-#endif /* BL2 */    
+#endif /* BL2 */
 #endif
 
 
@@ -828,7 +828,7 @@ FIH_RET_TYPE(int32_t) mpc_init_cfg(void)
 
 #ifdef TFM_FIH_PROFILE_ON
 fih_int fih_verify_mpc_cfg(void)
-{  
+{
     FIH_RET(fih_int_encode(ARM_DRIVER_OK));
 }
 #endif /* TFM_FIH_PROFILE_ON */
@@ -869,8 +869,8 @@ FIH_RET_TYPE(int32_t) ppc_init_cfg(void)
 
 #ifdef TFM_FIH_PROFILE_ON
 fih_int fih_verify_ppc_cfg(void)
-{    
- 
+{
+
     FIH_RET(fih_int_encode(ARM_DRIVER_OK));
 }
 #endif /* TFM_FIH_PROFILE_ON */

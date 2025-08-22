@@ -49,11 +49,11 @@
 #define PRIVILEGE_ONLY_AS_DEFAULT_PERIPHERAL_STATE  1
 
 void inph_ppc_init(struct inph_ppc_dev_t* dev,
-                     enum inph_ppc_name_t ppc_name)
+                     enum ppc_bank_e ppc_name)
 {
-    inph_security_cntrl_t* p_spctrl = 
+    inph_security_cntrl_t* p_spctrl =
                          (inph_security_cntrl_t *)dev->cfg->spctrl_base;
-    inph_nspriv_security_t* p_nspriv = 
+    inph_nspriv_security_t* p_nspriv =
                        (inph_nspriv_security_t *)dev->cfg->snspriv_base;
 
     switch(ppc_name) {
@@ -64,14 +64,14 @@ void inph_ppc_init(struct inph_ppc_dev_t* dev,
             dev->data->p_nsp_ppc = &p_nspriv->AHBNSPRVPPCCXIP.dw;
             dev->data->int_bit_mask = AHB_PPC_XIP1_INT_POS_MASK;
             break;
-    
+
     case AHB_PPC_XIP2:
             dev->data->p_ns_ppc  = &p_spctrl->AHBNSPPCCXIP.dw;
             dev->data->p_sp_ppc  = &p_spctrl->AHBSPRVPPCCXIP.dw;
             dev->data->p_nsp_ppc = &p_nspriv->AHBNSPRVPPCCXIP.dw;
             dev->data->int_bit_mask = AHB_PPC_XIP2_INT_POS_MASK;
             break;
-            
+
         case AHB_PPC_SDIO:
             dev->data->p_ns_ppc  = &p_spctrl->AHBNSPPCSDIO.dw;
             dev->data->p_sp_ppc  = &p_spctrl->AHBSPRVPPCSDIO.dw;
@@ -101,7 +101,7 @@ void inph_ppc_init(struct inph_ppc_dev_t* dev,
             dev->data->p_sp_ppc  = &p_spctrl->APBSPRVPPCSYS.dw;
             dev->data->p_nsp_ppc = &p_nspriv->APBNSPRVPPCSYS.dw;
             dev->data->int_bit_mask = APB_PPC_SYSCTRL_INT_POS_MASK;
-            break;            
+            break;
         case APB_PPC_BASE2:
             dev->data->p_ns_ppc  = &p_spctrl->APBNSPPCBASE2.dw;
             dev->data->p_sp_ppc  = &p_spctrl->APBSPRVPPCBASE2.dw;
@@ -120,7 +120,7 @@ void inph_ppc_init(struct inph_ppc_dev_t* dev,
             dev->data->p_nsp_ppc = &p_nspriv->APBNSPRVPPCBASE0.dw;
             dev->data->int_bit_mask = APB_PPC_BASE0_INT_POS_MASK;
             break;
-        
+
         /* default:  The default is not defined intentionally to force the
          *           compiler to check that all enumeration values are
          *           covered in the switch.*/
