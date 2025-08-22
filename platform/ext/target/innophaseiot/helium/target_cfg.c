@@ -880,6 +880,15 @@ FIH_RET_TYPE(int32_t) ppc_init_cfg(void)
     err |= ppc_devices_set_to_ns(&Driver_AHB_PERIPHERAL0, periph);
     assert(err == 0);
 
+    // BASE0 PPC initialize
+    periph = 0;
+    periph |= (1<<SPCNTL_BASE0_DT0_POS);  // assign DUAL_TIMER_0 to ns
+    periph |= (1<<SPCNTL_BASE0_DT1_POS);  // assign DUAL_TIMER_1 to ns
+    periph |= (1<<SPCNTL_BASE0_DT2_POS);  // assign DUAL_TIMER_2 to ns
+    periph |= (1<<SPCNTL_BASE0_DT3_POS);  // assign DUAL_TIMER_3 to ns
+    err |= ppc_devices_set_to_ns(&Driver_APB_PPCBASE0, periph);
+    assert(err == 0);
+
     /* Configure the response to a security violation as a
      * bus error instead of RAZ/WI
      */
