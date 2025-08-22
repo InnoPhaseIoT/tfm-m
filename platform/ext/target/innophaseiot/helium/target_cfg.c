@@ -889,6 +889,14 @@ FIH_RET_TYPE(int32_t) ppc_init_cfg(void)
     err |= ppc_devices_set_to_ns(&Driver_APB_PPCBASE0, periph);
     assert(err == 0);
 
+    // APB_SYS PPC initialize
+    periph = 0;
+    periph |= (1<<SPCNTL_SYS_RTC_POS);  // assign Real Time Counter (cast) to ns
+    periph |= (1<<SPCNTL_SYS_LPT_POS);  // assign Low Power Timer (cast wdt) to ns
+    periph |= (1<<SPCNTL_SYS_WDT_POS);  // assign Wachdog timer (cast) to ns
+    err |= ppc_devices_set_to_ns(&Driver_APB_SYSCNTRL, periph);
+    assert(err == 0);
+
     /* Configure the response to a security violation as a
      * bus error instead of RAZ/WI
      */
