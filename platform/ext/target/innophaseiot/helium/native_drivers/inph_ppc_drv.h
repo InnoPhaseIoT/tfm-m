@@ -78,30 +78,18 @@ enum inph_ppc_error_t {
     INPH_PPC_NOT_INIT,      /*!< PPC not initialized */
 };
 
-/* ARM PPC names */
-enum inph_ppc_name_t {
-    AHB_PPC_XIP1 = 0,  /*!< AHB XIP */
-    AHB_PPC_XIP2,      /*!< AHB XIP */
-    AHB_PPC_SDIO,      /*!< AHB PPC SDIO*/
-    AHB_PPC_PERIPH0,   /*!< PERIPHERAL0 PPC */
-    AHB_PPC_PERIPH1,   /*!< PERIPHERAL1 PPC */
-    AHB_PPC_SYSTEM,    /*!< AHB SYSTEM CONTROLLER PPC */
-    APB_PPC_SYSTEM,    /*!< APB SYSTEM CONTROLLER PPC */
-    APB_PPC_BASE0,     /*!< APB BASE0 PPC */
-    APB_PPC_BASE1,     /*!< APB BASE1 PPC */
-    APB_PPC_BASE2      /*!< APB BASE2 PPC */
-};
+#include "target_cfg.h"
 
 /**
  * \brief Initialize the PPC device.
  *
  * \param[in] dev       PPC device \ref inph_ppc_dev_t
- * \param[in] ppc_name  PPC name \ref inph_ppc_name_t
+ * \param[in] ppc_name  PPC name \ref ppc_bank_e
  *
  * \note This function doesn't check if dev is NULL.
  */
 void inph_ppc_init(struct inph_ppc_dev_t* dev,
-                     enum inph_ppc_name_t ppc_name);
+                     enum ppc_bank_e ppc_name);
 
 /**
  * \brief Configures the PPC device.

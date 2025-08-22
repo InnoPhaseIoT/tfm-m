@@ -25,6 +25,7 @@
 #include "region.h"
 #include "platform_regs.h"
 #include "utilities.h"
+#include "inph_ppc_drv.h"
 
 #ifdef PSA_API_TEST_IPC
 #endif
