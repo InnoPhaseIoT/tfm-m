@@ -897,6 +897,12 @@ FIH_RET_TYPE(int32_t) ppc_init_cfg(void)
     err |= ppc_devices_set_to_ns(&Driver_APB_SYSCNTRL, periph);
     assert(err == 0);
 
+    // BASE2 PPC initialize
+    periph = 0;
+    periph |= (1<<SPCNTL_BASE2_UDMA_POS);  // assign UDMA to ns
+    err |= ppc_devices_set_to_ns(&Driver_APB_PPCBASE2, periph);
+    assert(err == 0);
+
     /* Configure the response to a security violation as a
      * bus error instead of RAZ/WI
      */
