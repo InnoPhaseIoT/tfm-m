@@ -899,6 +899,7 @@ FIH_RET_TYPE(int32_t) ppc_init_cfg(void)
 
     // BASE2 PPC initialize
     periph = 0;
+    periph |= (1<<SPCNTL_BASE2_XSPI1CFG_POS);  // assign XSPI 1 CFG to ns
     periph |= (1<<SPCNTL_BASE2_UDMA_POS);  // assign UDMA to ns
     err |= ppc_devices_set_to_ns(&Driver_APB_PPCBASE2, periph);
     assert(err == 0);
