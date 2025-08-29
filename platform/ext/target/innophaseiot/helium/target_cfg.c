@@ -874,6 +874,12 @@ FIH_RET_TYPE(int32_t) ppc_init_cfg(void)
     err |= ppc_devices_set_to_ns(&Driver_APB_SYSCNTRL, periph);
     assert(err == 0);
 
+    // AHB Sys PPC initialize
+    periph = 0;
+    periph |= (1<<SPCNTL_AHB_SYS_RFA_AON_POS);  // assign RFA_AON to ns
+    err |= ppc_devices_set_to_ns(&Driver_AHB_SYSCNTRL, periph);
+    assert(err == 0);
+
     // PERIPH_0 PPC initialize
     periph = 0;
     periph |= (1<<SPCNTL_PERIPH0_UART0_POS);  // assign UART_0 to ns
