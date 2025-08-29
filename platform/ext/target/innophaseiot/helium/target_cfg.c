@@ -932,6 +932,12 @@ FIH_RET_TYPE(int32_t) ppc_init_cfg(void)
     err |= ppc_devices_set_to_ns(&Driver_APB_PPCBASE2, periph);
     assert(err == 0);
 
+    // SDIO PPC initialize
+    periph = 0;
+    periph |= (1<<SPCNTL_SDIO_CNTRL_POS);  // assign SDIO CNTRL to ns
+    err |= ppc_devices_set_to_ns(&Driver_AHB_SDIO, periph);
+    assert(err == 0);
+
     /* Configure the response to a security violation as a
      * bus error instead of RAZ/WI
      */
