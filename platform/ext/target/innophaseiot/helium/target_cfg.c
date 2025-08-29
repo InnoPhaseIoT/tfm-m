@@ -892,6 +892,12 @@ FIH_RET_TYPE(int32_t) ppc_init_cfg(void)
     // PERIPH_1 PPC initialize
     periph = 0;
     periph |= (1<<SPCNTL_PERIPH1_TRIG_POS);  // assign TRIG_MATRIX to ns
+    periph |= (1<<SPCNTL_PERIPH1_TCPWM0_POS);  // assign TCPWM0 to ns
+    periph |= (1<<SPCNTL_PERIPH1_TCPWM1_POS);  // assign TCPWM1 to ns
+    periph |= (1<<SPCNTL_PERIPH1_TCPWM2_POS);  // assign TCPWM2 to ns
+    periph |= (1<<SPCNTL_PERIPH1_TCPWM3_POS);  // assign TCPWM3 to ns
+    periph |= (1<<SPCNTL_PERIPH1_TCPWM4_POS);  // assign TCPWM4 to ns
+    periph |= (1<<SPCNTL_PERIPH1_TCPWM5_POS);  // assign TCPWM5 to ns
     err |= ppc_devices_set_to_ns(&Driver_AHB_PERIPHERAL1, periph);
     assert(err == 0);
 
