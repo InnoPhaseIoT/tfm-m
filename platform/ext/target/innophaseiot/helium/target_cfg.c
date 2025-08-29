@@ -884,6 +884,8 @@ FIH_RET_TYPE(int32_t) ppc_init_cfg(void)
     periph |= (1<<SPCNTL_PERIPH0_I2C0_POS);  // assign I2C_0 to ns
     periph |= (1<<SPCNTL_PERIPH0_I2C1_POS);  // assign I2C_1 to ns
     periph |= (1<<SPCNTL_PERIPH0_I2S_POS);  // assign I2S to ns
+    periph |= (1<<SPCNTL_PERIPH0_PDM_POS);  // assign PDM to ns
+    periph |= (1<<SPCNTL_PERIPH0_HKADC_POS);  // assign HKADC to ns
     err |= ppc_devices_set_to_ns(&Driver_AHB_PERIPHERAL0, periph);
     assert(err == 0);
 
