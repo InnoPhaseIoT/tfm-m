@@ -883,7 +883,14 @@ FIH_RET_TYPE(int32_t) ppc_init_cfg(void)
     periph |= (1<<SPCNTL_PERIPH0_SPI1_POS);  // assign SPI_1 to ns
     periph |= (1<<SPCNTL_PERIPH0_I2C0_POS);  // assign I2C_0 to ns
     periph |= (1<<SPCNTL_PERIPH0_I2C1_POS);  // assign I2C_1 to ns
+    periph |= (1<<SPCNTL_PERIPH0_I2S_POS);  // assign I2S to ns
     err |= ppc_devices_set_to_ns(&Driver_AHB_PERIPHERAL0, periph);
+    assert(err == 0);
+
+    // PERIPH_1 PPC initialize
+    periph = 0;
+    periph |= (1<<SPCNTL_PERIPH1_TRIG_POS);  // assign TRIG_MATRIX to ns
+    err |= ppc_devices_set_to_ns(&Driver_AHB_PERIPHERAL1, periph);
     assert(err == 0);
 
     // BASE0 PPC initialize
