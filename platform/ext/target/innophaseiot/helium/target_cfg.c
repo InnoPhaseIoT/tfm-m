@@ -391,6 +391,13 @@ const struct sau_cfg_t sau_cfg[] = {
         false,
     },
 #endif
+#if 1 // npu address space
+	{
+        0x20000000,
+        0x2004ffff,
+        false,
+    },
+#endif
 	{
         0x200E0000,
         0x200EFFFF,
@@ -913,6 +920,7 @@ FIH_RET_TYPE(int32_t) ppc_init_cfg(void)
     periph |= (1<<SPCNTL_BASE0_DT1_POS);  // assign DUAL_TIMER_1 to ns
     periph |= (1<<SPCNTL_BASE0_DT2_POS);  // assign DUAL_TIMER_2 to ns
     periph |= (1<<SPCNTL_BASE0_DT3_POS);  // assign DUAL_TIMER_3 to ns
+    periph |= (1<<SPCNTL_BASE0_NPU_POS);  // assign npu, bridge  to ns
     err |= ppc_devices_set_to_ns(&Driver_APB_PPCBASE0, periph);
     assert(err == 0);
 
