@@ -21,6 +21,8 @@
 /**
  * \brief the ns_lock ID
  */
+
+__attribute__((section(".data")))
 static void *ns_lock_handle = NULL;
 
 __attribute((weak))
