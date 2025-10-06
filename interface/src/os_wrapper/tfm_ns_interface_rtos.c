@@ -23,6 +23,7 @@
  */
 static void *ns_lock_handle = NULL;
 
+__attribute((weak))
 int32_t tfm_ns_interface_dispatch(veneer_fn fn,
                                   uint32_t arg0, uint32_t arg1,
                                   uint32_t arg2, uint32_t arg3)
@@ -42,6 +43,7 @@ int32_t tfm_ns_interface_dispatch(veneer_fn fn,
     return result;
 }
 
+__attribute((weak))
 uint32_t tfm_ns_interface_init(void)
 {
     void *handle;
