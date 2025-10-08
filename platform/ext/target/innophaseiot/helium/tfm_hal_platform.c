@@ -70,7 +70,7 @@ FIH_RET_TYPE(enum tfm_hal_status_t) tfm_hal_platform_init(void)
 }
 
 // NS app code space start
-#define memory_regions_non_secure_code_start 0x20050000
+#define memory_regions_non_secure_code_start 0x20090000
 
 struct
 {

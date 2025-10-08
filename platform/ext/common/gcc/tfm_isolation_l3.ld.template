@@ -33,11 +33,21 @@
 
 MEMORY
 {
+  /* Secure Flash code region (40 KB) — starts first */
+  FLASH (rx)  : ORIGIN = 0x200F0000, LENGTH = 40K
+
+  /* Secure RAM/data region (20 KB) — right after FLASH */
+  RAM   (rwx) : ORIGIN = ORIGIN(FLASH) + LENGTH(FLASH), LENGTH = 20K
+
+  /* Non-Secure Callable region (4 KB) — last */
+  NSC   (rx)  : ORIGIN = ORIGIN(RAM) + LENGTH(RAM), LENGTH = 4K
+#if 0 // original
   NSC (rx) :       ORIGIN = 0x200e0000, LENGTH = 64*1024
-  FLASH    (rx)  : ORIGIN = 0x200a0000, LENGTH = 4*64*1024
+  FLASH    (rx)  : ORIGIN = 0x200f0000, LENGTH = 40*1024
   RAM      (rw)  : ORIGIN = 0x200f0000, LENGTH = 64*1024
 #if defined(S_RAM_CODE_START)
   CODE_RAM (rwx) : ORIGIN = S_RAM_CODE_START, LENGTH = S_RAM_CODE_SIZE
+#endif
 #endif
 }
 
