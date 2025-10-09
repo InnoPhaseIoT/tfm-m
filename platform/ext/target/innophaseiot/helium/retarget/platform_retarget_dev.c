@@ -27,6 +27,7 @@
 #include "mpc_sie_drv.h"
 #include "inph_ppc_drv.h"
 #include "inph_uart_drv.h"
+#include "inph_xspi_flash_dev.h"
 #include "inph_tzm_drv.h"
 #include "device_cfg.h"
 
@@ -47,6 +48,21 @@ struct inph_uart_dev_t UART0_CMSDK_DEV_S = {
     &(UART0_CMSDK_DEV_CFG_S),
     &(UART0_CMSDK_DEV_DATA_S)
 };
+
+//------------------------------------------------------------------------------
+
+static const struct inph_flash_dev_cfg_t FLASH0_CMSDK_DEV_CFG_S = {
+    .base = XSPI1_BASE_S,
+    .default_baudrate = DEFAULT_UART_BAUDRATE
+};
+
+static struct inph_flash_dev_data_t FLASH0_CMSDK_DEV_DATA_S = {
+    .state = 0,
+    .system_clk = 0,
+    .baudrate = 0
+};
+
+//------------------------------------------------------------------------------
 
 // Shalini: you need to complete this
 struct inph_flash_dev_t FLASH0_CMSDK_DEV_S = {

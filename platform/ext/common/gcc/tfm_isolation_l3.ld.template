@@ -540,6 +540,9 @@ SECTIONS
         . = ALIGN(4);
         __bss_end__ = .;
     } > RAM AT> RAM
+    /* Provide symbol for heap start */
+    PROVIDE(end = .);
+
     Image$$ER_TFM_DATA$$ZI$$Base = ADDR(.TFM_BSS);
     Image$$ER_TFM_DATA$$ZI$$Limit = ADDR(.TFM_BSS) + SIZEOF(.TFM_BSS);
     Image$$ER_PART_RT_POOL$$ZI$$Base = __partition_runtime_start__;

@@ -39,7 +39,7 @@
 //Shalini: FYI
 #ifdef RTE_FLASH0
 #define FLASH_DEV           FLASH0_DEV_S
-#define FLASH_CMSDK_DEV     FLASH0_CMSDK_DEV_S
+#define FLASH0_CMSDK_DEV    FLASH0_CMSDK_DEV_S
 #endif
 
 #ifdef RTE_SRAM0_MPC

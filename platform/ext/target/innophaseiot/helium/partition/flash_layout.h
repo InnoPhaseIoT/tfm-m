@@ -83,8 +83,7 @@
 /* Sector size of the flash hardware; same as FLASH0_SECTOR_SIZE */
 #define FLASH_AREA_IMAGE_SECTOR_SIZE    (0x1000)     /* 4 KB */
 /* Same as FLASH0_SIZE */
-//#define FLASH_TOTAL_SIZE                (0x00800000) /* 8 MB */
-#define FLASH_TOTAL_SIZE                (0x00060000) //MHK
+#define FLASH_TOTAL_SIZE                (0x00800000) /* 8 MB */
 
 /* Flash layout info for BL2 bootloader */
 /* Same as FLASH0_BASE_S */

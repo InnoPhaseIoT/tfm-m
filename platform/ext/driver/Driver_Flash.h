@@ -56,6 +56,8 @@ extern "C"
 
 #define ARM_FLASH_SECTOR_INFO(addr,size) { (addr), (addr)+(size)-1 }
 
+typedef void (*ARM_FLASH_SignalEvent_t) (uint32_t event);  ///< Pointer to \ref ARM_FLASH_SignalEvent : Signal FLASH Event.
+
 /**
 \brief Flash Sector information
 */

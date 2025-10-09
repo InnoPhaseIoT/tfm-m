@@ -403,7 +403,7 @@ void Inph_XSPI_MemDeInit(XSPI_Type *base);
  * will read the status register to verify if the WEL bit is set.
  *
  * @param[in] *base          Pointer to xSPI mem. controller register structure.
- * @param[in] *memDevice     Pointer to the memory configuration structure.
+ * @param[in] *memConfig     Pointer to the memory configuration structure.
  * @param[in] *context       Pointer to the context structure
  *                           @ref inph_stc_xspi_context_t allocated by the user.
  *                           The structure is used during the XSPI operation for
@@ -425,7 +425,7 @@ Inph_XSPI_MemCmdWriteEnable(XSPI_Type *base,
  * in a blocking mode.
  *
  * @param[in] *base          Pointer to xSPI mem. controller register structure.
- * @param[in] *memDevice     Device to which command is sent.
+ * @param[in] *memConfig     Pointer to the memory configuration structure.
  * @param[in] *context       Pointer to the context structure
  *                           @ref inph_stc_xspi_context_t allocated by the user.
  *                           The structure is used during the XSPI operation for
@@ -448,7 +448,7 @@ Inph_XSPI_MemCmdWriteDisable(XSPI_Type *base,
  * is a blocking function until the status register from the memory is read.
  *
  * @param[in] *base          Pointer to xSPI mem. controller register structure.
- * @param[in] *memDevice     Device to which command is sent.
+ * @param[in] *memConfig     Pointer to the memory configuration structure.
  * @param[in] *context       Pointer to the context structure
  *                           @ref inph_stc_xspi_context_t allocated by the user.
  *                           The structure is used during the XSPI operation for
@@ -468,7 +468,7 @@ bool Inph_XSPI_MemIsBusy(XSPI_Type *base,
  * will read the status register to verify if the QE bit is set.
  *
  * @param[in] *base          Pointer to xSPI mem. controller register structure.
- * @param[in] *memDevice     Device to which command is sent.
+ * @param[in] *memConfig     Pointer to the memory configuration structure.
  * @param[in] *context       Pointer to the context structure
  *                           @ref inph_stc_xspi_context_t allocated by the user.
  *                           The structure is used during the XSPI operation for
@@ -495,7 +495,7 @@ Inph_XSPI_MemQuadEnable(XSPI_Type *base,
  * works in a blocking mode.
  *
  * @param[in] *base          Pointer to xSPI mem. controller register structure.
- * @param[in] *memDevice     Device to which command is sent.
+ * @param[in] *memConfig     Pointer to the memory configuration structure.
  * @param[in] status         Holds the status value read from the memory device.
  * @param[in] command        Holds the read status command.
  * @param[in] *context       Pointer to the context structure
@@ -526,7 +526,7 @@ inph_en_xspi_status_t Inph_XSPI_MemCmdReadStatus(
  * works in a blocking mode.
  *
  * @param[in] *base          Pointer to xSPI mem. controller register structure.
- * @param[in] *memDevice     Device to which command is sent.
+ * @param[in] *memConfig     Pointer to the memory configuration structure.
  * @param[in] status         Holds the status value to be written.
  * @param[in] command        Holds the write status command.
  * @param[in] *context       Pointer to the context structure
@@ -560,7 +560,7 @@ Inph_XSPI_MemCmdWriteStatus(XSPI_Type *base,
  * works in a blocking mode.
  *
  * @param[in] *base          Pointer to xSPI mem. controller register structure.
- * @param[in] *memDevice     Device to which command is sent.
+ * @param[in] *memConfig     Pointer to the memory configuration structure.
  * @param[in] *context       Pointer to the context structure
  *                           @ref inph_stc_xspi_context_t allocated by the user.
  *                           The structure is used during the XSPI operation for
@@ -591,7 +591,7 @@ Inph_XSPI_MemCmdChipErase(XSPI_Type *base,
  * works in a blocking mode.
  *
  * @param[in] *base          Pointer to xSPI mem. controller register structure.
- * @param[in] *memDevice     Device to which command is sent.
+ * @param[in] *memConfig     Pointer to the memory configuration structure.
  * @param[in] sectorAddr     Holds the sector erase to be erased.
  * @param[in] *context       Pointer to the context structure
  *                           @ref inph_stc_xspi_context_t allocated by the user.
@@ -624,8 +624,8 @@ inph_en_xspi_status_t Inph_XSPI_MemCmdSectorErase(
  * non-blocking mode, which uses interrupts to transfer.
  *
  * @param[in] *base          Pointer to xSPI mem. controller register structure.
- * @param[in] *memDevice     Device to which command is sent.
- * @param[in] *prgmAddr      memory address to be programmed.
+ * @param[in] *memConfig     Pointer to the memory configuration structure.
+ * @param[in] *addr          memory address to be programmed.
  * @param[in] *writeBuff     pointer to buffer holding data to be programmed.
  * @param[in] size           size of the data to be programmed.
  * @param[in] cmdCompleteCb  the callback function to be called once the
@@ -658,8 +658,8 @@ inph_en_xspi_status_t Inph_XSPI_MemCmdProgram(
  * which uses interrupts to read from FIFO.
  *
  * @param[in] *base          Pointer to xSPI mem. controller register structure.
- * @param[in] *memDevice     Device to which command is sent.
- * @param[in] *readAddr      memory address to be read from.
+ * @param[in] *memConfig     Pointer to the memory configuration structure.
+ * @param[in] *addr          memory address to be read from.
  * @param[in] *readBuff      pointer to buffer where the read data will be
  *                           stored.
  * @param[in] size           size of the data to be read.
@@ -696,8 +696,6 @@ inph_en_xspi_status_t Inph_XSPI_MemCmdRead(
  *
  * @param[in] *base          Pointer to xSPI mem. controller register structure.
  * @param[in] *device        Pointer to the memory device config structure.
- * @param[in] *context       Pointer to the context structure that holds the
- *                           transfer parameters.
  * @param[in] chipSelect     The chip select line for connected memory device.
  * @param[in] *context       Pointer to the context structure that holds the
  *                           transfer parameters.
@@ -909,7 +907,7 @@ Inph_XSPI_MemEraseChip(XSPI_Type *base,
  * in a blocking mode.
  *
  * @param[in] *base          Pointer to xSPI mem. controller register structure.
- * @param[in] *memDevice     Pointer to the memory configuration structure.
+ * @param[in] *memConfig     Memory device configuration.
  * @param[in] *context       Pointer to the context structure
  *                           @ref inph_stc_xspi_context_t allocated by the user.
  *                           The structure is used during the XSPI operation for
@@ -928,7 +926,7 @@ Inph_XSPI_MemReset(XSPI_Type *base, inph_stc_xspi_mem_config_t const *memConfig,
  * in a blocking mode.
  *
  * @param[in] *base          Pointer to xSPI mem. controller register structure.
- * @param[in] *memDevice     Pointer to the memory configuration structure.
+ * @param[in] *memConfig     Memory device configuration.
  * @param[in] *context       Pointer to the context structure
  *                           @ref inph_stc_xspi_context_t allocated by the user.
  *                           The structure is used during the XSPI operation for
@@ -947,7 +945,7 @@ Inph_XSPI_MemEnterQuadMode(XSPI_Type *base,
  * in a blocking mode.
  *
  * @param[in] *base          Pointer to xSPI mem. controller register structure.
- * @param[in] *memDevice     Pointer to the memory configuration structure.
+ * @param[in] *memConfig     Pointer to the memory configuration structure.
  * @param[in] *context       Pointer to the context structure
  *                           @ref inph_stc_xspi_context_t allocated by the user.
  *                           The structure is used during the XSPI operation for

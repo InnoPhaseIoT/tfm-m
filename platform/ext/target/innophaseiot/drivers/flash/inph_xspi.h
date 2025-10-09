@@ -237,12 +237,11 @@ extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
-#include "inph_device.h"
 #include "inph_assert.h"
 #include "inph_status_codes.h"
 #include "inph_utils.h"
 #include "xspi_registers.h"
-#include "inph_timers.h"
+//--- #include "inph_timers.h"
 
 /* Exported macro ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
@@ -1722,9 +1721,13 @@ __STATIC_INLINE void Inph_XSPI_UnPackBytes(uint32_t data, uint8_t byteArray[],
 __STATIC_INLINE inph_en_xspi_status_t Inph_XSPI_Timeout(uint32_t *timeoutUnits)
 {
     inph_en_xspi_status_t result = INPH_XSPI_SUCCESS;
+    volatile int delay = 0xFF;
 
     if (*timeoutUnits > 0u) {
-        Inph_TIMER_MicroSec(INPH_XSPI_WAIT_1_US);
+        //---Inph_TIMER_MicroSec(INPH_XSPI_WAIT_1_US);
+        while (delay > 0) {
+            delay--;
+        }
         --(*timeoutUnits);
         result = (0u == (*timeoutUnits)) ? INPH_XSPI_ERROR_TIMEOUT
                                          : INPH_XSPI_SUCCESS;

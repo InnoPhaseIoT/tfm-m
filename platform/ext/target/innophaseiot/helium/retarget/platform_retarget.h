@@ -32,6 +32,10 @@
 #define XSPI_SIZE       (0x2000000)  /* 32 MB */
 #define AIP_SIZE        (0x2000000)  /* 32 MB */
 
+#define INPH_FLASH_SIZE         0x800000  /* 8MB */
+#define INPH_FLASH_SIZEOF_ROW   0x1000
+
+
 #if 0
 /* ======= Defines peripherals memory map addresses ======= */
 /* Non-secure memory map addresses */
@@ -66,11 +70,11 @@
 #endif
 
 /* Flash memory emulated over external SSRAM memory */
-#define INPH_FLASH0_BASE_S          0x00000000  //Shalini: you need to complete
-#define INPH_FLASH0_BASE_NS         0x00000000
+#define INPH_FLASH0_BASE_S          0x02000000  //Shalini: you need to complete
+#define INPH_FLASH0_BASE_NS         0x12000000
 #define INPH_FLASH0_SIZE            0x00800000  /* 8 MB */
 #define INPH_FLASH0_SECTOR_SIZE     0x00001000  /* 4 kB */
-#define INPH_FLASH0_PAGE_SIZE       0x00001000  /* 4 kB */
+#define INPH_FLASH0_PAGE_SIZE       0x00000100  /* 256 B */
 #define INPH_FLASH0_PROGRAM_UNIT    0x1         /* Minimum write size */
 
 #define INPH_FLASH_BASE             INPH_FLASH0_BASE_S
@@ -103,6 +107,9 @@
 #define INPH_ROM_BASE_S         0x50050000
 #define INPH_XSPI1_BASE_S       0x50051000
 #define INPH_XSPI2_BASE_S       0x50056000
+
+#define XSPI1_BASE_S            0x50052000  /* CONF REGS */
+#define XSPI2_BASE_S            0x50055000  /* CONF REGS */
 
 /* Non-Secure Peripheral memory map addresses */
 

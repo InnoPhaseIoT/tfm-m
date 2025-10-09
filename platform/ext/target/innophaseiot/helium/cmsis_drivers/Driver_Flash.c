@@ -16,7 +16,8 @@
  * limitations under the License.
  */
 
-#include "Driver_FLASH_CMSDK.h"
+#include "platform_retarget_dev.h"
+#include "Driver_Flash_CMSDK.h"
 #include "cmsis_driver_config.h"
 #include "RTE_Device.h"
 
@@ -29,8 +30,6 @@
 ARM_DRIVER_FLASH_CMSDK(FLASH0_CMSDK_DEV, Driver_FLASH0); //shalini: adjust
 
 #endif /* RTE_USART0 */
-
-
 
 
 #pragma GCC pop_options

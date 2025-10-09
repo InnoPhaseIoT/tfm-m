@@ -17,20 +17,24 @@
 #ifndef __DRIVER_FLASH_CMSDK_H__
 #define __DRIVER_FLASH_CMSDK_H__
 
+#include "platform_retarget.h"
 #include "Driver_Flash_Common.h"
-#include "inph_xspi_memslot.h"
 #include "inph_xspi.h"
+#include "inph_xspi_flash_dev.h"
+#include "inph_xspi_memslot.h"
 #include "tfm_utils.h"
-#include "Driver_Flash.h"
 
 /* Driver version */
 #define ARM_FLASH_DRV_VERSION      ARM_DRIVER_VERSION_MAJOR_MINOR(1, 1)
+
+#if 0 //---------------------------------------------------------------------
 #define ARM_FLASH_DRV_ERASE_VALUE  0xFF
 
 #define FLASH_BASE                    INPH_FLASH_BASE        // go platform_retarget.h for defines
 #define FLASH_SIZE                    INPH_FLASH_SIZE        // you need to set the values there
 #define FLASH_SECTOR_SIZE             INPH_FLASH_SIZEOF_ROW  //
 #define FLASH_PAGE_SIZE               INPH_FLASH_SIZEOF_ROW  //
+#endif //---------------------------------------------------------------------
 
 enum {
    DATA_WIDTH_8BIT   = 0u,
@@ -53,6 +57,7 @@ typedef struct {
     ARM_FLASH_SignalEvent_t cb_event;  /* Callback function for events */
 } FLASHx_Resources;
 
+#if 0
 static ARM_FLASH_INFO ARM_FLASH_DEV_DATA =
 {
     .sector_info  = NULL,                  /* Uniform sector layout */
@@ -62,6 +67,7 @@ static ARM_FLASH_INFO ARM_FLASH_DEV_DATA =
     .program_unit = 4,
     .erased_value = 0xFF
 };
+#endif
 
 static inline ARM_FLASH_CAPABILITIES ARM_FLASH_GetCapabilities(void)
 {
@@ -70,16 +76,48 @@ static inline ARM_FLASH_CAPABILITIES ARM_FLASH_GetCapabilities(void)
 
 static inline int32_t ARM_FLASHx_Initialize(FLASHx_Resources *flash_dev)
 {
-    /* Initializes  flash driver */
-    Inph_XSPI_Init(flash_dev->dev);
+    inph_en_xspi_status_t result = INPH_XSPI_ERROR;
+    inph_stc_xspi_config_t qspiDefaultConfig;
+
+    xspi_obj.base = (XSPI_Type *)XSPI1_BASE_S;
+
+    /* Context initialization to default */
+    xspi_obj.context.txBufferAddr = NULL;
+    xspi_obj.context.txBufferSize = 0;
+    xspi_obj.context.txBufferCount = 0;
+    xspi_obj.context.rxBufferAddr = NULL;
+    xspi_obj.context.rxBufferSize = 0;
+    xspi_obj.context.rxBufferCount = 0;
+    xspi_obj.context.transferStatus = INPH_XSPI_READY;
+
+    /* Configurations for xSPI interface */
+    qspiDefaultConfig.mode = (uint32_t)INPH_XSPI_MODE_NORMAL;
+    qspiDefaultConfig.deselectDelay = INPH_XSPI_DESELECT_DELAY;
+    qspiDefaultConfig.rxClockSel = 0;
+    qspiDefaultConfig.blockEvent = 0;
+
+    flash_config_io();
+
+    /* Initialize the xSPI interface */
+    result = Inph_XSPI_Init(xspi_obj.base, &qspiDefaultConfig,
+                             INPH_XSPI_TIMEOUT_10_MS, &xspi_obj.context);
+
+    /* Initialize object, enable quad mode and read ID of the device */
+    result = Inph_XSPI_SerialFlashInit(inphXSPIMemConfigs1[0]);
+    /* uncomment printf after enabling UART driver */
+#if 0
+    if (result != INPH_XSPI_SUCCESS) {
+        printf("\n NOR Flash Initialization Failed!\r\n");
+    }
+#endif
 
     return ARM_DRIVER_OK;
 }
 
 static inline int32_t ARM_FLASHx_Uninitialize(FLASHx_Resources *flash_dev)
 {
-    /* Initializes generic UART driver */
-    Inph_XSPI_DeInit(uart_dev->dev);
+    /* Initializes generic FLASH driver */
+    Inph_XSPI_DeInit(xspi_obj.base);
 
     return ARM_DRIVER_OK;
 }
@@ -87,8 +125,6 @@ static inline int32_t ARM_FLASHx_Uninitialize(FLASHx_Resources *flash_dev)
 static inline int32_t ARM_FLASHx_PowerControl(FLASHx_Resources *flash_dev,
                                               ARM_POWER_STATE state)
 {
-    ARG_UNUSED(uart_dev);
-
     switch (state) {
     case ARM_POWER_OFF:
     case ARM_POWER_LOW:
@@ -100,45 +136,65 @@ static inline int32_t ARM_FLASHx_PowerControl(FLASHx_Resources *flash_dev,
      *           compiler to check that all the enumeration values are
      *           covered in the switch.*/
     }
+
     return ARM_DRIVER_OK;
 }
 
 static inline int32_t ARM_FLASHx_ReadData(FLASHx_Resources *flash_dev,
-                                      uint32_t addr, const void *data,
+                                      uint32_t addr, void *data,
                                       uint32_t num)
 {
-    //put your code here
-    //for example: Inph_XSPI_ReceiveData();
+    inph_en_xspi_status_t result = INPH_XSPI_ERROR;
+
+    result = Inph_XSPI_MemRead(xspi_obj.base, inphXSPIMemConfigs1[0], addr,
+                               data, num, &xspi_obj.context);
+
     return ARM_DRIVER_OK;
 }
 
 static inline int32_t ARM_FLASHx_ProgramData(FLASHx_Resources *flash_dev,
-                               uint32_t addr, void *data, uint32_t num)
+                               uint32_t addr, const void *data, uint32_t cnt)
 {
-    //Put your code here to call your driver function
+    inph_en_xspi_status_t result = INPH_XSPI_ERROR;
+
+    result = Inph_XSPI_MemWrite(xspi_obj.base, inphXSPIMemConfigs1[0], addr,
+                                (uint8_t *)data, cnt, &xspi_obj.context);
 
     return ARM_DRIVER_OK;
 }
 
 static inline uint32_t ARM_FLASHx_EraseSector(FLASHx_Resources *flash_dev,
-                                              uint32_t num)
+                                              uint32_t addr)
 {
-    //your function calls here
+    inph_en_xspi_status_t result = INPH_XSPI_ERROR;
+    uint32_t length = 4096; /* sectror size */
+
+    result = Inph_XSPI_MemEraseSector(xspi_obj.base,
+                                       inphXSPIMemConfigs1[0],
+                                       addr, length, &xspi_obj.context);
+
     return ARM_DRIVER_OK;
 }
 
-static inline uint32_t ARM_FLASHx_EraseChip(FLASHx_Resources *flash_dev)
+//static inline int32_t ARM_FLASHx_EraseChip(FLASHx_Resources *flash_dev)
+static inline int32_t ARM_FLASHx_EraseChip(void)
 {
-    //your function calls here
+    inph_en_xspi_status_t result = INPH_XSPI_ERROR;
+
+    result = Inph_XSPI_MemEraseChip(xspi_obj.base, inphXSPIMemConfigs1[0],
+                                    &xspi_obj.context);
+
     return ARM_DRIVER_OK;
 }
 
+//static inline volatile ARM_FLASH_STATUS ARM_FLASHx_GetStatus(FLASHx_Resources *flash_dev)
 static inline int32_t ARM_FLASHx_GetStatus(FLASHx_Resources *flash_dev)
 {
     //your function calls here
     return ARM_DRIVER_OK;
 }
 
+//static inline ARM_FLASH_INFO* ARM_FLASHx_GetInfo(FLASHx_Resources *flash_dev)
 static inline int32_t ARM_FLASHx_GetInfo(FLASHx_Resources *flash_dev)
 {
     //your function calls here
@@ -188,18 +244,18 @@ static int32_t FLASH_DRIVER_NAME##_ReadData                                   \
 static int32_t FLASH_DRIVER_NAME##_ProgramData                                \
                           (uint32_t addr, const void *data, uint32_t cnt)     \
 {                                                                             \
-    return ARM_FLASHx_ProgrammData                                            \
-                            (&FLASH_DRIVER_NAME##_DEV, addr, data, num);      \
+    return ARM_FLASHx_ProgramData                                             \
+                            (&FLASH_DRIVER_NAME##_DEV, addr, data, cnt);      \
 }                                                                             \
                                                                               \
 static int32_t FLASH_DRIVER_NAME##_EraseSector(uint32_t addr)                 \
 {                                                                             \
-    return ARM_FLASHx_EraseSector(addr);                                      \
+    return ARM_FLASHx_EraseSector(&FLASH_DRIVER_NAME##_DEV, addr);            \
 }                                                                             \
                                                                               \
-static uint32_t FLASH_DRIVER_NAME##EraseChip(void)                            \
+static int32_t FLASH_DRIVER_NAME##_EraseChip(void)                            \
 {                                                                             \
-    return ARM_FLASHx_EraseChip(&FLASH_DRIVER_NAME##_DEV);                    \
+    return ARM_FLASHx_EraseChip();                                            \
 }                                                                             \
                                                                               \
 static uint32_t FLASH_DRIVER_NAME##_GetStatus(void)                           \
@@ -211,19 +267,19 @@ static int32_t FLASH_DRIVER_NAME##_GetInfo(void)                              \
     return ARM_FLASHx_GetInfo(&FLASH_DRIVER_NAME##_DEV);                      \
 }                                                                             \
                                                                               \
-extern ARM_DRIVER_USART FLASH_DRIVER_NAME;                                    \
-ARM_DRIVER_USART FLASH_DRIVER_NAME   = {                                      \
-    ARM_USART_GetVersion,                                                     \
-    ARM_USART_GetCapabilities,                                                \
+extern ARM_DRIVER_FLASH FLASH_DRIVER_NAME;                                    \
+ARM_DRIVER_FLASH FLASH_DRIVER_NAME   = {                                      \
+    ARM_FLASH_GetVersion,                                                     \
+    ARM_FLASH_GetCapabilities,                                                \
     FLASH_DRIVER_NAME##_Initialize,                                           \
     FLASH_DRIVER_NAME##_Uninitialize,                                         \
     FLASH_DRIVER_NAME##_PowerControl,                                         \
     FLASH_DRIVER_NAME##_ReadData,                                             \
     FLASH_DRIVER_NAME##_ProgramData,                                          \
     FLASH_DRIVER_NAME##_EraseSector,                                          \
-    FLASH_DRIVER_NAME##EraseChip,                                             \
-    FLASH_DRIVER_NAME##GetStatus,                                             \
-    FLASH_DRIVER_NAME##GetInfo
+    FLASH_DRIVER_NAME##_EraseChip,                                            \
+    FLASH_DRIVER_NAME##_GetStatus,                                            \
+    FLASH_DRIVER_NAME##_GetInfo                                               \
 }
 
 #endif  /* __DRIVER_FLASH_CMSDK_H__ */

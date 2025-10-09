@@ -48,6 +48,10 @@
 extern struct inph_uart_dev_t UART0_CMSDK_DEV_S;
 #endif
 
+#ifdef RTE_FLASH0
+extern struct inph_flash_dev_t FLASH0_CMSDK_DEV_S;
+#endif
+
 #ifdef RTE_TZM_S
 extern struct inph_tzm_dev_t TZM_DEV_S;
 #endif
