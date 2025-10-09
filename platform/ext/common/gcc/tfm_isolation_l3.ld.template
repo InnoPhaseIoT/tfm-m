@@ -33,10 +33,24 @@
 
 MEMORY
 {
+#if defined(TFM_INPH_BUILD_TYPE_RAM) // RAM build
+  /* Secure Flash code region (40 KB) — starts first */
+  FLASH (rx)  : ORIGIN = 0x200F0000, LENGTH = 40K
+
+  /* Secure RAM/data region (20 KB) — right after FLASH */
+  RAM   (rwx) : ORIGIN = ORIGIN(FLASH) + LENGTH(FLASH), LENGTH = 20K
+
+  /* Non-Secure Callable region (4 KB) — last */
+  NSC   (rx)  : ORIGIN = ORIGIN(RAM) + LENGTH(RAM), LENGTH = 4K
+#elif defined(TFM_INPH_BUILD_TYPE_FLASH) // FLASH build
+#elif defined(TFM_INPH_BUILD_TYPE_FLASH_PLAIN) // FLASH PLAIN build
+#elif defined(TFM_INPH_BUILD_TYPE_FLASH_EN) // FLASH ENC build
+#else // some other platform
   FLASH    (rx)  : ORIGIN = S_CODE_START, LENGTH = S_CODE_SIZE
   RAM      (rw)  : ORIGIN = S_DATA_START, LENGTH = S_DATA_SIZE
 #if defined(S_RAM_CODE_START)
   CODE_RAM (rwx) : ORIGIN = S_RAM_CODE_START, LENGTH = S_RAM_CODE_SIZE
+#endif
 #endif
 }
 
@@ -62,6 +76,11 @@ SECTIONS
 #ifdef CONFIG_TFM_USE_TRUSTZONE
     ASSERT(. <= ADDR(.TFM_VECTORS) + S_CODE_VECTOR_TABLE_SIZE, ".TFM_VECTORS section size overflow.")
     . = ADDR(.TFM_VECTORS) + S_CODE_VECTOR_TABLE_SIZE;
+
+#if !defined(TFM_INPH_BUILD_TYPE_FLASH) && \
+    !defined(TFM_INPH_BUILD_TYPE_FLASH_PLAIN) && \
+    !defined(TFM_INPH_BUILD_TYPE_FLASH_EN) && \
+    !defined(TFM_INPH_BUILD_TYPE_RAM)
     /*
      * Place the CMSE Veneers (containing the SG instruction) after the code, in
      * a separate at least 32 bytes aligned region so that the SAU can
@@ -73,6 +92,7 @@ SECTIONS
     } > FLASH
     Image$$ER_VENEER$$Base = ADDR(.gnu.sgstubs);
     Image$$VENEER_ALIGN$$Limit = ALIGN(TFM_LINKER_VENEERS_ALIGNMENT);
+#endif
 
     /* GCC always places veneers at the end of .gnu.sgstubs section, so the only
      * way to align the end of .gnu.sgstubs section is to align start of the
@@ -537,4 +557,23 @@ SECTIONS
 #endif /* BL2 */
 
     PROVIDE(__stack = Image$$ARM_LIB_STACK$$ZI$$Limit);
+
+#if defined(TFM_INPH_BUILD_TYPE_FLASH) || \
+    defined(TFM_INPH_BUILD_TYPE_FLASH_PLAIN) || \
+    defined(TFM_INPH_BUILD_TYPE_FLASH_EN) || \
+    defined(TFM_INPH_BUILD_TYPE_RAM)
+    . = ORIGIN(NSC);
+    /*
+     * Place the CMSE Veneers (containing the SG instruction) after the code, in
+     * a separate at least 32 bytes aligned region so that the SAU can
+     * programmed to just set this region as Non-Secure Callable.
+     */
+    .gnu.sgstubs ALIGN(TFM_LINKER_VENEERS_ALIGNMENT) :
+    {
+        *(.gnu.sgstubs*)
+    } > NSC
+
+    Image$$ER_VENEER$$Base = ADDR(.gnu.sgstubs);
+    Image$$VENEER_ALIGN$$Limit = ALIGN(TFM_LINKER_VENEERS_ALIGNMENT);
+#endif
 }
