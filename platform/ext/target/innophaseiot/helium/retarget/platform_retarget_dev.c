@@ -742,7 +742,69 @@ struct mpc_sie_dev_t MPC_ROM_DEV_S = {
     &(MPC_ROM_DEV_CFG_S),
     &(MPC_ROM_DEV_DATA_S)};
 
-/* XSPI1 */
+#if defined(TFM_INPH_BUILD_TYPE_FLASH_EN)
+
+/* XSPI1 -- FLASH_EN  */
+static const struct mpc_sie_memory_range_t MPC_XSPI1_RANGE_S = {
+    .base         = XSPI1_RANGE_BASE_S_DEC,
+    .limit        = XSPI1_RANGE_LIMIT_S_DEC,
+    .range_offset = 0,
+    .attr         = MPC_SIE_SEC_ATTR_SECURE
+};
+static const struct mpc_sie_memory_range_t MPC_XSPI1_RANGE_NS = {
+    .base         = XSPI1_RANGE_BASE_NS_DEC,
+    .limit        = XSPI1_RANGE_LIMIT_NS_DEC,
+    .range_offset = 0,
+    .attr         = MPC_SIE_SEC_ATTR_NONSECURE
+};
+static const struct mpc_sie_memory_range_t*
+    MPC_XSPI1_RANGE_LIST[MPC_SRAM_RANGE_LIST_LEN] = {
+        &MPC_XSPI1_RANGE_S,
+        &MPC_XSPI1_RANGE_NS
+    };
+static struct mpc_sie_dev_cfg_t MPC_XSPI1_DEV_CFG_S = {
+    .base = INPH_XSPI1_BASE_S,
+    .range_list = MPC_XSPI1_RANGE_LIST,
+    .nbr_of_ranges = MPC_SRAM_RANGE_LIST_LEN};
+static struct mpc_sie_dev_data_t MPC_XSPI1_DEV_DATA_S = {
+    .is_initialized = false,
+    .sie_version = SIE200};
+struct mpc_sie_dev_t MPC_XSPI1_DEV_S = {
+    &(MPC_XSPI1_DEV_CFG_S),
+    &(MPC_XSPI1_DEV_DATA_S)};
+
+/* XSPI2 -- FLASH_EN  */
+static const struct mpc_sie_memory_range_t MPC_XSPI2_RANGE_S = {
+    .base         = XSPI2_RANGE_BASE_S_DEC,
+    .limit        = XSPI2_RANGE_LIMIT_S_DEC,
+    .range_offset = 0,
+    .attr         = MPC_SIE_SEC_ATTR_SECURE
+};
+static const struct mpc_sie_memory_range_t MPC_XSPI2_RANGE_NS = {
+    .base         = XSPI2_RANGE_BASE_NS_DEC,
+    .limit        = XSPI2_RANGE_LIMIT_NS_DEC,
+    .range_offset = 0,
+    .attr         = MPC_SIE_SEC_ATTR_NONSECURE
+};
+static const struct mpc_sie_memory_range_t*
+    MPC_XSPI2_RANGE_LIST[MPC_SRAM_RANGE_LIST_LEN] = {
+        &MPC_XSPI2_RANGE_S,
+        &MPC_XSPI2_RANGE_NS
+    };
+static struct mpc_sie_dev_cfg_t MPC_XSPI2_DEV_CFG_S = {
+    .base = INPH_XSPI2_BASE_S,
+    .range_list = MPC_XSPI2_RANGE_LIST,
+    .nbr_of_ranges = MPC_SRAM_RANGE_LIST_LEN};
+static struct mpc_sie_dev_data_t MPC_XSPI2_DEV_DATA_S = {
+    .is_initialized = false,
+    .sie_version = SIE200};
+struct mpc_sie_dev_t MPC_XSPI2_DEV_S = {
+    &(MPC_XSPI2_DEV_CFG_S),
+    &(MPC_XSPI2_DEV_DATA_S)};
+
+#else // not TFM_INPH_BUILD_TYPE_FLASH_EN
+
+/* XSPI1 -- FLASH_PLAIN  */
 static const struct mpc_sie_memory_range_t MPC_XSPI1_RANGE_S = {
     .base         = XSPI1_RANGE_BASE_S,
     .limit        = XSPI1_RANGE_LIMIT_S,
@@ -771,7 +833,7 @@ struct mpc_sie_dev_t MPC_XSPI1_DEV_S = {
     &(MPC_XSPI1_DEV_CFG_S),
     &(MPC_XSPI1_DEV_DATA_S)};
 
-/* XSPI2 */
+/* XSPI2 -- FLASH_PLAIN  */
 static const struct mpc_sie_memory_range_t MPC_XSPI2_RANGE_S = {
     .base         = XSPI2_RANGE_BASE_S,
     .limit        = XSPI2_RANGE_LIMIT_S,
@@ -800,6 +862,4 @@ struct mpc_sie_dev_t MPC_XSPI2_DEV_S = {
     &(MPC_XSPI2_DEV_CFG_S),
     &(MPC_XSPI2_DEV_DATA_S)};
 
-
-//#endif //INPH_HELIUM_A0
-
+#endif

@@ -45,10 +45,15 @@ MEMORY
 #elif defined(TFM_INPH_BUILD_TYPE_FLASH) // FLASH build
   NSC      (rx)  : ORIGIN = 0x02300000, LENGTH = 0x100000
   FLASH    (rx)  : ORIGIN = 0x02000000, LENGTH = 0x300000
+  RAM      (rw)  : ORIGIN = 0x200f0000, LENGTH = 64*1024
 #elif defined(TFM_INPH_BUILD_TYPE_FLASH_PLAIN) // FLASH PLAIN build
   NSC      (rx)  : ORIGIN = 0x02300000, LENGTH = 0x100000
   FLASH    (rx)  : ORIGIN = 0x02000000, LENGTH = 0x300000
+  RAM      (rw)  : ORIGIN = 0x200f0000, LENGTH = 64*1024
 #elif defined(TFM_INPH_BUILD_TYPE_FLASH_EN) // FLASH ENC build
+  NSC      (rx)  : ORIGIN = 0x04300000, LENGTH = 0x100000
+  FLASH    (rx)  : ORIGIN = 0x04000000, LENGTH = 0x300000
+  RAM      (rw)  : ORIGIN = 0x200f0000, LENGTH = 64*1024
 #else // some other platform
   FLASH    (rx)  : ORIGIN = S_CODE_START, LENGTH = S_CODE_SIZE
   RAM      (rw)  : ORIGIN = S_DATA_START, LENGTH = S_DATA_SIZE
@@ -75,9 +80,39 @@ SECTIONS
         /* Pad up to exactly 4 KB */
         . = 0x00001000;
     } > FLASH
-#endif
+
+    .TFM_VECTORS 0x02001000 : ALIGN(4)
+    {
+        __vectors_start__ = .;
+        KEEP(*(.vectors))
+        __vectors_end__ = .;
+        . = ALIGN(4);
+    } > FLASH
+#elif defined(TFM_INPH_BUILD_TYPE_FLASH_PLAIN) // FLASH PLAIN build
     /* Start address of the code. */
-    /* Image$$PT_RO_START$$Base = ADDR(.TFM_VECTORS); */
+    Image$$PT_RO_START$$Base = ADDR(.TFM_VECTORS);
+
+    .TFM_VECTORS 0x02001000 : ALIGN(4)
+    {
+        __vectors_start__ = .;
+        KEEP(*(.vectors))
+        __vectors_end__ = .;
+        . = ALIGN(4);
+    } > FLASH
+#elif defined(TFM_INPH_BUILD_TYPE_FLASH_EN) // FLASH ENC build
+    /* Start address of the code. */
+    Image$$PT_RO_START$$Base = ADDR(.TFM_VECTORS);
+
+    .TFM_VECTORS 0x04001000 : ALIGN(4)
+    {
+        __vectors_start__ = .;
+        KEEP(*(.vectors))
+        __vectors_end__ = .;
+        . = ALIGN(4);
+    } > FLASH
+#elif defined(TFM_INPH_BUILD_TYPE_RAM) // RAM build
+    /* Start address of the code. */
+    Image$$PT_RO_START$$Base = ADDR(.TFM_VECTORS);
 
     .TFM_VECTORS : ALIGN(4)
     {
@@ -86,6 +121,7 @@ SECTIONS
         __vectors_end__ = .;
         . = ALIGN(4);
     } > FLASH
+#endif
 
     ASSERT(__vectors_start__ != __vectors_end__, ".vectors should not be empty")
 

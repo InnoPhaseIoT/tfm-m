@@ -96,8 +96,14 @@ static fih_int tfm_core_init(void)
     FIH_RET(fih_int_encode(SPM_SUCCESS));
 }
 
+
+//volatile int boot_wait = 1;
+
 int main(void)
 {
+//    while (boot_wait == 1)
+//        ;
+
 #ifdef CONFIG_TFM_ENABLE_PROFILING
     PROFILING_INIT();
 #endif

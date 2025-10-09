@@ -77,6 +77,7 @@ FIH_RET_TYPE(enum tfm_hal_status_t) tfm_hal_platform_init(void)
 #elif defined(TFM_INPH_BUILD_TYPE_FLASH_PLAIN)
 #define memory_regions_non_secure_code_start 0x02400000     /* FLASH NSPE start address */
 #elif defined(TFM_INPH_BUILD_TYPE_FLASH_EN)
+#define memory_regions_non_secure_code_start 0x04400000     /* FLASH NSPE start address --with EIP39 decription */
 #else
 #error "Unknown build platform"
 #endif

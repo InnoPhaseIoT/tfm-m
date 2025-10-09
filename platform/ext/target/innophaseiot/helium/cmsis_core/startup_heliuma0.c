@@ -169,7 +169,7 @@ typedef struct {
 /* Place this into ".image_header" section */
 __attribute__((section(".image_header")))
 const boot_header_t boot_header = {
-    .eip130_img = 0x00200000,
+    .eip130_img = 0x00700000,
     .vector_table_offset = 0x1000,
     .magic_no = 0x0f4812f0,
 };

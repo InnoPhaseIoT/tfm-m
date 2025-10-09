@@ -419,7 +419,7 @@ const struct sau_cfg_t sau_cfg[] = {
     },
 	{ // npu + apu nspe
         0x20000000,
-        0x2009ffff,
+        0x200effff,
         false,
     },
 	{ // flash nsc
@@ -434,6 +434,29 @@ const struct sau_cfg_t sau_cfg[] = {
     }
 };
 #elif defined(TFM_INPH_BUILD_TYPE_FLASH_EN)
+const struct sau_cfg_t sau_cfg[] = {
+    {
+        ((uint32_t)&REGION_NAME(Load$$LR$$, LR_NS_PARTITION, $$Base)),
+        ((uint32_t)&REGION_NAME(Load$$LR$$, LR_NS_PARTITION, $$Base) +
+        NS_PARTITION_SIZE - 1),
+        false,
+    },
+	{ // npu + apu nspe
+        0x20000000,
+        0x200effff,
+        false,
+    },
+	{ // flash nsc
+        0x04300000,
+        0x043FFFFF,
+        true,
+    },
+	{ // flash nspe
+        0x04400000,
+        0x047FFFFF,
+        false,
+    }
+};
 #else
 #error "Unknown build platform"
 #endif
@@ -528,9 +551,10 @@ FIH_RET_TYPE(int32_t) mpc_init_cfg(void)
         ERROR_MSG("Failed to Initialize MPC for QSPI1!");
         return TFM_PLAT_ERR_SYSTEM_ERR;
     }
-
 #if defined(TFM_INPH_BUILD_TYPE_FLASH) || defined(TFM_INPH_BUILD_TYPE_FLASH_PLAIN)
     ret = Driver_XSPI1_MPC.ConfigRegion(0x02400000, 0x027FFFFF, ARM_MPC_ATTR_NONSECURE);
+#elif defined(TFM_INPH_BUILD_TYPE_FLASH_EN)
+    ret = Driver_XSPI1_MPC.ConfigRegion(0x04400000, 0x047FFFFF, ARM_MPC_ATTR_NONSECURE);
 #else
     ret = Driver_XSPI1_MPC.ConfigRegion( XSPI1_RANGE_BASE_NS, XSPI1_RANGE_LIMIT_NS,
                                       ARM_MPC_ATTR_NONSECURE);
@@ -551,8 +575,12 @@ FIH_RET_TYPE(int32_t) mpc_init_cfg(void)
         ERROR_MSG("Failed to Initialize MPC for QSPI2!");
         return TFM_PLAT_ERR_SYSTEM_ERR;
     }
+#if defined(TFM_INPH_BUILD_TYPE_FLASH_EN)
+    ret = Driver_XSPI2_MPC.ConfigRegion(XSPI2_RANGE_BASE_NS_DEC, XSPI2_RANGE_LIMIT_NS_DEC, ARM_MPC_ATTR_NONSECURE);
+#else
     ret = Driver_XSPI2_MPC.ConfigRegion( XSPI2_RANGE_BASE_NS, XSPI2_RANGE_LIMIT_NS,
                                       ARM_MPC_ATTR_NONSECURE);
+#endif
     if (ret != ARM_DRIVER_OK) {
         ERROR_MSG("Failed to Configure MPC for QSPI2!");
         return TFM_PLAT_ERR_SYSTEM_ERR;
