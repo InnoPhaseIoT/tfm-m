@@ -33,3 +33,23 @@ set(TFM_MULTI_CORE_TOPOLOGY           OFF)
 set(PLATFORM_HAS_ISOLATION_L3_SUPPORT ON)
 
 set(TFM_PARTITION_INPH_SERVICES         OFF         CACHE BOOL      "Enable Inph Services partition")
+
+set(TFM_INPH_BUILD_TYPE_FLASH           OFF          CACHE BOOL      "To be used with Helium_FLASH_OFF build")
+if(TFM_INPH_BUILD_TYPE_FLASH)
+    add_definitions(-DTFM_INPH_BUILD_TYPE_FLASH)
+endif()
+
+set(TFM_INPH_BUILD_TYPE_FLASH_PLAIN     OFF          CACHE BOOL      "To be used with Helium_FLASH_PLAIN build")
+if(TFM_INPH_BUILD_TYPE_FLASH_PLAIN)
+    add_definitions(-DTFM_INPH_BUILD_TYPE_FLASH_PLAIN)
+endif()
+
+set(TFM_INPH_BUILD_TYPE_FLASH_EN        OFF          CACHE BOOL      "To be used with Helium_FLASH_EN build")
+if(TFM_INPH_BUILD_TYPE_FLASH_EN)
+    add_definitions(-DTFM_INPH_BUILD_TYPE_FLASH_EN)
+endif()
+
+set(TFM_INPH_BUILD_TYPE_RAM             OFF          CACHE BOOL      "To be used with Helium_RAM build")
+if(TFM_INPH_BUILD_TYPE_RAM)
+    add_definitions(-DTFM_INPH_BUILD_TYPE_RAM)
+endif()
