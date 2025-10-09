@@ -409,8 +409,30 @@ const struct sau_cfg_t sau_cfg[] = {
         true,
     }
 };
-#elif defined(TFM_INPH_BUILD_TYPE_FLASH)
-#elif defined(TFM_INPH_BUILD_TYPE_FLASH_PLAIN)
+#elif defined(TFM_INPH_BUILD_TYPE_FLASH) || defined(TFM_INPH_BUILD_TYPE_FLASH_PLAIN)
+const struct sau_cfg_t sau_cfg[] = {
+    {
+        ((uint32_t)&REGION_NAME(Load$$LR$$, LR_NS_PARTITION, $$Base)),
+        ((uint32_t)&REGION_NAME(Load$$LR$$, LR_NS_PARTITION, $$Base) +
+        NS_PARTITION_SIZE - 1),
+        false,
+    },
+	{ // npu + apu nspe
+        0x20000000,
+        0x2009ffff,
+        false,
+    },
+	{ // flash nsc
+        0x02300000,
+        0x023FFFFF,
+        true,
+    },
+	{ // flash nspe
+        0x02400000,
+        0x027FFFFF,
+        false,
+    }
+};
 #elif defined(TFM_INPH_BUILD_TYPE_FLASH_EN)
 #else
 #error "Unknown build platform"
@@ -506,8 +528,13 @@ FIH_RET_TYPE(int32_t) mpc_init_cfg(void)
         ERROR_MSG("Failed to Initialize MPC for QSPI1!");
         return TFM_PLAT_ERR_SYSTEM_ERR;
     }
+
+#if defined(TFM_INPH_BUILD_TYPE_FLASH) || defined(TFM_INPH_BUILD_TYPE_FLASH_PLAIN)
+    ret = Driver_XSPI1_MPC.ConfigRegion(0x02400000, 0x027FFFFF, ARM_MPC_ATTR_NONSECURE);
+#else
     ret = Driver_XSPI1_MPC.ConfigRegion( XSPI1_RANGE_BASE_NS, XSPI1_RANGE_LIMIT_NS,
                                       ARM_MPC_ATTR_NONSECURE);
+#endif
     if (ret != ARM_DRIVER_OK) {
         ERROR_MSG("Failed to Configure MPC for QSPI1!");
         return TFM_PLAT_ERR_SYSTEM_ERR;

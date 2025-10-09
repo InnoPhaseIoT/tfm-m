@@ -382,6 +382,18 @@ enum mpc_sie_error_t mpc_sie_config_region(struct mpc_sie_dev_t* dev,
     __DSB();
     __ISB();
 
+#if 0
+    volatile uint32_t temp = 0x0;
+
+    for(i = 0; i < 32; i++) {
+
+        p_mpc->BLKIDX.bf.BlockIndex = i;
+        temp = p_mpc->BLKLUT.bf.BlockLUT;
+
+        if (temp == 0x5555) break;
+    }
+#endif
+
     return MPC_SIE_ERR_NONE;
 }
 

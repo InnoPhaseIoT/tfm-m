@@ -159,6 +159,21 @@ DEFAULT_IRQ_HANDLER(GPIO1_6_Handler)
 DEFAULT_IRQ_HANDLER(GPIO1_7_Handler)
 
 
+/* Custom boot header structure */
+typedef struct {
+    uint32_t eip130_img;
+    uint32_t vector_table_offset;
+    uint32_t magic_no;
+} boot_header_t;
+
+/* Place this into ".image_header" section */
+__attribute__((section(".image_header")))
+const boot_header_t boot_header = {
+    .eip130_img = 0x00200000,
+    .vector_table_offset = 0x1000,
+    .magic_no = 0x0f4812f0,
+};
+
 /*----------------------------------------------------------------------------
   Exception / Interrupt Vector table
  *----------------------------------------------------------------------------*/

@@ -43,7 +43,11 @@ MEMORY
   /* Non-Secure Callable region (4 KB) — last */
   NSC   (rx)  : ORIGIN = ORIGIN(RAM) + LENGTH(RAM), LENGTH = 4K
 #elif defined(TFM_INPH_BUILD_TYPE_FLASH) // FLASH build
+  NSC      (rx)  : ORIGIN = 0x02300000, LENGTH = 0x100000
+  FLASH    (rx)  : ORIGIN = 0x02000000, LENGTH = 0x300000
 #elif defined(TFM_INPH_BUILD_TYPE_FLASH_PLAIN) // FLASH PLAIN build
+  NSC      (rx)  : ORIGIN = 0x02300000, LENGTH = 0x100000
+  FLASH    (rx)  : ORIGIN = 0x02000000, LENGTH = 0x300000
 #elif defined(TFM_INPH_BUILD_TYPE_FLASH_EN) // FLASH ENC build
 #else // some other platform
   FLASH    (rx)  : ORIGIN = S_CODE_START, LENGTH = S_CODE_SIZE
@@ -60,8 +64,20 @@ ENTRY(Reset_Handler)
 
 SECTIONS
 {
+#if defined(TFM_INPH_BUILD_TYPE_FLASH) // FLASH build
     /* Start address of the code. */
-    Image$$PT_RO_START$$Base = ADDR(.TFM_VECTORS);
+    Image$$PT_RO_START$$Base = ADDR(.image_header);
+
+    /* --- Custom boot header --- */
+    .image_header : ALIGN(4)
+    {
+        KEEP(*(.image_header))
+        /* Pad up to exactly 4 KB */
+        . = 0x00001000;
+    } > FLASH
+#endif
+    /* Start address of the code. */
+    /* Image$$PT_RO_START$$Base = ADDR(.TFM_VECTORS); */
 
     .TFM_VECTORS : ALIGN(4)
     {
