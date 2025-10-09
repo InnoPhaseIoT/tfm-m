@@ -384,25 +384,24 @@ const struct sau_cfg_t sau_cfg[] = {
         NS_PARTITION_SIZE - 1),
         false,
     },
-#if 1
-	{
+	{ // apu nspe
         0x20090000,
         0x200Effff,
         false,
     },
-#endif
-#if 1 // npu address space
-	{
+	{ // npu address space
         0x20000000,
         0x2008ffff,
         false,
     },
-#endif
-	{
+	{ // nsc
         0x200F0000+(40*1024),
         0x200fFFFF,
         true,
-    },
+    }
+};
+
+const struct sau_cfg_t sau_cfg_periph[] = {
     {
         PERIPHERALS_BASE_NS_START,
 #ifdef SECURE_UART1
@@ -443,6 +442,14 @@ FIH_RET_TYPE(int32_t) sau_and_idau_cfg(void)
         SAU->RBAR = sau_cfg[i].RBAR & SAU_RBAR_BADDR_Msk;
         SAU->RLAR = (sau_cfg[i].RLAR & SAU_RLAR_LADDR_Msk) |
                     (sau_cfg[i].nsc ? SAU_RLAR_NSC_Msk : 0U) |
+                    SAU_RLAR_ENABLE_Msk;
+    }
+
+    for (i = 0; i < ARRAY_SIZE(sau_cfg_periph); i++) {
+        SAU->RNR = i + ARRAY_SIZE(sau_cfg);
+        SAU->RBAR = sau_cfg_periph[i].RBAR & SAU_RBAR_BADDR_Msk;
+        SAU->RLAR = (sau_cfg_periph[i].RLAR & SAU_RLAR_LADDR_Msk) |
+                    (sau_cfg_periph[i].nsc ? SAU_RLAR_NSC_Msk : 0U) |
                     SAU_RLAR_ENABLE_Msk;
     }
 
