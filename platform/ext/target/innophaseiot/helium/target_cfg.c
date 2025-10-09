@@ -371,6 +371,13 @@ enum tfm_plat_err_t nvic_interrupt_enable(void)
     (DEV_APIS_TEST_NVMEM_REGION_START + DEV_APIS_TEST_NVMEM_REGION_SIZE - 1)
 #endif
 
+#if defined(TFM_INPH_BUILD_TYPE_FLASH) + \
+    defined(TFM_INPH_BUILD_TYPE_FLASH_PLAIN) + \
+    defined(TFM_INPH_BUILD_TYPE_FLASH_EN) + \
+    defined(TFM_INPH_BUILD_TYPE_RAM) != 1
+#error "Invalid build args. !. more than 1 config selected."
+#endif
+
 struct sau_cfg_t {
     uint32_t RBAR;
     uint32_t RLAR;
