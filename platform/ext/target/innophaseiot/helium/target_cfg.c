@@ -956,12 +956,24 @@ FIH_RET_TYPE(int32_t) ppc_init_cfg(void)
     // System Management Unit
     periph = 0;
     periph |= (1<<SPCNTL_APB_SYS_SMU_POS);  // assign SYSTEM_MANAGEMENT_UNIT to ns
+    /* below are needed for npu rf caliberation */
+    {
+        periph |= (1<<SPCNTL_APB_SYS_HKADC_POS);  // assign HKADC NPU Channels to ns
+    }
     err |= ppc_devices_set_to_ns(&Driver_APB_SYSCNTRL, periph);
     assert(err == 0);
 
     // AHB Sys PPC initialize
     periph = 0;
     periph |= (1<<SPCNTL_AHB_SYS_RFA_AON_POS);  // assign RFA_AON to ns
+    /* below are needed for npu rf caliberation */
+    {
+        periph |= (1<<SPCNTL_AHB_SYS_AON_FSM_POS);     // SPCNTL_AHB_SYS_AON_FSM_POS;
+        periph |= (1<<SPCNTL_AHB_SYS_PMU_AON_POS);     // SPCNTL_AHB_SYS_PMU_AON_POS
+        periph |= (1<<SPCNTL_AHB_SYS_RFA_AON_POS);     // SPCNTL_AHB_SYS_RFA_AON_POS
+        periph |= (1<<SPCNTL_AHB_SYS_RFA_VDDL_POS);    // SPCNTL_AHB_SYS_RFA_VDDL_POS
+        periph |= (1<<SPCNTL_AHB_SYS_DPA_POS);         // SPCNTL_AHB_SYS_DPA_POS
+    }
     err |= ppc_devices_set_to_ns(&Driver_AHB_SYSCNTRL, periph);
     assert(err == 0);
 
