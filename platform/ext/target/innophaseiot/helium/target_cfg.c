@@ -469,6 +469,8 @@ FIH_RET_TYPE(int32_t) sau_and_idau_cfg(void)
     inph_security_cntrl_t* spctrl = PPC_SPCTRL;
     uint32_t i;
 
+    uint32_t num_regions = ((SAU->TYPE & SAU_TYPE_SREGION_Msk) >> SAU_TYPE_SREGION_Pos);
+
     /* Ensure all memory accesses are completed */
     __DMB();
 
@@ -476,6 +478,7 @@ FIH_RET_TYPE(int32_t) sau_and_idau_cfg(void)
     TZ_SAU_Enable();
 
     for (i = 0; i < ARRAY_SIZE(sau_cfg); i++) {
+        assert(i < num_regions);
         SAU->RNR = i;
         SAU->RBAR = sau_cfg[i].RBAR & SAU_RBAR_BADDR_Msk;
         SAU->RLAR = (sau_cfg[i].RLAR & SAU_RLAR_LADDR_Msk) |
@@ -484,6 +487,8 @@ FIH_RET_TYPE(int32_t) sau_and_idau_cfg(void)
     }
 
     for (i = 0; i < ARRAY_SIZE(sau_cfg_periph); i++) {
+        int idx = i + ARRAY_SIZE(sau_cfg);
+        assert(idx < num_regions);
         SAU->RNR = i + ARRAY_SIZE(sau_cfg);
         SAU->RBAR = sau_cfg_periph[i].RBAR & SAU_RBAR_BADDR_Msk;
         SAU->RLAR = (sau_cfg_periph[i].RLAR & SAU_RLAR_LADDR_Msk) |
