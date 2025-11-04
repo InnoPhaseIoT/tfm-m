@@ -81,7 +81,7 @@ SECTIONS
         . = 0x00001000;
     } > FLASH
 
-    .TFM_VECTORS 0x02001000 : ALIGN(4)
+    .TFM_VECTORS ORIGIN(FLASH)+0x1000 : ALIGN(4)
     {
         __vectors_start__ = .;
         KEEP(*(.vectors))
@@ -92,7 +92,7 @@ SECTIONS
     /* Start address of the code. */
     Image$$PT_RO_START$$Base = ADDR(.TFM_VECTORS);
 
-    .TFM_VECTORS 0x02001000 : ALIGN(4)
+    .TFM_VECTORS ORIGIN(FLASH)+0x1000 : ALIGN(4)
     {
         __vectors_start__ = .;
         KEEP(*(.vectors))
@@ -103,7 +103,7 @@ SECTIONS
     /* Start address of the code. */
     Image$$PT_RO_START$$Base = ADDR(.TFM_VECTORS);
 
-    .TFM_VECTORS 0x04001000 : ALIGN(4)
+    .TFM_VECTORS ORIGIN(FLASH)+0x1000 : ALIGN(4)
     {
         __vectors_start__ = .;
         KEEP(*(.vectors))
