@@ -538,6 +538,49 @@ fih_int fih_verify_sau_and_idau_cfg(void)
 #define NR_MPC_INIT_STEP                 6
 #endif
 
+
+#include "cmsis.h"
+#include <stdio.h>
+
+volatile struct {
+    int sau_cfg_num;
+    struct {
+        uint32_t rbar;
+        uint32_t rlar;
+        uint32_t base;
+        uint32_t limit;
+        uint32_t nsc;
+        uint32_t enable;
+    }vals;
+}sau_cfg_read_back;
+
+void dump_sau_config(void)
+{
+    uint32_t num_regions = ((SAU->TYPE & SAU_TYPE_SREGION_Msk) >> SAU_TYPE_SREGION_Pos);
+    sau_cfg_read_back.sau_cfg_num = num_regions;
+
+    for (uint32_t i = 0; i < num_regions; i++) {
+        SAU->RNR = i;
+        uint32_t rbar = SAU->RBAR;
+        uint32_t rlar = SAU->RLAR;
+
+        uint32_t base   = rbar & SAU_RBAR_BADDR_Msk;
+        uint32_t limit  = rlar & SAU_RLAR_LADDR_Msk;
+        uint32_t nsc    = (rlar & SAU_RLAR_NSC_Msk) ? 1 : 0;
+        uint32_t enable = (rlar & SAU_RLAR_ENABLE_Msk) ? 1 : 0;
+
+        sau_cfg_read_back.vals.rbar   =  rbar;
+        sau_cfg_read_back.vals.rlar   =  rlar;
+        sau_cfg_read_back.vals.base   =  base;
+        sau_cfg_read_back.vals.limit  =  limit;
+        sau_cfg_read_back.vals.nsc    =  nsc;
+        sau_cfg_read_back.vals.enable =  enable;
+        //printf("Region %lu: base=0x%08lx  limit=0x%08lx  NSC=%lu  enabled=%lu\n",
+               //i, base, limit, nsc, enable);
+    }
+
+    printf("SAU_CTRL: 0x%08lx\n", SAU->CTRL);
+}
 FIH_RET_TYPE(int32_t) mpc_init_cfg(void)
 {
     int32_t ret = ARM_DRIVER_OK;
@@ -908,6 +951,8 @@ FIH_RET_TYPE(int32_t) mpc_init_cfg(void)
      */
     __DSB();
     __ISB();
+
+    //dump_sau_config();
 
     FIH_RET(fih_int_encode(ARM_DRIVER_OK));
 }
