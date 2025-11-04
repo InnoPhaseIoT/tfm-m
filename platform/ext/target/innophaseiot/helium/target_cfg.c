@@ -386,37 +386,20 @@ struct sau_cfg_t {
 
 // NS app code space start
 #if defined(TFM_INPH_BUILD_TYPE_RAM)
-const struct sau_cfg_t sau_cfg[] = {
-    {
-        ((uint32_t)&REGION_NAME(Load$$LR$$, LR_NS_PARTITION, $$Base)),
-        ((uint32_t)&REGION_NAME(Load$$LR$$, LR_NS_PARTITION, $$Base) +
-        NS_PARTITION_SIZE - 1),
-        false,
-    },
-	{ // apu nspe
-        0x20090000,
-        0x200Effff,
-        false,
-    },
-	{ // npu address space
+volatile const struct sau_cfg_t sau_cfg[] = {
+	{ // npu + apu nspe
         0x20000000,
-        0x2008ffff,
+        0x200effff,
         false,
     },
 	{ // nsc
-        0x200F0000+(40*1024),
+        0x200f0000+(40*1024)+(20*1024),
         0x200fFFFF,
         true,
     }
 };
 #elif defined(TFM_INPH_BUILD_TYPE_FLASH) || defined(TFM_INPH_BUILD_TYPE_FLASH_PLAIN)
 const struct sau_cfg_t sau_cfg[] = {
-    {
-        ((uint32_t)&REGION_NAME(Load$$LR$$, LR_NS_PARTITION, $$Base)),
-        ((uint32_t)&REGION_NAME(Load$$LR$$, LR_NS_PARTITION, $$Base) +
-        NS_PARTITION_SIZE - 1),
-        false,
-    },
 	{ // npu + apu nspe
         0x20000000,
         0x200effff,
@@ -435,12 +418,6 @@ const struct sau_cfg_t sau_cfg[] = {
 };
 #elif defined(TFM_INPH_BUILD_TYPE_FLASH_EN)
 const struct sau_cfg_t sau_cfg[] = {
-    {
-        ((uint32_t)&REGION_NAME(Load$$LR$$, LR_NS_PARTITION, $$Base)),
-        ((uint32_t)&REGION_NAME(Load$$LR$$, LR_NS_PARTITION, $$Base) +
-        NS_PARTITION_SIZE - 1),
-        false,
-    },
 	{ // npu + apu nspe
         0x20000000,
         0x200effff,

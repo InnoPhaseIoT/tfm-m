@@ -73,7 +73,7 @@ FIH_RET_TYPE(enum tfm_hal_status_t) tfm_hal_platform_init(void)
 #if defined(TFM_INPH_BUILD_TYPE_RAM)
 __attribute__((used))
 const int tfm_build_info__Helium_RAM;
-#define memory_regions_non_secure_code_start 0x20090000
+#define memory_regions_non_secure_code_start 0x20010000
 #elif defined(TFM_INPH_BUILD_TYPE_FLASH)
 __attribute__((used))
 const int tfm_build_info__Helium_FLASH_OFF;
