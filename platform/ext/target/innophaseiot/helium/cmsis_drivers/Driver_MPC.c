@@ -26,6 +26,15 @@
 #include "RTE_Device.h"
 #include "Driver_MPC_Sie.h"
 
+#if 0    
+    (defined (RTE_SRAM10_MPC) && (RTE_SRAM10_MPC == 1)) ||           \
+    (defined (RTE_SRAM11_MPC) && (RTE_SRAM11_MPC == 1)) ||           \
+    (defined (RTE_SRAM12_MPC) && (RTE_SRAM12_MPC == 1)) ||           \
+    (defined (RTE_SRAM13_MPC) && (RTE_SRAM13_MPC == 1)) ||           \
+    (defined (RTE_SRAM14_MPC) && (RTE_SRAM14_MPC == 1)) ||           \
+    (defined (RTE_SRAM15_MPC) && (RTE_SRAM15_MPC == 1)) ||           
+#endif
+
 #if (defined (RTE_SRAM0_MPC) && (RTE_SRAM0_MPC == 1)) ||             \
     (defined (RTE_SRAM1_MPC) && (RTE_SRAM1_MPC == 1)) ||             \
     (defined (RTE_SRAM2_MPC) && (RTE_SRAM2_MPC == 1)) ||             \
@@ -36,12 +45,6 @@
     (defined (RTE_SRAM7_MPC) && (RTE_SRAM7_MPC == 1)) ||             \
     (defined (RTE_SRAM8_MPC) && (RTE_SRAM8_MPC == 1)) ||             \
     (defined (RTE_SRAM9_MPC) && (RTE_SRAM9_MPC == 1)) ||             \
-    (defined (RTE_SRAM10_MPC) && (RTE_SRAM10_MPC == 1)) ||           \
-    (defined (RTE_SRAM11_MPC) && (RTE_SRAM11_MPC == 1)) ||           \
-    (defined (RTE_SRAM12_MPC) && (RTE_SRAM12_MPC == 1)) ||           \
-    (defined (RTE_SRAM13_MPC) && (RTE_SRAM13_MPC == 1)) ||           \
-    (defined (RTE_SRAM14_MPC) && (RTE_SRAM14_MPC == 1)) ||           \
-    (defined (RTE_SRAM15_MPC) && (RTE_SRAM15_MPC == 1)) ||           \
     (defined (RTE_ROM_MPC) && (RTE_ROM_MPC == 1)) ||                 \
     (defined (RTE_XSPI1_MPC) && (RTE_XSPI1_MPC == 1)) ||             \
     (defined (RTE_XSPI2_MPC) && (RTE_XSPI2_MPC == 1))
@@ -87,6 +90,7 @@ ARM_DRIVER_MPC(MPC_SRAM8_DEV, Driver_SRAM8_MPC);
 ARM_DRIVER_MPC(MPC_SRAM9_DEV, Driver_SRAM9_MPC);
 #endif /* RTE_SRAM9_MPC */
 
+#if 0
 #if (defined (RTE_SRAM10_MPC) && (RTE_SRAM10_MPC == 1))
 ARM_DRIVER_MPC(MPC_SRAM10_DEV, Driver_SRAM10_MPC);
 #endif /* RTE_SRAM10_MPC */
@@ -110,6 +114,7 @@ ARM_DRIVER_MPC(MPC_SRAM14_DEV, Driver_SRAM14_MPC);
 #if (defined (RTE_SRAM15_MPC) && (RTE_SRAM15_MPC == 1))
 ARM_DRIVER_MPC(MPC_SRAM15_DEV, Driver_SRAM15_MPC);
 #endif /* RTE_SRAM13_MPC */
+#endif
 
 #if (defined (RTE_ROM_MPC) && (RTE_ROM_MPC == 1))
 ARM_DRIVER_MPC(MPC_ROM_DEV, Driver_ROM_MPC);

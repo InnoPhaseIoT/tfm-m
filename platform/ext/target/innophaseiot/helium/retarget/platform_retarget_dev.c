@@ -539,6 +539,7 @@ struct mpc_sie_dev_t MPC_SRAM9_DEV_S = {
     &(MPC_SRAM9_DEV_CFG_S),
     &(MPC_SRAM9_DEV_DATA_S)};
 
+#if 0
 /* SRAM10 */
 static const struct mpc_sie_memory_range_t MPC_SRAM10_RANGE_S = {
     .base         = SRAM10_RANGE_BASE_S,
@@ -712,6 +713,7 @@ static struct mpc_sie_dev_data_t MPC_SRAM15_DEV_DATA_S = {
 struct mpc_sie_dev_t MPC_SRAM15_DEV_S = {
     &(MPC_SRAM15_DEV_CFG_S),
     &(MPC_SRAM15_DEV_DATA_S)};
+#endif
 
 /* ROM */
 static const struct mpc_sie_memory_range_t MPC_ROM_RANGE_S = {

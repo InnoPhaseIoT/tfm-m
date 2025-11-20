@@ -78,10 +78,12 @@ typedef enum _INPH_POWER_STATE {
 /* MPC RUN TIME ENVIRONMENT DECLARATIONS                                     */
 /*****************************************************************************/
 
+#if 1
 // <e> MPC (Memory Protection Controller) [Driver_SRAM0_MPC]
 // <i> Configuration settings for Driver_SRAM0_MPC in component ::Drivers:MPC
 #define   RTE_SRAM0_MPC                  1
 // </e> MPC (Memory Protection Controller) [Driver_SRAM0_MPC]
+#endif
 
 // <e> MPC (Memory Protection Controller) [Driver_SRAM1_MPC]
 // <i> Configuration settings for Driver_SRAM1_MPC in component ::Drivers:MPC
@@ -128,6 +130,7 @@ typedef enum _INPH_POWER_STATE {
 #define   RTE_SRAM9_MPC                  1
 // </e> MPC (Memory Protection Controller) [Driver_SRAM9_MPC]
 
+#if 0
 // <e> MPC (Memory Protection Controller) [Driver_SRAM10_MPC]
 // <i> Configuration settings for Driver_SRAM10_MPC in component ::Drivers:MPC
 #define   RTE_SRAM10_MPC                 1
@@ -157,6 +160,7 @@ typedef enum _INPH_POWER_STATE {
 // <i> Configuration settings for Driver_SRAM15_MPC in component ::Drivers:MPC
 #define   RTE_SRAM15_MPC                 1
 // </e> MPC (Memory Protection Controller) [Driver_SRAM15_MPC]
+#endif
 
 // <e> MPC (Memory Protection Controller) [Driver_ROM_MPC]
 // <i> Configuration settings for Driver_ROM_MPC in component ::Drivers:MPC

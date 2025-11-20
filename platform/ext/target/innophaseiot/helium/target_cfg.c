@@ -76,7 +76,6 @@ const struct memory_region_limits memory_regions = {
 extern ARM_DRIVER_MPC Driver_SRAM0_MPC;
 extern ARM_DRIVER_MPC Driver_SRAM1_MPC;
 extern ARM_DRIVER_MPC Driver_SRAM2_MPC;
-#if 1
 extern ARM_DRIVER_MPC Driver_SRAM3_MPC;
 extern ARM_DRIVER_MPC Driver_SRAM4_MPC;
 extern ARM_DRIVER_MPC Driver_SRAM5_MPC;
@@ -84,6 +83,7 @@ extern ARM_DRIVER_MPC Driver_SRAM6_MPC;
 extern ARM_DRIVER_MPC Driver_SRAM7_MPC;
 extern ARM_DRIVER_MPC Driver_SRAM8_MPC;
 extern ARM_DRIVER_MPC Driver_SRAM9_MPC;
+#if 0
 extern ARM_DRIVER_MPC Driver_SRAM10_MPC;
 extern ARM_DRIVER_MPC Driver_SRAM11_MPC;
 extern ARM_DRIVER_MPC Driver_SRAM12_MPC;
@@ -233,10 +233,10 @@ enum tfm_plat_err_t nvic_interrupt_enable(void)
     inph_security_cntrl_t* spctrl = PPC_SPCTRL;
     int32_t ret = ARM_DRIVER_OK;
 
-    //ret = Driver_SRAM0_MPC.EnableInterrupt();
-    //if (ret != ARM_DRIVER_OK) {
-    //    return TFM_PLAT_ERR_SYSTEM_ERR;
-    //} // MHK
+     ret = Driver_SRAM0_MPC.EnableInterrupt();
+    if (ret != ARM_DRIVER_OK) {
+        return TFM_PLAT_ERR_SYSTEM_ERR;
+    } // MHK
 
     /* MPC interrupt enabling */
     ret = Driver_SRAM1_MPC.EnableInterrupt();
@@ -283,6 +283,7 @@ enum tfm_plat_err_t nvic_interrupt_enable(void)
         return TFM_PLAT_ERR_SYSTEM_ERR;
     }
 
+#if 0
     ret = Driver_SRAM10_MPC.EnableInterrupt();
     if (ret != ARM_DRIVER_OK) {
         return TFM_PLAT_ERR_SYSTEM_ERR;
@@ -311,6 +312,7 @@ enum tfm_plat_err_t nvic_interrupt_enable(void)
     if (ret != ARM_DRIVER_OK) {
         return TFM_PLAT_ERR_SYSTEM_ERR;
     }
+#endif
 
     ret = Driver_XSPI1_MPC.EnableInterrupt();
     if (ret != ARM_DRIVER_OK) {
@@ -387,50 +389,50 @@ struct sau_cfg_t {
 // NS app code space start
 #if defined(TFM_INPH_BUILD_TYPE_RAM)
 volatile const struct sau_cfg_t sau_cfg[] = {
-	{ // npu + apu nspe
-        0x20000000,
-        0x200effff,
-        false,
-    },
 	{ // nsc
-        0x200f0000+(40*1024)+(20*1024),
-        0x200fFFFF,
+        0x20040000,
+        0x2004FFFF,
         true,
+    },
+	{ // npu + apu nspe
+        0x20050000,
+        0x2009ffff,
+        false,
     }
 };
 #elif defined(TFM_INPH_BUILD_TYPE_FLASH) || defined(TFM_INPH_BUILD_TYPE_FLASH_PLAIN)
 const struct sau_cfg_t sau_cfg[] = {
 	{ // npu + apu nspe
-        0x20000000,
-        0x200effff,
+        0x20050000,
+        0x2009ffff,
         false,
     },
 	{ // flash nsc
-        0x02300000,
-        0x023FFFFF,
+        0x02200000,
+        0x022FFFFF,
         true,
     },
 	{ // flash nspe
-        0x02400000,
-        0x027FFFFF,
+        0x02300000,
+        0x023FFFFF,
         false,
     }
 };
 #elif defined(TFM_INPH_BUILD_TYPE_FLASH_EN)
 const struct sau_cfg_t sau_cfg[] = {
 	{ // npu + apu nspe
-        0x20000000,
-        0x200effff,
+        0x20050000,
+        0x2009ffff,
         false,
     },
 	{ // flash nsc
-        0x04300000,
-        0x043FFFFF,
+        0x04200000,
+        0x042FFFFF,
         true,
     },
 	{ // flash nspe
-        0x04400000,
-        0x047FFFFF,
+        0x04300000,
+        0x043FFFFF,
         false,
     }
 };
@@ -577,7 +579,7 @@ FIH_RET_TYPE(int32_t) mpc_init_cfg(void)
         return TFM_PLAT_ERR_SYSTEM_ERR;
     }
 #if defined(TFM_INPH_BUILD_TYPE_FLASH) || defined(TFM_INPH_BUILD_TYPE_FLASH_PLAIN)
-    ret = Driver_XSPI1_MPC.ConfigRegion(0x02400000, 0x027FFFFF, ARM_MPC_ATTR_NONSECURE);
+    ret = Driver_XSPI1_MPC.ConfigRegion(0x02300000, 0x023FFFFF, ARM_MPC_ATTR_NONSECURE);
 #elif defined(TFM_INPH_BUILD_TYPE_FLASH_EN)
     ret = Driver_XSPI1_MPC.ConfigRegion(0x04400000, 0x047FFFFF, ARM_MPC_ATTR_NONSECURE);
 #else
@@ -650,105 +652,89 @@ FIH_RET_TYPE(int32_t) mpc_init_cfg(void)
 
     { // =============== MPC config as per ram config start ==============
         { // secure banks config start
-            { //SRAM15
-                ret = Driver_SRAM15_MPC.Initialize();
+#if 1
+            { //SRAM0
+                ret = Driver_SRAM0_MPC.Initialize();
                 if (ret != ARM_DRIVER_OK) {
                     FIH_RET(fih_int_encode(ret));
                 }
-                ret = Driver_SRAM15_MPC.ConfigRegion(SRAM15_RANGE_BASE_S, SRAM15_RANGE_LIMIT_S,
+                ret = Driver_SRAM0_MPC.ConfigRegion(SRAM0_RANGE_BASE_S, SRAM0_RANGE_LIMIT_S,
                         ARM_MPC_ATTR_SECURE);
                 if (ret != ARM_DRIVER_OK) {
                     FIH_RET(fih_int_encode(ret));
                 }
 
-                ret = Driver_SRAM15_MPC.LockDown();
+                ret = Driver_SRAM0_MPC.LockDown();
                 if (ret != ARM_DRIVER_OK) {
                     FIH_RET(fih_int_encode(ret));
                 }
             }
+#endif
         } // secure banks config end
 
-        { // non-secure banks config start
-            { //SRAM10
-                ret = Driver_SRAM10_MPC.Initialize();
+            { //SRAM1
+                ret = Driver_SRAM1_MPC.Initialize();
                 if (ret != ARM_DRIVER_OK) {
                     FIH_RET(fih_int_encode(ret));
                 }
-                ret = Driver_SRAM10_MPC.ConfigRegion(SRAM10_RANGE_BASE_NS, SRAM10_RANGE_LIMIT_NS,
-                        ARM_MPC_ATTR_NONSECURE);
+                ret = Driver_SRAM1_MPC.ConfigRegion(SRAM1_RANGE_BASE_S, SRAM1_RANGE_LIMIT_S,
+                        ARM_MPC_ATTR_SECURE);
                 if (ret != ARM_DRIVER_OK) {
                     FIH_RET(fih_int_encode(ret));
                 }
 
-                ret = Driver_SRAM10_MPC.LockDown();
+                ret = Driver_SRAM1_MPC.LockDown();
                 if (ret != ARM_DRIVER_OK) {
                     FIH_RET(fih_int_encode(ret));
                 }
             }
 
-            { //SRAM11
-                ret = Driver_SRAM11_MPC.Initialize();
+            { //SRAM2
+                ret = Driver_SRAM2_MPC.Initialize();
                 if (ret != ARM_DRIVER_OK) {
                     FIH_RET(fih_int_encode(ret));
                 }
-                ret = Driver_SRAM11_MPC.ConfigRegion(SRAM11_RANGE_BASE_NS, SRAM11_RANGE_LIMIT_NS,
-                        ARM_MPC_ATTR_NONSECURE);
+                ret = Driver_SRAM2_MPC.ConfigRegion(SRAM2_RANGE_BASE_S, SRAM2_RANGE_LIMIT_S,
+                        ARM_MPC_ATTR_SECURE);
                 if (ret != ARM_DRIVER_OK) {
                     FIH_RET(fih_int_encode(ret));
                 }
 
-                ret = Driver_SRAM11_MPC.LockDown();
+                ret = Driver_SRAM2_MPC.LockDown();
                 if (ret != ARM_DRIVER_OK) {
                     FIH_RET(fih_int_encode(ret));
                 }
             }
 
-            { //SRAM12
-                ret = Driver_SRAM12_MPC.Initialize();
+            { //SRAM3
+                ret = Driver_SRAM3_MPC.Initialize();
                 if (ret != ARM_DRIVER_OK) {
                     FIH_RET(fih_int_encode(ret));
                 }
-                ret = Driver_SRAM12_MPC.ConfigRegion(SRAM12_RANGE_BASE_NS, SRAM12_RANGE_LIMIT_NS,
-                        ARM_MPC_ATTR_NONSECURE);
+                ret = Driver_SRAM3_MPC.ConfigRegion(SRAM3_RANGE_BASE_S, SRAM3_RANGE_LIMIT_S,
+                        ARM_MPC_ATTR_SECURE);
                 if (ret != ARM_DRIVER_OK) {
                     FIH_RET(fih_int_encode(ret));
                 }
 
-                ret = Driver_SRAM12_MPC.LockDown();
+                ret = Driver_SRAM3_MPC.LockDown();
                 if (ret != ARM_DRIVER_OK) {
                     FIH_RET(fih_int_encode(ret));
                 }
             }
 
-            { //SRAM13
-                ret = Driver_SRAM13_MPC.Initialize();
+            { //SRAM4
+                ret = Driver_SRAM4_MPC.Initialize();
                 if (ret != ARM_DRIVER_OK) {
                     FIH_RET(fih_int_encode(ret));
                 }
-                ret = Driver_SRAM13_MPC.ConfigRegion(SRAM13_RANGE_BASE_NS, SRAM13_RANGE_LIMIT_NS,
-                        ARM_MPC_ATTR_NONSECURE);
-                if (ret != ARM_DRIVER_OK) {
-                    FIH_RET(fih_int_encode(ret));
-                }
-
-                ret = Driver_SRAM13_MPC.LockDown();
-                if (ret != ARM_DRIVER_OK) {
-                    FIH_RET(fih_int_encode(ret));
-                }
-            }
-
-            { //SRAM14
-                ret = Driver_SRAM14_MPC.Initialize();
-                if (ret != ARM_DRIVER_OK) {
-                    FIH_RET(fih_int_encode(ret));
-                }
-                ret = Driver_SRAM14_MPC.ConfigRegion(SRAM14_RANGE_BASE_NS, SRAM14_RANGE_LIMIT_NS,
-                        ARM_MPC_ATTR_NONSECURE);
+                ret = Driver_SRAM4_MPC.ConfigRegion(SRAM4_RANGE_BASE_S, SRAM4_RANGE_LIMIT_S,
+                        ARM_MPC_ATTR_SECURE);
                 if (ret != ARM_DRIVER_OK) {
                     FIH_RET(fih_int_encode(ret));
                 }
 
-                ret = Driver_SRAM14_MPC.LockDown();
+                ret = Driver_SRAM4_MPC.LockDown();
                 if (ret != ARM_DRIVER_OK) {
                     FIH_RET(fih_int_encode(ret));
                 }
@@ -838,94 +824,114 @@ FIH_RET_TYPE(int32_t) mpc_init_cfg(void)
                     FIH_RET(fih_int_encode(ret));
                 }
             }
+#if 0
+        { // non-secure banks config start
+            { //SRAM10
+                ret = Driver_SRAM10_MPC.Initialize();
+                if (ret != ARM_DRIVER_OK) {
+                    FIH_RET(fih_int_encode(ret));
+                }
+                ret = Driver_SRAM10_MPC.ConfigRegion(SRAM10_RANGE_BASE_NS, SRAM10_RANGE_LIMIT_NS,
+                        ARM_MPC_ATTR_NONSECURE);
+                if (ret != ARM_DRIVER_OK) {
+                    FIH_RET(fih_int_encode(ret));
+                }
+
+                ret = Driver_SRAM10_MPC.LockDown();
+                if (ret != ARM_DRIVER_OK) {
+                    FIH_RET(fih_int_encode(ret));
+                }
+            }
+
+            { //SRAM11
+                ret = Driver_SRAM11_MPC.Initialize();
+                if (ret != ARM_DRIVER_OK) {
+                    FIH_RET(fih_int_encode(ret));
+                }
+                ret = Driver_SRAM11_MPC.ConfigRegion(SRAM11_RANGE_BASE_NS, SRAM11_RANGE_LIMIT_NS,
+                        ARM_MPC_ATTR_NONSECURE);
+                if (ret != ARM_DRIVER_OK) {
+                    FIH_RET(fih_int_encode(ret));
+                }
+
+                ret = Driver_SRAM11_MPC.LockDown();
+                if (ret != ARM_DRIVER_OK) {
+                    FIH_RET(fih_int_encode(ret));
+                }
+            }
+
+            { //SRAM12
+                ret = Driver_SRAM12_MPC.Initialize();
+                if (ret != ARM_DRIVER_OK) {
+                    FIH_RET(fih_int_encode(ret));
+                }
+                ret = Driver_SRAM12_MPC.ConfigRegion(SRAM12_RANGE_BASE_NS, SRAM12_RANGE_LIMIT_NS,
+                        ARM_MPC_ATTR_NONSECURE);
+                if (ret != ARM_DRIVER_OK) {
+                    FIH_RET(fih_int_encode(ret));
+                }
+
+                ret = Driver_SRAM12_MPC.LockDown();
+                if (ret != ARM_DRIVER_OK) {
+                    FIH_RET(fih_int_encode(ret));
+                }
+            }
+
+            { //SRAM13
+                ret = Driver_SRAM13_MPC.Initialize();
+                if (ret != ARM_DRIVER_OK) {
+                    FIH_RET(fih_int_encode(ret));
+                }
+                ret = Driver_SRAM13_MPC.ConfigRegion(SRAM13_RANGE_BASE_NS, SRAM13_RANGE_LIMIT_NS,
+                        ARM_MPC_ATTR_NONSECURE);
+                if (ret != ARM_DRIVER_OK) {
+                    FIH_RET(fih_int_encode(ret));
+                }
+
+                ret = Driver_SRAM13_MPC.LockDown();
+                if (ret != ARM_DRIVER_OK) {
+                    FIH_RET(fih_int_encode(ret));
+                }
+            }
+
+            { //SRAM14
+                ret = Driver_SRAM14_MPC.Initialize();
+                if (ret != ARM_DRIVER_OK) {
+                    FIH_RET(fih_int_encode(ret));
+                }
+                ret = Driver_SRAM14_MPC.ConfigRegion(SRAM14_RANGE_BASE_NS, SRAM14_RANGE_LIMIT_NS,
+                        ARM_MPC_ATTR_NONSECURE);
+                if (ret != ARM_DRIVER_OK) {
+                    FIH_RET(fih_int_encode(ret));
+                }
+
+                ret = Driver_SRAM14_MPC.LockDown();
+                if (ret != ARM_DRIVER_OK) {
+                    FIH_RET(fih_int_encode(ret));
+                }
+            }
 
             // unused banks, still init
 
-            { //SRAM0
-                ret = Driver_SRAM0_MPC.Initialize();
+            { //SRAM15
+                ret = Driver_SRAM15_MPC.Initialize();
                 if (ret != ARM_DRIVER_OK) {
                     FIH_RET(fih_int_encode(ret));
                 }
-                ret = Driver_SRAM0_MPC.ConfigRegion(SRAM0_RANGE_BASE_NS, SRAM0_RANGE_LIMIT_NS,
+                ret = Driver_SRAM15_MPC.ConfigRegion(SRAM15_RANGE_BASE_NS, SRAM15_RANGE_LIMIT_NS,
                         ARM_MPC_ATTR_NONSECURE);
                 if (ret != ARM_DRIVER_OK) {
                     FIH_RET(fih_int_encode(ret));
                 }
 
-                ret = Driver_SRAM0_MPC.LockDown();
-                if (ret != ARM_DRIVER_OK) {
-                    FIH_RET(fih_int_encode(ret));
-                }
-            }
-
-            { //SRAM1
-                ret = Driver_SRAM1_MPC.Initialize();
-                if (ret != ARM_DRIVER_OK) {
-                    FIH_RET(fih_int_encode(ret));
-                }
-                ret = Driver_SRAM1_MPC.ConfigRegion(SRAM1_RANGE_BASE_NS, SRAM1_RANGE_LIMIT_NS,
-                        ARM_MPC_ATTR_NONSECURE);
-                if (ret != ARM_DRIVER_OK) {
-                    FIH_RET(fih_int_encode(ret));
-                }
-
-                ret = Driver_SRAM1_MPC.LockDown();
-                if (ret != ARM_DRIVER_OK) {
-                    FIH_RET(fih_int_encode(ret));
-                }
-            }
-
-            { //SRAM2
-                ret = Driver_SRAM2_MPC.Initialize();
-                if (ret != ARM_DRIVER_OK) {
-                    FIH_RET(fih_int_encode(ret));
-                }
-                ret = Driver_SRAM2_MPC.ConfigRegion(SRAM2_RANGE_BASE_NS, SRAM2_RANGE_LIMIT_NS,
-                        ARM_MPC_ATTR_NONSECURE);
-                if (ret != ARM_DRIVER_OK) {
-                    FIH_RET(fih_int_encode(ret));
-                }
-
-                ret = Driver_SRAM2_MPC.LockDown();
-                if (ret != ARM_DRIVER_OK) {
-                    FIH_RET(fih_int_encode(ret));
-                }
-            }
-
-            { //SRAM3
-                ret = Driver_SRAM3_MPC.Initialize();
-                if (ret != ARM_DRIVER_OK) {
-                    FIH_RET(fih_int_encode(ret));
-                }
-                ret = Driver_SRAM3_MPC.ConfigRegion(SRAM3_RANGE_BASE_NS, SRAM3_RANGE_LIMIT_NS,
-                        ARM_MPC_ATTR_NONSECURE);
-                if (ret != ARM_DRIVER_OK) {
-                    FIH_RET(fih_int_encode(ret));
-                }
-
-                ret = Driver_SRAM3_MPC.LockDown();
-                if (ret != ARM_DRIVER_OK) {
-                    FIH_RET(fih_int_encode(ret));
-                }
-            }
-
-            { //SRAM4
-                ret = Driver_SRAM4_MPC.Initialize();
-                if (ret != ARM_DRIVER_OK) {
-                    FIH_RET(fih_int_encode(ret));
-                }
-                ret = Driver_SRAM4_MPC.ConfigRegion(SRAM4_RANGE_BASE_NS, SRAM4_RANGE_LIMIT_NS,
-                        ARM_MPC_ATTR_NONSECURE);
-                if (ret != ARM_DRIVER_OK) {
-                    FIH_RET(fih_int_encode(ret));
-                }
-
-                ret = Driver_SRAM4_MPC.LockDown();
+                ret = Driver_SRAM15_MPC.LockDown();
                 if (ret != ARM_DRIVER_OK) {
                     FIH_RET(fih_int_encode(ret));
                 }
             }
         } // non-secure banks config end
+#endif
+
     } // =============== MPC config as per ram config end ==============
 
     /* Add barriers to assure the MPC configuration is done before continue
@@ -967,6 +973,10 @@ FIH_RET_TYPE(int32_t) ppc_init_cfg(void)
     inph_nspriv_security_t* nsppctrl = PPC_NSPPCTRL;
     uint32_t periph;
     int err = ARM_DRIVER_OK;
+
+    // retrurn -- LESLY
+    //FIH_RET(fih_int_encode(ARM_DRIVER_OK));
+    //return;
 
     /* Initialize not used PPC drivers */
     err |= Driver_APB_PPCBASE0.Initialize();
@@ -1139,12 +1149,14 @@ void mpc_clear_irq(void)
     Driver_SRAM7_MPC.ClearInterrupt();
     Driver_SRAM8_MPC.ClearInterrupt();
     Driver_SRAM9_MPC.ClearInterrupt();
+#if 0
     Driver_SRAM10_MPC.ClearInterrupt();
     Driver_SRAM11_MPC.ClearInterrupt();
     Driver_SRAM12_MPC.ClearInterrupt();
     Driver_SRAM13_MPC.ClearInterrupt();
     Driver_SRAM14_MPC.ClearInterrupt();
     Driver_SRAM15_MPC.ClearInterrupt();
+#endif
     Driver_XSPI1_MPC.ClearInterrupt();
     Driver_XSPI2_MPC.ClearInterrupt();
     Driver_ROM_MPC.ClearInterrupt();

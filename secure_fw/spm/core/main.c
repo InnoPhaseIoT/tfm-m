@@ -97,12 +97,12 @@ static fih_int tfm_core_init(void)
 }
 
 
-//volatile int boot_wait = 1;
+volatile int boot_wait = 1;
 
 int main(void)
 {
-//    while (boot_wait == 1)
-//        ;
+    while (boot_wait == 1)
+        ;
 
 #ifdef CONFIG_TFM_ENABLE_PROFILING
     PROFILING_INIT();

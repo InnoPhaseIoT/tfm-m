@@ -82,6 +82,7 @@
 #define MPC_SRAM9_DEV     MPC_SRAM9_DEV_S
 #endif
 
+#if 0
 #ifdef RTE_SRAM10_MPC
 #define MPC_SRAM10_DEV     MPC_SRAM10_DEV_S
 #endif
@@ -105,6 +106,8 @@
 #ifdef RTE_SRAM15_MPC
 #define MPC_SRAM15_DEV     MPC_SRAM15_DEV_S
 #endif
+#endif
+
 
 #ifdef RTE_ROM_MPC
 #define MPC_ROM_DEV        MPC_ROM_DEV_S

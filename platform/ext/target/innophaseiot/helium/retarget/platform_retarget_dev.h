@@ -138,6 +138,7 @@ extern struct mpc_sie_dev_t MPC_SRAM8_DEV_S;
 extern struct mpc_sie_dev_t MPC_SRAM9_DEV_S;
 #endif
 
+#if 0
 #ifdef RTE_SRAM10_MPC
 extern struct mpc_sie_dev_t MPC_SRAM10_DEV_S;
 #endif
@@ -160,6 +161,7 @@ extern struct mpc_sie_dev_t MPC_SRAM14_DEV_S;
 
 #ifdef RTE_SRAM15_MPC
 extern struct mpc_sie_dev_t MPC_SRAM15_DEV_S;
+#endif
 #endif
 
 #ifdef RTE_ROM_MPC
