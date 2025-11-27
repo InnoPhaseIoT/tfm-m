@@ -581,7 +581,7 @@ FIH_RET_TYPE(int32_t) mpc_init_cfg(void)
 #if defined(TFM_INPH_BUILD_TYPE_FLASH) || defined(TFM_INPH_BUILD_TYPE_FLASH_PLAIN)
     ret = Driver_XSPI1_MPC.ConfigRegion(0x02300000, 0x023FFFFF, ARM_MPC_ATTR_NONSECURE);
 #elif defined(TFM_INPH_BUILD_TYPE_FLASH_EN)
-    ret = Driver_XSPI1_MPC.ConfigRegion(0x04400000, 0x047FFFFF, ARM_MPC_ATTR_NONSECURE);
+    ret = Driver_XSPI1_MPC.ConfigRegion(0x04300000, 0x043FFFFF, ARM_MPC_ATTR_NONSECURE);
 #else
     ret = Driver_XSPI1_MPC.ConfigRegion( XSPI1_RANGE_BASE_NS, XSPI1_RANGE_LIMIT_NS,
                                       ARM_MPC_ATTR_NONSECURE);
