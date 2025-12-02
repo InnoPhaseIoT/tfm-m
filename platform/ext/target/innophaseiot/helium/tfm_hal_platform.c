@@ -77,15 +77,15 @@ const int tfm_build_info__Neon_RAM;
 #elif defined(TFM_INPH_BUILD_TYPE_FLASH)
 __attribute__((used))
 const int tfm_build_info__Neon_FLASH_OFF;
-#define memory_regions_non_secure_code_start 0x02300000     /* FLASH NSPE start address */
+#define memory_regions_non_secure_code_start 0x02400000     /* FLASH NSPE start address */
 #elif defined(TFM_INPH_BUILD_TYPE_FLASH_PLAIN)
 __attribute__((used))
 const int tfm_build_info__Neon_FLASH_PLAIN;
-#define memory_regions_non_secure_code_start 0x02300000     /* FLASH NSPE start address */
+#define memory_regions_non_secure_code_start 0x02400000     /* FLASH NSPE start address */
 #elif defined(TFM_INPH_BUILD_TYPE_FLASH_EN)
 __attribute__((used))
 const int tfm_build_info__Neon_FLASH_EN;
-#define memory_regions_non_secure_code_start 0x04300000     /* FLASH NSPE start address --with EIP39 decription */
+#define memory_regions_non_secure_code_start 0x04400000     /* FLASH NSPE start address --with EIP39 decription */
 #else
 #error "Unknown build platform"
 #endif

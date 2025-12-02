@@ -408,13 +408,13 @@ const struct sau_cfg_t sau_cfg[] = {
         false,
     },
 	{ // flash nsc
-        0x02200000,
-        0x022FFFFF,
+        0x02300000,
+        0x023FFFFF,
         true,
     },
 	{ // flash nspe
-        0x02300000,
-        0x023FFFFF,
+        0x02400000,
+        0x027FFFFF,
         false,
     }
 };
@@ -426,13 +426,13 @@ const struct sau_cfg_t sau_cfg[] = {
         false,
     },
 	{ // flash nsc
-        0x04200000,
-        0x042FFFFF,
+        0x04300000,
+        0x043FFFFF,
         true,
     },
 	{ // flash nspe
-        0x04300000,
-        0x043FFFFF,
+        0x04400000,
+        0x047FFFFF,
         false,
     }
 };
@@ -579,9 +579,9 @@ FIH_RET_TYPE(int32_t) mpc_init_cfg(void)
         return TFM_PLAT_ERR_SYSTEM_ERR;
     }
 #if defined(TFM_INPH_BUILD_TYPE_FLASH) || defined(TFM_INPH_BUILD_TYPE_FLASH_PLAIN)
-    ret = Driver_XSPI1_MPC.ConfigRegion(0x02300000, 0x023FFFFF, ARM_MPC_ATTR_NONSECURE);
+    ret = Driver_XSPI1_MPC.ConfigRegion(0x02400000, 0x027FFFFF, ARM_MPC_ATTR_NONSECURE);
 #elif defined(TFM_INPH_BUILD_TYPE_FLASH_EN)
-    ret = Driver_XSPI1_MPC.ConfigRegion(0x04300000, 0x043FFFFF, ARM_MPC_ATTR_NONSECURE);
+    ret = Driver_XSPI1_MPC.ConfigRegion(0x04400000, 0x047FFFFF, ARM_MPC_ATTR_NONSECURE);
 #else
     ret = Driver_XSPI1_MPC.ConfigRegion( XSPI1_RANGE_BASE_NS, XSPI1_RANGE_LIMIT_NS,
                                       ARM_MPC_ATTR_NONSECURE);
