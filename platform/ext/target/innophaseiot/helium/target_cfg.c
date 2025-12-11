@@ -1044,6 +1044,7 @@ FIH_RET_TYPE(int32_t) ppc_init_cfg(void)
     periph |= (1<<SPCNTL_BASE0_DT2_POS);  // assign DUAL_TIMER_2 to ns
     periph |= (1<<SPCNTL_BASE0_DT3_POS);  // assign DUAL_TIMER_3 to ns
     periph |= (1<<SPCNTL_BASE0_NPU_POS);  // assign npu, bridge  to ns
+    periph |= (1<<SPCNTL_BASE0_OTP_POS);  // assign OTP Host interface to ns
     err |= ppc_devices_set_to_ns(&Driver_APB_PPCBASE0, periph);
     assert(err == 0);
 
