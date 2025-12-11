@@ -974,10 +974,6 @@ FIH_RET_TYPE(int32_t) ppc_init_cfg(void)
     uint32_t periph;
     int err = ARM_DRIVER_OK;
 
-    // retrurn -- LESLY
-    //FIH_RET(fih_int_encode(ARM_DRIVER_OK));
-    //return;
-
     /* Initialize not used PPC drivers */
     err |= Driver_APB_PPCBASE0.Initialize();
     err |= Driver_APB_PPCBASE1.Initialize();
@@ -1056,7 +1052,7 @@ FIH_RET_TYPE(int32_t) ppc_init_cfg(void)
     //periph |= (1<<SPCNTL_APB_SYS_RTC_POS);  // assign Real Time Counter (cast) to ns
     periph |= (1<<SPCNTL_APB_SYS_LPT_POS);  // assign Low Power Timer (cast wdt) to ns
     periph |= (1<<SPCNTL_APB_SYS_WDT_POS);  // assign Wachdog timer (cast) to ns
-    //periph |= (1<<SPCNTL_APB_SYS_MISC_POS); // assign DIG_AON_MISC to ns
+    periph |= (1<<SPCNTL_APB_SYS_MISC_POS); // assign DIG_AON_MISC to ns
     err |= ppc_devices_set_to_ns(&Driver_APB_SYSCNTRL, periph);
     assert(err == 0);
 
