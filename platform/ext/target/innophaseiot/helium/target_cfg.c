@@ -1056,6 +1056,8 @@ FIH_RET_TYPE(int32_t) ppc_init_cfg(void)
     periph |= (1<<SPCNTL_APB_SYS_MISC_POS); // assign DIG_AON_MISC to ns
     periph |= (1<<SPCNTL_APB_SYS_RFA_AON);    // comparator
     periph |= (1<<SPCNTL_APB_SYS_MISC2_POS);   // comparator dep
+    periph |= (1<<SPCNTL_APB_SYS_RFA_VDDL);   // HKADC dep
+    periph |= (1<<SPCNTL_APB_SYS_AON_FSM);    // HKADC dep
     err |= ppc_devices_set_to_ns(&Driver_APB_SYSCNTRL, periph);
     assert(err == 0);
 
