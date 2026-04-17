@@ -57,8 +57,7 @@ typedef struct {
     ARM_FLASH_SignalEvent_t cb_event;  /* Callback function for events */
 } FLASHx_Resources;
 
-#if 0
-static ARM_FLASH_INFO ARM_FLASH_DEV_DATA =
+static ARM_FLASH_INFO ARM_FlashInfo =
 {
     .sector_info  = NULL,                  /* Uniform sector layout */
     .sector_count = FLASH_SIZE / FLASH_SECTOR_SIZE,
@@ -67,7 +66,6 @@ static ARM_FLASH_INFO ARM_FLASH_DEV_DATA =
     .program_unit = 4,
     .erased_value = 0xFF
 };
-#endif
 
 static inline ARM_FLASH_CAPABILITIES ARM_FLASH_GetCapabilities(void)
 {
@@ -188,17 +186,16 @@ static inline int32_t ARM_FLASHx_EraseChip(void)
 }
 
 //static inline volatile ARM_FLASH_STATUS ARM_FLASHx_GetStatus(FLASHx_Resources *flash_dev)
-static inline int32_t ARM_FLASHx_GetStatus(FLASHx_Resources *flash_dev)
+static inline ARM_FLASH_STATUS ARM_FLASHx_GetStatus(FLASHx_Resources *flash_dev)
 {
-    //your function calls here
-    return ARM_DRIVER_OK;
+    ARM_FLASH_STATUS status = {0};
+    return status;
 }
 
 //static inline ARM_FLASH_INFO* ARM_FLASHx_GetInfo(FLASHx_Resources *flash_dev)
-static inline int32_t ARM_FLASHx_GetInfo(FLASHx_Resources *flash_dev)
+static inline ARM_FLASH_INFO *ARM_FLASHx_GetInfo(FLASHx_Resources *flash_dev)
 {
-    //your function calls here
-    return ARM_DRIVER_OK;
+    return &ARM_FlashInfo;
 }
 
 /*
@@ -258,11 +255,11 @@ static int32_t FLASH_DRIVER_NAME##_EraseChip(void)                            \
     return ARM_FLASHx_EraseChip();                                            \
 }                                                                             \
                                                                               \
-static uint32_t FLASH_DRIVER_NAME##_GetStatus(void)                           \
+static ARM_FLASH_STATUS FLASH_DRIVER_NAME##_GetStatus(void)                           \
 {                                                                             \
     return ARM_FLASHx_GetStatus(&FLASH_DRIVER_NAME##_DEV);                    \
 }                                                                             \
-static int32_t FLASH_DRIVER_NAME##_GetInfo(void)                              \
+static ARM_FLASH_INFO *FLASH_DRIVER_NAME##_GetInfo(void)                              \
 {                                                                             \
     return ARM_FLASHx_GetInfo(&FLASH_DRIVER_NAME##_DEV);                      \
 }                                                                             \
